@@ -107,7 +107,13 @@ def figure_sample_size() -> None:
 def figure_ladder() -> None:
     data = json.loads((RESULTS / "baseline_ladder.json").read_text(encoding="utf-8"))
     rungs = data["ladder"]
-    labels = [r["rung"][3:] for r in rungs]
+    labels_raw = [r["rung"][3:] for r in rungs]
+    labels = [
+        "training-set mean (reference predictor)"
+        if label == "training mean (Stage-B reference)"
+        else label
+        for label in labels_raw
+    ]
     values = [100 * r["rmse_gain"] for r in rungs]
     lows = [100 * r["rmse_gain_ci95"][0] for r in rungs]
     highs = [100 * r["rmse_gain_ci95"][1] for r in rungs]
@@ -118,11 +124,11 @@ def figure_ladder() -> None:
     ypos = range(len(labels))
     ax.barh(list(ypos), values, xerr=errs, color=colours, alpha=0.85,
             error_kw={"ecolor": "#333", "elinewidth": 1, "capsize": 2.5})
-    ax.axvline(10, color=RED, linestyle="--", linewidth=1.2, label="Stage-B gate (10%)")
+    ax.axvline(10, color=RED, linestyle="--", linewidth=1.2, label="10% prediction criterion")
     ax.set_yticks(list(ypos))
     ax.set_yticklabels(labels, fontsize=8)
     ax.invert_yaxis()
-    ax.set_xlabel("RMSE improvement over the mean predictor (%)")
+    ax.set_xlabel("RMSE gain over the training-set mean predictor (%)")
     ax.legend(fontsize=7.5, loc="upper right")
 
     inc = data["history_increment_pp"]
