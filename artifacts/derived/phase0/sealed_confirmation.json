@@ -1,0 +1,59 @@
+{
+  "evidence_class": "confirmatory",
+  "prediction_lock_written_utc": "2026-08-05T10:46:14.196609+00:00",
+  "frozen_estimator_sha256": "e4f2dea4100555241d0c17e8564e4c78189dd05eb8fd0ad356ccad6aa64302dc",
+  "estimator_refitted": false,
+  "sealed_data": {
+    "scheduled": 1800,
+    "analysable": 1800,
+    "failed_or_incomplete": 0,
+    "attrition": 0.0,
+    "attrition_limit": 0.1,
+    "clusters": 300,
+    "seed_block": "untouched_test, seeds 9801-9900"
+  },
+  "reference_predictor_value": -22.935416666666665,
+  "primary": {
+    "statement": "RMSE gain of the frozen estimator over the training-set mean, on the sealed block, is at least 10%.",
+    "threshold": 0.1,
+    "observed_rmse_gain": 0.13992387139559503,
+    "ci95": [
+      0.10870764488427018,
+      0.17073282757063235
+    ],
+    "met": true
+  },
+  "secondary": {
+    "statement": "The point estimate falls inside the validation-split 95% interval.",
+    "predicted_interval": [
+      0.1146,
+      0.1719
+    ],
+    "observed": 0.13992387139559503,
+    "met": true
+  },
+  "benefit_auroc": {
+    "observed": 0.7622089314194578,
+    "ci95": [
+      0.7389476539306005,
+      0.7870855100555321
+    ]
+  },
+  "per_network": {
+    "cologne8": {
+      "rows": 600,
+      "clusters": 100,
+      "rmse_gain": 0.24354995812335545
+    },
+    "ingolstadt21": {
+      "rows": 600,
+      "clusters": 100,
+      "rmse_gain": 0.11084488880230936
+    },
+    "moscow": {
+      "rows": 600,
+      "clusters": 100,
+      "rmse_gain": 0.12252782647626326
+    }
+  }
+}

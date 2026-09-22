@@ -1,0 +1,9 @@
+network,scenario,n,reference,target,reference_mean,target_mean,difference_s,difference_ci_low,difference_ci_high,relative_difference,relative_ci_low,relative_ci_high,noninferior_5pct,wilcoxon_p,rank_biserial_proposed_minus_reference,wilcoxon_p_holm
+cologne8,high,20,ppo_ensemble,ergs_v2,3.6991953529192374,3.6991953529192374,0.0,0.0,0.0,0.0,0.0,0.0,True,1.0,0.0,1.0
+cologne8,low,20,ppo_ensemble,ergs_v2,3.226947535687727,3.226947535687727,0.0,0.0,0.0,0.0,0.0,0.0,True,1.0,0.0,1.0
+cologne8,nominal,20,ppo_ensemble,ergs_v2,3.0779301294945474,3.0779301294945474,0.0,0.0,0.0,0.0,0.0,0.0,True,1.0,0.0,1.0
+cologne8,variable,20,ppo_ensemble,ergs_v2,3.399513496128475,3.399513496128475,0.0,0.0,0.0,0.0,0.0,0.0,True,1.0,0.0,1.0
+moscow,high,20,ppo_ensemble,ergs_v2,56.95554111564917,56.95554111564917,0.0,0.0,0.0,0.0,0.0,0.0,True,1.0,0.0,1.0
+moscow,low,20,ppo_ensemble,ergs_v2,7.515372316638777,7.515372316638777,0.0,0.0,0.0,0.0,0.0,0.0,True,1.0,0.0,1.0
+moscow,nominal,20,ppo_ensemble,ergs_v2,10.600096426472977,10.600096426472977,0.0,0.0,0.0,0.0,0.0,0.0,True,1.0,0.0,1.0
+moscow,variable,20,ppo_ensemble,ergs_v2,19.760957063658008,19.760957063658008,0.0,0.0,0.0,0.0,0.0,0.0,True,1.0,0.0,1.0

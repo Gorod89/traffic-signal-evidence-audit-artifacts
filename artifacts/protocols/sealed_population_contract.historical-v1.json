@@ -1,0 +1,38 @@
+{
+  "schema_version": "sealed-population-contract-v2",
+  "evidence_status": "post-hoc hardened reanalysis of an internally locked test with an interim look",
+  "prediction_lock_sha256": "fd328c7a32057134fdb3c42e75a908de6d7b1b81796b8958fcd841dc9b9633cf",
+  "networks": [
+    "moscow",
+    "cologne8",
+    "ingolstadt21"
+  ],
+  "conditions": [
+    "normal",
+    "packet_loss",
+    "sensor_delay_noise",
+    "lane_closure",
+    "emergency_vehicle",
+    "demand_shock"
+  ],
+  "seed_start": 9801,
+  "seed_count": 100,
+  "snapshot_indices": [
+    0
+  ],
+  "split": "sealed_probe",
+  "record_schema_version": 1,
+  "feature_dimension": 81,
+  "rows_per_cluster": 6,
+  "locked_seed_block": "untouched_test, seeds 9801-9900",
+  "required_collection_executables": {
+    "sumo": "e39d9f60e2494570bc826d29ac0a22c3fe311c2b222469cb5063591b4574d05c"
+  },
+  "historical_limitations": [
+    "The prediction lock was timestamped locally and had no independent third-party custody.",
+    "The first surviving score path was created when 1797 of 1800 registered records existed; three records arrived later and the same path was overwritten with the final 1800-record score.",
+    "The surviving collector was created after the recorded collection and cannot prove which collector enforced the historical run.",
+    "The surviving evaluator was modified after the stored result; the exact evaluator bytes used for the historical score are unavailable.",
+    "This contract and hardened fail-closed implementation are retrospective audit artifacts and are not part of the original lock."
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "confirmatory_admissible": false,
+  "failures": 0,
+  "finalist_search_gate_diagnostics": {
+    "m-32c477fd36e1": {
+      "F0_structural": true,
+      "F1_h4_engineering_effect": false,
+      "F2_all_horizon_engineering_effect": true,
+      "F3_action_sensitivity": true,
+      "F7_resource_contract": true,
+      "complete": true,
+      "corruption_zero_control_positive": true
+    },
+    "m-60b0b252595b": {
+      "F0_structural": true,
+      "F1_h4_engineering_effect": false,
+      "F2_all_horizon_engineering_effect": true,
+      "F3_action_sensitivity": true,
+      "F7_resource_contract": true,
+      "complete": true,
+      "corruption_zero_control_positive": true
+    },
+    "m-b1f6dca5624f": {
+      "F0_structural": true,
+      "F1_h4_engineering_effect": false,
+      "F2_all_horizon_engineering_effect": true,
+      "F3_action_sensitivity": true,
+      "F7_resource_contract": true,
+      "complete": true,
+      "corruption_zero_control_positive": true
+    }
+  },
+  "finalists": [
+    "m-60b0b252595b",
+    "m-32c477fd36e1",
+    "m-b1f6dca5624f"
+  ],
+  "quick_audit_opened": false,
+  "reason": "legacy paired proxy has no fresh sealed traffic outcomes or heterogeneous graph trajectories",
+  "schema_version": 1,
+  "status": "engineering_search_complete",
+  "trials": 104
+}

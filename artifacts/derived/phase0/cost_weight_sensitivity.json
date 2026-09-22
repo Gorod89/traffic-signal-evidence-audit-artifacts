@@ -1,0 +1,232 @@
+{
+  "input_sha256": "24231bba4eadff8051da0af7705ff429d86c93ec10c554ede9247836aea55d8e",
+  "identity_residual": 2.2737367544323206e-13,
+  "replicates": 2000,
+  "schemes": [
+    {
+      "scheme": "registered (1, 2, 0.5, 30)",
+      "weights": {
+        "stopped": 1.0,
+        "queue": 2.0,
+        "braking": 0.5,
+        "teleports": 30.0
+      },
+      "gain_no_history": 0.1446945567318878,
+      "history_increment_pp": 0.5695713298551008,
+      "history_increment_ci95_pp": [
+        -0.8515205632686004,
+        2.090451870172575
+      ],
+      "history_increment_covers_zero": true,
+      "naive_increment_pp": 16.52223437819893,
+      "naive_increment_ci95_pp": [
+        13.462050797197374,
+        19.406912969249515
+      ],
+      "naive_increment_positive": true
+    },
+    {
+      "scheme": "stopped only",
+      "weights": {
+        "stopped": 1.0,
+        "queue": 0.0,
+        "braking": 0.0,
+        "teleports": 0.0
+      },
+      "gain_no_history": 0.1530127345662079,
+      "history_increment_pp": -0.04525974687896728,
+      "history_increment_ci95_pp": [
+        -1.5062987180651948,
+        1.5251502135641497
+      ],
+      "history_increment_covers_zero": true,
+      "naive_increment_pp": 17.41923825082924,
+      "naive_increment_ci95_pp": [
+        14.430057829974293,
+        20.290454121908617
+      ],
+      "naive_increment_positive": true
+    },
+    {
+      "scheme": "queue only",
+      "weights": {
+        "stopped": 0.0,
+        "queue": 1.0,
+        "braking": 0.0,
+        "teleports": 0.0
+      },
+      "gain_no_history": -0.0587614632963358,
+      "history_increment_pp": 2.1540132853640426,
+      "history_increment_ci95_pp": [
+        0.7900844250533852,
+        3.5991801906227425
+      ],
+      "history_increment_covers_zero": false,
+      "naive_increment_pp": -5.88960406843102,
+      "naive_increment_ci95_pp": [
+        -9.01164752940454,
+        -2.9964136353838255
+      ],
+      "naive_increment_positive": false
+    },
+    {
+      "scheme": "teleports only",
+      "weights": {
+        "stopped": 0.0,
+        "queue": 0.0,
+        "braking": 0.0,
+        "teleports": 1.0
+      },
+      "gain_no_history": -0.011295750695602846,
+      "history_increment_pp": -0.17365134959339557,
+      "history_increment_ci95_pp": [
+        -0.9620426923945463,
+        0.526791564320259
+      ],
+      "history_increment_covers_zero": true,
+      "naive_increment_pp": -1.180967716000192,
+      "naive_increment_ci95_pp": [
+        -3.284407374062321,
+        0.02894282016806755
+      ],
+      "naive_increment_positive": false
+    },
+    {
+      "scheme": "equal weights",
+      "weights": {
+        "stopped": 1.0,
+        "queue": 1.0,
+        "braking": 1.0,
+        "teleports": 1.0
+      },
+      "gain_no_history": 0.1502649761853353,
+      "history_increment_pp": 0.3625130500096829,
+      "history_increment_ci95_pp": [
+        -1.050535101291153,
+        1.8801185903434399
+      ],
+      "history_increment_covers_zero": true,
+      "naive_increment_pp": 17.112425863385074,
+      "naive_increment_ci95_pp": [
+        14.136075332937976,
+        19.964823359077947
+      ],
+      "naive_increment_positive": true
+    },
+    {
+      "scheme": "queue x4 (1, 8, 0.5, 30)",
+      "weights": {
+        "stopped": 1.0,
+        "queue": 8.0,
+        "braking": 0.5,
+        "teleports": 30.0
+      },
+      "gain_no_history": 0.12534502814053594,
+      "history_increment_pp": 0.6664921645263666,
+      "history_increment_ci95_pp": [
+        -0.7436477024712279,
+        2.127336450436107
+      ],
+      "history_increment_covers_zero": true,
+      "naive_increment_pp": 14.367187470169384,
+      "naive_increment_ci95_pp": [
+        11.409981125219769,
+        17.120451989805545
+      ],
+      "naive_increment_positive": true
+    },
+    {
+      "scheme": "queue /4 (1, 0.5, 0.5, 30)",
+      "weights": {
+        "stopped": 1.0,
+        "queue": 0.5,
+        "braking": 0.5,
+        "teleports": 30.0
+      },
+      "gain_no_history": 0.14778383161504172,
+      "history_increment_pp": 1.0229136497949987,
+      "history_increment_ci95_pp": [
+        -0.35751738030165015,
+        2.5058800666622942
+      ],
+      "history_increment_covers_zero": true,
+      "naive_increment_pp": 16.879520922962854,
+      "naive_increment_ci95_pp": [
+        13.969348241165031,
+        19.682864523274763
+      ],
+      "naive_increment_positive": true
+    },
+    {
+      "scheme": "teleports x4 (1, 2, 0.5, 120)",
+      "weights": {
+        "stopped": 1.0,
+        "queue": 2.0,
+        "braking": 0.5,
+        "teleports": 120.0
+      },
+      "gain_no_history": 0.1407346615254329,
+      "history_increment_pp": 0.8078331499379088,
+      "history_increment_ci95_pp": [
+        -0.656686975736748,
+        2.3583090761717274
+      ],
+      "history_increment_covers_zero": true,
+      "naive_increment_pp": 16.12028375764546,
+      "naive_increment_ci95_pp": [
+        13.057948289804811,
+        18.972913476925633
+      ],
+      "naive_increment_positive": true
+    },
+    {
+      "scheme": "teleports /30 (1, 2, 0.5, 1)",
+      "weights": {
+        "stopped": 1.0,
+        "queue": 2.0,
+        "braking": 0.5,
+        "teleports": 1.0
+      },
+      "gain_no_history": 0.14373878453862643,
+      "history_increment_pp": 0.5266450030022796,
+      "history_increment_ci95_pp": [
+        -0.9148903013635894,
+        2.033091686024263
+      ],
+      "history_increment_covers_zero": true,
+      "naive_increment_pp": 16.42775994183929,
+      "naive_increment_ci95_pp": [
+        13.431009102825461,
+        19.301797024231043
+      ],
+      "naive_increment_positive": true
+    },
+    {
+      "scheme": "braking x10 (1, 2, 5, 30)",
+      "weights": {
+        "stopped": 1.0,
+        "queue": 2.0,
+        "braking": 5.0,
+        "teleports": 30.0
+      },
+      "gain_no_history": 0.14964117484875272,
+      "history_increment_pp": 0.22841357767386938,
+      "history_increment_ci95_pp": [
+        -1.064362986220688,
+        1.6195847478591552
+      ],
+      "history_increment_covers_zero": true,
+      "naive_increment_pp": 17.011525051338495,
+      "naive_increment_ci95_pp": [
+        14.081061140364021,
+        19.825474979949085
+      ],
+      "naive_increment_positive": true
+    }
+  ],
+  "summary": {
+    "schemes_tested": 10,
+    "history_increment_covers_zero_in": 9,
+    "naive_increment_positive_in": 8
+  }
+}

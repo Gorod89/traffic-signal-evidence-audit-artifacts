@@ -1,0 +1,107 @@
+{
+  "input": "artifacts/derived/v6/paired_branches.csv",
+  "input_sha256": "24231bba4eadff8051da0af7705ff429d86c93ec10c554ede9247836aea55d8e",
+  "rows": 3480,
+  "columns": 74,
+  "model": "ExtraTreesRegressor(n_estimators=300, random_state=20260805)",
+  "thresholds": {
+    "rmse_gain": 0.1,
+    "auroc": 0.65,
+    "source": "V4 stage_b_verifier.json / V5 stage_b_verifier.json"
+  },
+  "disjointness": {
+    "train_rows": 960,
+    "eval_rows": 1800,
+    "shared_seeds": 0,
+    "shared_routes": 0,
+    "train_clusters": 160,
+    "eval_clusters": 300
+  },
+  "features": {
+    "column": "feature_vector",
+    "width": 81,
+    "leakage_audit": "outcome columns (gain_*, *_cost_*, delta_*, *_target_observation_*) are never read into X"
+  },
+  "results": {
+    "gain_h1": {
+      "model_rmse": 32.43639863885864,
+      "mean_predictor_rmse": 60.11629695075355,
+      "rmse_gain": 0.46043917732607353,
+      "rmse_gain_ci95": [
+        0.4338367732366052,
+        0.4874309679169574
+      ],
+      "auroc": 0.8531062256552451,
+      "auroc_ci95": [
+        0.8325730544044896,
+        0.8732884249142314
+      ],
+      "positive_fraction": 0.34,
+      "passes_rmse_gate": true,
+      "passes_auroc_gate": true,
+      "passes_lower_bound_rmse_gate": true
+    },
+    "gain_h2": {
+      "model_rmse": 94.8151010312267,
+      "mean_predictor_rmse": 134.08137908595882,
+      "rmse_gain": 0.2928540735664624,
+      "rmse_gain_ci95": [
+        0.26468993714305633,
+        0.32075618268331574
+      ],
+      "auroc": 0.8733745667339418,
+      "auroc_ci95": [
+        0.8545412435320394,
+        0.8912965622867906
+      ],
+      "positive_fraction": 0.3422222222222222,
+      "passes_rmse_gate": true,
+      "passes_auroc_gate": true,
+      "passes_lower_bound_rmse_gate": true
+    },
+    "gain_h4": {
+      "model_rmse": 189.06843879498217,
+      "mean_predictor_rmse": 220.67782656235477,
+      "rmse_gain": 0.14323771563175625,
+      "rmse_gain_ci95": [
+        0.11456377277530433,
+        0.17193862327736767
+      ],
+      "auroc": 0.7707082496099593,
+      "auroc_ci95": [
+        0.7480992667649623,
+        0.7933398828107188
+      ],
+      "positive_fraction": 0.3616666666666667,
+      "passes_rmse_gate": true,
+      "passes_auroc_gate": true,
+      "passes_lower_bound_rmse_gate": true
+    },
+    "gain_h4_zero_shot_ingolstadt21": {
+      "rows": 600,
+      "clusters": 100,
+      "in_training": false,
+      "rmse_gain": 0.10824921095847995,
+      "rmse_gain_ci95": [
+        0.073205581960834,
+        0.1410010240633577
+      ],
+      "auroc": 0.7151629196791125,
+      "auroc_ci95": [
+        0.6616894638609296,
+        0.7648157155616011
+      ],
+      "passes_rmse_gate": true,
+      "passes_auroc_gate": true
+    }
+  },
+  "historical_comparison": {
+    "v4_stage_b_rmse_gain": 0.0534,
+    "v4_paired_rows": 360,
+    "v5_stage_b_rmse_gain": 0.0899,
+    "v5_paired_rows": 420,
+    "v6_paired_rows": 3480,
+    "note": "V4/V5 used their own splits and feature sets; this is a same-threshold comparison, not a same-protocol replication."
+  },
+  "evidence_class": "retrospective_diagnostic_not_confirmatory: the V6.1 validation split was already consumed by Gate B, so program rules forbid treating this as confirmatory evidence."
+}

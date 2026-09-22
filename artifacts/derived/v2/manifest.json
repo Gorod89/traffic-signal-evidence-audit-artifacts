@@ -1,0 +1,50 @@
+{
+  "expected_runs": 1600,
+  "observed_runs": 1600,
+  "networks": [
+    "cologne8",
+    "moscow"
+  ],
+  "scenarios": [
+    "high",
+    "low",
+    "nominal",
+    "variable"
+  ],
+  "methods": [
+    "ergs_no_calibration",
+    "ergs_no_event",
+    "ergs_no_guard",
+    "ergs_no_hysteresis",
+    "ergs_v2",
+    "fixed",
+    "lightgpt_direct",
+    "lightgpt_review",
+    "max_pressure",
+    "ppo_ensemble"
+  ],
+  "seeds": [
+    1001,
+    1003,
+    1007,
+    1009,
+    1013,
+    1019,
+    1021,
+    1031,
+    1033,
+    1039,
+    1049,
+    1051,
+    1061,
+    1063,
+    1069,
+    1087,
+    1091,
+    1093,
+    1097,
+    1103
+  ],
+  "bootstrap_resamples": 20000,
+  "complete": true
+}

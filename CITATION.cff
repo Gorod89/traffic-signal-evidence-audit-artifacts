@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use these tools or derived artifacts, please cite this repository and the associated article."
+title: "Traffic-Signal Evidence Audit: Code and Derived Artifacts"
+type: software
+version: 0.1.0
+date-released: 2026-09-22
+authors:
+  - family-names: Gorodnichev
+    given-names: Mikhail
+    email: m.g.gorodnichev@mtuci.ru
+    affiliation: "Faculty of Information Technology, Moscow Technical University of Communication and Informatics"
+repository-code: "https://github.com/Gorod89/traffic-signal-evidence-audit-artifacts"
+preferred-citation:
+  type: article
+  title: "Baselines, Sample Size, and Supervisory Activity in Guarded Reinforcement-Learning Traffic-Signal Control: A SUMO Evidence Audit"
+  authors:
+    - family-names: Gorodnichev
+      given-names: Mikhail
+  year: 2026

@@ -1,0 +1,80 @@
+{
+  "question": "Does the corpus contain paired counterfactual data branched from an incumbent stronger than the PPO ensemble?",
+  "answer": "No. Every paired or counterfactual dataset in the corpus branches from the same PPO EnsemblePolicy.",
+  "datasets": [
+    {
+      "dataset": "v4/results/cfra/paired_branches.csv",
+      "exists": true,
+      "generator": "v4/src/ergs_tsc_v4/cfra_branching.py",
+      "baseline_controller": [
+        "PPO ensemble"
+      ]
+    },
+    {
+      "dataset": "v5/results/cfra/paired_branches.csv",
+      "exists": true,
+      "generator": "v5/src/ergs_tsc_v5/cfra_branching.py",
+      "baseline_controller": [
+        "PPO ensemble"
+      ]
+    },
+    {
+      "dataset": "v6/results/cfra/paired_branches.csv",
+      "exists": true,
+      "generator": "v6/src/ergs_tsc_v6/cfra_branching.py",
+      "baseline_controller": [
+        "PPO ensemble"
+      ]
+    },
+    {
+      "dataset": "v10_proposal/phase0/sealed/raw",
+      "exists": true,
+      "generator": "v10_proposal/phase0/collect_sealed.py",
+      "baseline_controller": [
+        "PPO ensemble"
+      ]
+    },
+    {
+      "dataset": "v10_proposal/phase1_controller/results/paired_voi",
+      "exists": true,
+      "generator": "v10_proposal/phase1_controller/pace_runtime.py",
+      "baseline_controller": [
+        "PPO ensemble"
+      ]
+    },
+    {
+      "dataset": "v3/results/counterfactual/counterfactual_interventions.csv",
+      "exists": true,
+      "generator": "v3/src/ergs_tsc_v3/counterfactual.py",
+      "baseline_controller": [
+        "PPO ensemble"
+      ]
+    }
+  ],
+  "idqn_checkpoints_present": [
+    "v3/models/idqn.pth",
+    "v3/models/idqn_latest.pth",
+    "v4/models/idqn.pth",
+    "v4/models/idqn_latest.pth",
+    "v5/models/idqn.pth",
+    "v5/models/idqn_latest.pth",
+    "v6/models/idqn.pth"
+  ],
+  "v3_evidence_that_idqn_is_stronger": {
+    "source": "v3/results/analysis/competitor_comparisons.csv",
+    "scope": "global",
+    "mean_relative": 0.697,
+    "ci95_relative": [
+      0.5721,
+      0.8247
+    ],
+    "p_holm": 0.0,
+    "reading": "ERGS v3 is 69.7% worse than Adapted IDQN; the comparison is end-to-end episode scoring over 20 seed clusters, not paired branches, and it never entered a counterfactual collection."
+  },
+  "blockers": [
+    "cfra_branching._ppo_actions takes an EnsemblePolicy and calls .act(), which returns (actions, log_prob, values, entropy); AdaptedIDQN.act has a different signature and no ensemble.",
+    "policy_entropy and policy_disagreement are elements 11 and 12 of ActionContext.as_array(), so they sit at positions 11, 38 and 65 of the 81-dimensional feature_vector that rungs 3, 5 and 6 consume. A deterministic value-based incumbent has neither quantity, so swapping the incumbent changes the estimator's feature space as well as the branch baseline -- the two rungs whose difference defines the overstatement factor would no longer be the same two rungs.",
+    "No paired-branch configuration for a non-PPO incumbent exists anywhere in the corpus, so answering the question needs a new SUMO collection run, not a reanalysis."
+  ],
+  "evidence_class": "retrospective_diagnostic_not_confirmatory"
+}

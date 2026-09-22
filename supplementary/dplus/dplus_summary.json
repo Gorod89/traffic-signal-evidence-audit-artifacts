@@ -1,0 +1,64 @@
+{
+  "run": "v8/results/primary_search_v2",
+  "trials": {
+    "total": 94,
+    "R1": 72,
+    "R2": 22,
+    "R3": 0,
+    "promoted_at_R1": 24,
+    "R2_missing": 2,
+    "all_complete": true
+  },
+  "comparability": {
+    "same_source_csv": true,
+    "same_source_sha256": "4052e1c15063dd9a5b2b267c83085cac7e6bf03df1ebb0ddaf232cc658dfa558",
+    "same_target_indices": [
+      2,
+      3,
+      4,
+      5,
+      8,
+      9
+    ],
+    "same_channel_weights": [
+      0.35,
+      0.2,
+      0.15,
+      0.15,
+      0.1,
+      0.05
+    ],
+    "same_fold_salt": "v8-groupcv-v1",
+    "fold_partition_identical": true,
+    "same_metric_function": "summarize_physical_metrics on sqrt(channel_weight)-scaled arrays",
+    "aggregation_differs": true,
+    "overall_and_h4_comparable": true,
+    "worst_case_metrics_comparable_as_published": false,
+    "corruption_comparable": false
+  },
+  "headline": {
+    "best_neural_overall": {
+      "candidate_id": "m-e27868141735",
+      "encoder": "gru",
+      "paired_head": "shared_branch",
+      "overall_improvement": 0.1769400654570006,
+      "h4_improvement": 0.0005352340703677,
+      "worst_condition_reported": -0.1291286261868613,
+      "worst_condition_matched": 0.1113658472897541,
+      "corr_min": -0.013670766603087
+    },
+    "best_baseline_overall": {
+      "name": "history_ridge_alpha=100",
+      "overall_improvement": 0.2014459911964588,
+      "h4_improvement": -0.0540523820549964,
+      "worst_condition_matched": -0.1525377393808221
+    },
+    "current_ridge_alpha_100": {
+      "overall_improvement": 0.1805747640975042,
+      "h4_improvement": -0.0063375298651022,
+      "worst_condition_matched": 0.0747569696626324
+    },
+    "neural_beating_best_baseline_overall": 0,
+    "neural_h4_above_0.05": 0
+  }
+}

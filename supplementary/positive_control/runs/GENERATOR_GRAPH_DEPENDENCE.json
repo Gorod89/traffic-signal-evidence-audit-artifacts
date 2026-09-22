@@ -1,0 +1,16 @@
+{
+  "interpretation": "shift_relative_to_target = |target(perturbed graph) - target(true graph)|^2 / |target(true graph)|^2, capacity normalized, pooled over H1/H2/H4. A value near zero would mean the label does not depend on topology.",
+  "samples": 144,
+  "variants": {
+    "adjacency_shuffle": {
+      "shift_energy": 37.94823582842946,
+      "shift_relative_to_target": 0.8528425997150719,
+      "target_energy": 44.49617765471339
+    },
+    "no_edge": {
+      "shift_energy": 26.89269882813096,
+      "shift_relative_to_target": 0.6043822243972515,
+      "target_energy": 44.49617765471339
+    }
+  }
+}

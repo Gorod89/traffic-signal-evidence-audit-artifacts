@@ -1,0 +1,149 @@
+{
+  "claim_scope": "synthetic_scm_graph_inductive_bias_falsification_only",
+  "family_best_trial_ids": {
+    "directed_mpnn": "gt-331f2893a48d",
+    "edge_attention": "gt-9a788a8fbc64",
+    "edge_null": "gt-c222980fe8e3"
+  },
+  "interpretation": "This screen can reject an unsuitable graph inductive bias on a synthetic SCM; it cannot establish traffic-system superiority.",
+  "matched_comparisons": [
+    {
+      "capacity_max_to_min_ratio": 1.0519609158163001,
+      "comparison_group": "cg-1fba2fd129",
+      "families": {
+        "directed_mpnn": {
+          "development_capacity_normalized_mse": 0.0054368674755096436,
+          "development_movement_horizon_rmse": 2.5022788047790527,
+          "latency_milliseconds_p95": 3.269799935817718,
+          "parameter_count": 97023,
+          "trial_id": "gt-efb301c42a3a"
+        },
+        "edge_attention": {
+          "development_capacity_normalized_mse": 0.005612154025584459,
+          "development_movement_horizon_rmse": 2.6093804836273193,
+          "latency_milliseconds_p95": 4.277555274963379,
+          "parameter_count": 96919,
+          "trial_id": "gt-629ebb0fe482"
+        },
+        "edge_null": {
+          "development_capacity_normalized_mse": 0.00546956667676568,
+          "development_movement_horizon_rmse": 2.4974517822265625,
+          "latency_milliseconds_p95": 3.2185871481895427,
+          "parameter_count": 101955,
+          "trial_id": "gt-72059c689178"
+        }
+      }
+    },
+    {
+      "capacity_max_to_min_ratio": 1.0559970001607057,
+      "comparison_group": "cg-5b8e1c2f9d",
+      "families": {
+        "directed_mpnn": {
+          "development_capacity_normalized_mse": 0.005388444289565086,
+          "development_movement_horizon_rmse": 2.507046699523926,
+          "latency_milliseconds_p95": 1.9892223954200743,
+          "parameter_count": 59139,
+          "trial_id": "gt-331f2893a48d"
+        },
+        "edge_attention": {
+          "development_capacity_normalized_mse": 0.005418147426098585,
+          "development_movement_horizon_rmse": 2.518939256668091,
+          "latency_milliseconds_p95": 2.4524335503578176,
+          "parameter_count": 59091,
+          "trial_id": "gt-15a9ad2d8473"
+        },
+        "edge_null": {
+          "development_capacity_normalized_mse": 0.005390172824263573,
+          "development_movement_horizon_rmse": 2.507127523422241,
+          "latency_milliseconds_p95": 1.897697603702545,
+          "parameter_count": 56003,
+          "trial_id": "gt-c222980fe8e3"
+        }
+      }
+    },
+    {
+      "capacity_max_to_min_ratio": 1.0794003618506074,
+      "comparison_group": "cg-6c10393731",
+      "families": {
+        "directed_mpnn": {
+          "development_capacity_normalized_mse": 0.0054093473590910435,
+          "development_movement_horizon_rmse": 2.501340389251709,
+          "latency_milliseconds_p95": 2.6070528388023373,
+          "parameter_count": 62643,
+          "trial_id": "gt-f8981f06d597"
+        },
+        "edge_attention": {
+          "development_capacity_normalized_mse": 0.0054009645245969296,
+          "development_movement_horizon_rmse": 2.5107831954956055,
+          "latency_milliseconds_p95": 2.8412335753440856,
+          "parameter_count": 62563,
+          "trial_id": "gt-9a788a8fbc64"
+        },
+        "edge_null": {
+          "development_capacity_normalized_mse": 0.006272227969020605,
+          "development_movement_horizon_rmse": 2.831120491027832,
+          "latency_milliseconds_p95": 2.5340992093086236,
+          "parameter_count": 58035,
+          "trial_id": "gt-584dca47b2ff"
+        }
+      }
+    },
+    {
+      "capacity_max_to_min_ratio": 1.0794003618506074,
+      "comparison_group": "cg-c75753e626",
+      "families": {
+        "directed_mpnn": {
+          "development_capacity_normalized_mse": 0.005411928053945303,
+          "development_movement_horizon_rmse": 2.507207155227661,
+          "latency_milliseconds_p95": 2.5226479768753047,
+          "parameter_count": 62643,
+          "trial_id": "gt-d84aa937a9b3"
+        },
+        "edge_attention": {
+          "development_capacity_normalized_mse": 0.005960921291261911,
+          "development_movement_horizon_rmse": 2.709730386734009,
+          "latency_milliseconds_p95": 3.321446323394775,
+          "parameter_count": 62563,
+          "trial_id": "gt-8b465f29a268"
+        },
+        "edge_null": {
+          "development_capacity_normalized_mse": 0.005558633711189032,
+          "development_movement_horizon_rmse": 2.5799503326416016,
+          "latency_milliseconds_p95": 2.897817575931549,
+          "parameter_count": 58035,
+          "trial_id": "gt-68798895afa6"
+        }
+      }
+    }
+  ],
+  "protocol_file": "SEARCH_PROTOCOL.json",
+  "schema_version": "v8-graph-search-summary-1",
+  "selected_audit_file": "SELECTED_AUDIT.json",
+  "selected_trial_id": "gt-331f2893a48d",
+  "split": {
+    "audit_graph_seeds": [
+      1103,
+      2411,
+      2683
+    ],
+    "cluster_disjoint": true,
+    "dependence_cluster": "graph_seed",
+    "development_graph_seeds": [
+      1427
+    ],
+    "sample_counts": {
+      "audit": 24,
+      "development": 8,
+      "train": 40
+    },
+    "train_graph_seeds": [
+      1213,
+      1601,
+      1871,
+      2017,
+      2237
+    ]
+  },
+  "traffic_or_sota_evidence": false,
+  "trial_count": 12
+}

@@ -1,0 +1,12 @@
+{
+  "confirmatory_admissible": false,
+  "failures": 0,
+  "finalists": [
+    "m-675e80faa0eb"
+  ],
+  "quick_audit_opened": false,
+  "reason": "legacy paired proxy has no fresh sealed traffic outcomes or heterogeneous graph trajectories",
+  "schema_version": 1,
+  "status": "engineering_search_complete",
+  "trials": 16
+}

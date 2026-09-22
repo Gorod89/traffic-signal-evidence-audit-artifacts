@@ -1,0 +1,290 @@
+{
+  "evidence_class": "retrospective_diagnostic_not_confirmatory",
+  "input_manifest_sha256": {
+    "v3_traces": "f88a69bff6d57149098a135da683b2028dbfd537cc2e591550366955d30d5e8a",
+    "v4_policy_traces": "a1a05cb0672da5891a3c00eee50e0804940554491b1ccfc621168d238b018223",
+    "v1_decisions": "786c1ffeea926d6da38b89bd828854497759bd755d1e5e078adbaddd3e023a9a"
+  },
+  "v3": {
+    "files": 72,
+    "proposal_evaluations": 427342,
+    "proposer_disagreed_with_incumbent": 65791,
+    "disagreement_rate": 0.15395397597240618,
+    "accepted": 15844,
+    "acceptance_rate_of_evaluations": 0.03707569113262914,
+    "acceptance_rate_of_disagreements": 0.2408232129014607,
+    "block_reasons": {
+      "no_disagreement": 342262,
+      "model_uncertainty": 33764,
+      "legal_phase": 17582,
+      "accepted": 15844,
+      "calibrated_gain": 14186,
+      "low_confidence": 1242,
+      "insufficient_green_evidence": 1039,
+      "closure_conflict": 856,
+      "emergency_priority_conflict": 566,
+      "downstream_spillback": 1
+    },
+    "share_blocked_before_any_authority_decision": 0.8009088739229938,
+    "calibrated_lower_gain_when_disagreed": {
+      "n": 59083,
+      "mean": -1.0507810984676293,
+      "median": -1.135318265598086,
+      "p90": 0.0,
+      "max": 0.5175284752797975,
+      "fraction_strictly_positive": 0.002047966420120847
+    },
+    "block_reasons_by_method": {
+      "ergs_no_calibration": {
+        "no_disagreement": 48015,
+        "model_uncertainty": 8433,
+        "legal_phase": 2093,
+        "calibrated_gain": 1092,
+        "low_confidence": 196,
+        "accepted": 143,
+        "insufficient_green_evidence": 117
+      },
+      "ergs_no_hysteresis": {
+        "no_disagreement": 47969,
+        "model_uncertainty": 8437,
+        "legal_phase": 2119,
+        "calibrated_gain": 1170,
+        "low_confidence": 196,
+        "insufficient_green_evidence": 117,
+        "accepted": 70
+      },
+      "ergs_no_shield": {
+        "no_disagreement": 48111,
+        "model_uncertainty": 8447,
+        "legal_phase": 2086,
+        "calibrated_gain": 1168,
+        "low_confidence": 197,
+        "accepted": 70
+      },
+      "ergs_no_uncertainty": {
+        "no_disagreement": 48013,
+        "calibrated_gain": 9588,
+        "legal_phase": 2067,
+        "low_confidence": 193,
+        "insufficient_green_evidence": 117,
+        "accepted": 91
+      },
+      "ergs_v3": {
+        "no_disagreement": 47995,
+        "model_uncertainty": 8447,
+        "legal_phase": 2086,
+        "calibrated_gain": 1168,
+        "low_confidence": 196,
+        "insufficient_green_evidence": 117,
+        "accepted": 70
+      },
+      "illm_style_review": {
+        "no_disagreement": 48415,
+        "accepted": 8692,
+        "legal_phase": 1976,
+        "closure_conflict": 428,
+        "emergency_priority_conflict": 283,
+        "low_confidence": 209,
+        "insufficient_green_evidence": 117
+      },
+      "llm_no_semantic": {
+        "no_disagreement": 53744,
+        "legal_phase": 5155,
+        "insufficient_green_evidence": 454,
+        "closure_conflict": 428,
+        "emergency_priority_conflict": 283,
+        "low_confidence": 55,
+        "downstream_spillback": 1
+      },
+      "ppo_event_rule": {
+        "accepted": 6708
+      }
+    },
+    "block_reasons_by_condition": {
+      "demand_shock": {
+        "no_disagreement": 98813,
+        "model_uncertainty": 17606,
+        "calibrated_gain": 8235,
+        "accepted": 5005,
+        "legal_phase": 1489,
+        "low_confidence": 35,
+        "downstream_spillback": 1
+      },
+      "emergency_vehicle": {
+        "no_disagreement": 26870,
+        "legal_phase": 2076,
+        "accepted": 658,
+        "emergency_priority_conflict": 566,
+        "model_uncertainty": 391,
+        "calibrated_gain": 134,
+        "low_confidence": 32
+      },
+      "lane_closure": {
+        "no_disagreement": 30292,
+        "accepted": 6269,
+        "legal_phase": 2213,
+        "model_uncertainty": 1016,
+        "closure_conflict": 856,
+        "calibrated_gain": 827,
+        "low_confidence": 22
+      },
+      "normal": {
+        "no_disagreement": 26065,
+        "legal_phase": 1235
+      },
+      "packet_loss": {
+        "no_disagreement": 88683,
+        "legal_phase": 8879,
+        "insufficient_green_evidence": 702,
+        "accepted": 76,
+        "low_confidence": 16
+      },
+      "sensor_delay_noise": {
+        "no_disagreement": 71539,
+        "model_uncertainty": 14751,
+        "calibrated_gain": 4990,
+        "accepted": 3836,
+        "legal_phase": 1690,
+        "low_confidence": 1137,
+        "insufficient_green_evidence": 337
+      }
+    }
+  },
+  "v4": {
+    "files": 72,
+    "authority_decisions": 81127,
+    "queried": 824,
+    "query_rate": 0.01015691446743994,
+    "accepted": 133,
+    "acceptance_rate_of_decisions": 0.0016394048837008641,
+    "acceptance_rate_of_queries": 0.16140776699029127,
+    "refusal_reasons": {
+      "not_queried": 80303,
+      "support_reject": 438,
+      "accepted": 133,
+      "guard_reject": 127,
+      "safety_reject": 66,
+      "risk_reject": 60
+    },
+    "gain_lcb_when_queried": {
+      "n": 824,
+      "mean": -26.74145352908214,
+      "median": -53.171465609893914,
+      "fraction_strictly_positive": 0.3725728155339806
+    },
+    "value_of_information": {
+      "n": 81127,
+      "mean": -18.245565946412242,
+      "median": -44.006122475699684,
+      "fraction_zero": 0.0
+    }
+  },
+  "v1": {
+    "files": 100,
+    "decision_records": 360000,
+    "by_method": {
+      "ergs": {
+        "decisions": 72000,
+        "triggered": 616,
+        "trigger_rate": 0.008555555555555556,
+        "proposed_different_from_incumbent": 40,
+        "accepted": 40,
+        "acceptance_rate": 0.0005555555555555556,
+        "authority_activity_ratio": 0.0005555555555555556,
+        "acceptance_rate_of_triggers": 0.06493506493506493
+      },
+      "guard": {
+        "decisions": 72000,
+        "triggered": 607,
+        "trigger_rate": 0.008430555555555556,
+        "proposed_different_from_incumbent": 123,
+        "accepted": 123,
+        "acceptance_rate": 0.0017083333333333334,
+        "authority_activity_ratio": 0.0017083333333333334,
+        "acceptance_rate_of_triggers": 0.2026359143327842
+      },
+      "hysteresis": {
+        "decisions": 72000,
+        "triggered": 590,
+        "trigger_rate": 0.008194444444444445,
+        "proposed_different_from_incumbent": 32,
+        "accepted": 32,
+        "acceptance_rate": 0.00044444444444444447,
+        "authority_activity_ratio": 0.00044444444444444447,
+        "acceptance_rate_of_triggers": 0.05423728813559322
+      },
+      "trigger": {
+        "decisions": 72000,
+        "triggered": 72000,
+        "trigger_rate": 1.0,
+        "proposed_different_from_incumbent": 3973,
+        "accepted": 3973,
+        "acceptance_rate": 0.05518055555555555,
+        "authority_activity_ratio": 0.05518055555555555,
+        "acceptance_rate_of_triggers": 0.05518055555555555
+      },
+      "ungated": {
+        "decisions": 72000,
+        "triggered": 72000,
+        "trigger_rate": 1.0,
+        "proposed_different_from_incumbent": 4704,
+        "accepted": 4704,
+        "acceptance_rate": 0.06533333333333333,
+        "authority_activity_ratio": 0.06533333333333333,
+        "acceptance_rate_of_triggers": 0.06533333333333333
+      }
+    },
+    "most_common_llm_rationales": {
+      "ergs": {
+        "green is not dominant, so no need to advance": 209,
+        "green is not dominant and downstream is blocked": 146,
+        "green is not dominant or downstream is not clear": 61,
+        "green is now RED, so we should advance to red approach.": 50,
+        "green is now RED, so we should advance through the legal transition to serve red approaches.": 42,
+        "green is not dominant and downstream is clear": 39,
+        "green is now RED and downstream is BLOCKED, so we should advance through the legal transition to serve red app": 27,
+        "green is now red, so we should advance to red": 14
+      },
+      "guard": {
+        "green is not dominant, so no need to advance": 223,
+        "green is not dominant and downstream is blocked": 143,
+        "green is not dominant or downstream is not clear": 58,
+        "green is now RED, so we should advance through the legal transition to serve red approaches.": 46,
+        "green is not dominant and downstream is clear": 37,
+        "green is now RED, so we should advance to red approach.": 35,
+        "green is now RED and downstream is BLOCKED, so we should advance through the legal transition to serve red app": 31,
+        "green is now red, so we should advance to red": 12
+      },
+      "hysteresis": {
+        "green is not dominant, so no need to advance": 230,
+        "green is not dominant and downstream is blocked": 148,
+        "green is not dominant or downstream is not clear": 63,
+        "green is now RED, so we should advance to red approach.": 39,
+        "green is not dominant and downstream is clear": 37,
+        "green is now RED and downstream is BLOCKED, so we should advance through the legal transition to serve red app": 26,
+        "green is now RED, so we should advance through the legal transition to serve red approaches.": 26,
+        "green is now red, so we should advance to red": 13
+      },
+      "trigger": {
+        "BALANCED, green_queue=0, red_queue=0": 55182,
+        "green is now red": 5392,
+        "green is not dominant, so no need to advance": 3414,
+        "green is not dominant or downstream is CLEAR": 1740,
+        "green is not dominant and downstream is blocked": 1664,
+        "green is now RED, so we should advance to red approach.": 1093,
+        "green is now RED, so we should advance through the legal transition to serve red approaches.": 724,
+        "green is not dominant and downstream is clear": 659
+      },
+      "ungated": {
+        "BALANCED, green_queue=0, red_queue=0": 55791,
+        "green is now red": 4498,
+        "green is not dominant, so no need to advance": 4002,
+        "green is not dominant and downstream is blocked": 1990,
+        "green is not dominant or downstream is CLEAR": 1570,
+        "green is not dominant and downstream is clear": 971,
+        "green is not dominant or downstream is not clear": 667,
+        "Dominant is BALANCED, downstream is CLEAR, green queue is 8, red queue is 8": 495
+      }
+    }
+  }
+}

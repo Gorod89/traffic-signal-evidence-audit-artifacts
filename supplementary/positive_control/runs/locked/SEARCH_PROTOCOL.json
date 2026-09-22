@@ -1,0 +1,287 @@
+{
+  "audit_policy": "evaluate the selected trial once after selection",
+  "claim_scope": "synthetic_scm_graph_inductive_bias_falsification_only",
+  "config": {
+    "batch_size": 16,
+    "corruption_modes": [
+      "mcar",
+      "burst",
+      "spatial",
+      "mnar"
+    ],
+    "depths": [
+      1,
+      2
+    ],
+    "dropout": 0.05,
+    "epochs": 12,
+    "generation_seed": 20260817,
+    "graph_seeds": [
+      1103,
+      1213,
+      1427,
+      1601,
+      1871,
+      2017,
+      2237,
+      2411,
+      2683
+    ],
+    "graph_sizes": [
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "heads": 4,
+    "latency_repetitions": 30,
+    "latency_warmups": 5,
+    "learning_rates": [
+      0.0003,
+      0.001
+    ],
+    "max_trials": 12,
+    "maximum_capacity_deviation": 0.08,
+    "mixed_precision": true,
+    "parameter_targets": [
+      60000,
+      100000
+    ],
+    "patience": 4,
+    "requested_device": "cuda",
+    "samples_per_graph": 8,
+    "search_seed": 19001,
+    "split_seed": 8807,
+    "temporal_depths": [
+      1
+    ],
+    "weight_decays": [
+      0.0,
+      0.0001
+    ]
+  },
+  "controls": [
+    "intact",
+    "adjacency_shuffle",
+    "no_edge",
+    "action_shuffle"
+  ],
+  "device_policy": "CUDA-only; no host fallback",
+  "schema_version": "v8-graph-search-protocol-1",
+  "selected_trials": [
+    {
+      "comparison_group": "cg-1fba2fd129",
+      "learning_rate": 0.0003,
+      "model": {
+        "depth": 2,
+        "dropout": 0.05,
+        "family": "directed_mpnn",
+        "heads": 4,
+        "temporal_depth": 1,
+        "width": 60
+      },
+      "parameter_target": 100000,
+      "trial_id": "gt-efb301c42a3a",
+      "weight_decay": 0.0
+    },
+    {
+      "comparison_group": "cg-1fba2fd129",
+      "learning_rate": 0.0003,
+      "model": {
+        "depth": 2,
+        "dropout": 0.05,
+        "family": "edge_attention",
+        "heads": 4,
+        "temporal_depth": 1,
+        "width": 60
+      },
+      "parameter_target": 100000,
+      "trial_id": "gt-629ebb0fe482",
+      "weight_decay": 0.0
+    },
+    {
+      "comparison_group": "cg-1fba2fd129",
+      "learning_rate": 0.0003,
+      "model": {
+        "depth": 2,
+        "dropout": 0.05,
+        "family": "edge_null",
+        "heads": 4,
+        "temporal_depth": 1,
+        "width": 64
+      },
+      "parameter_target": 100000,
+      "trial_id": "gt-72059c689178",
+      "weight_decay": 0.0
+    },
+    {
+      "comparison_group": "cg-5b8e1c2f9d",
+      "learning_rate": 0.001,
+      "model": {
+        "depth": 1,
+        "dropout": 0.05,
+        "family": "directed_mpnn",
+        "heads": 4,
+        "temporal_depth": 1,
+        "width": 56
+      },
+      "parameter_target": 60000,
+      "trial_id": "gt-331f2893a48d",
+      "weight_decay": 0.0
+    },
+    {
+      "comparison_group": "cg-5b8e1c2f9d",
+      "learning_rate": 0.001,
+      "model": {
+        "depth": 1,
+        "dropout": 0.05,
+        "family": "edge_attention",
+        "heads": 4,
+        "temporal_depth": 1,
+        "width": 56
+      },
+      "parameter_target": 60000,
+      "trial_id": "gt-15a9ad2d8473",
+      "weight_decay": 0.0
+    },
+    {
+      "comparison_group": "cg-5b8e1c2f9d",
+      "learning_rate": 0.001,
+      "model": {
+        "depth": 1,
+        "dropout": 0.05,
+        "family": "edge_null",
+        "heads": 4,
+        "temporal_depth": 1,
+        "width": 56
+      },
+      "parameter_target": 60000,
+      "trial_id": "gt-c222980fe8e3",
+      "weight_decay": 0.0
+    },
+    {
+      "comparison_group": "cg-6c10393731",
+      "learning_rate": 0.0003,
+      "model": {
+        "depth": 2,
+        "dropout": 0.05,
+        "family": "directed_mpnn",
+        "heads": 4,
+        "temporal_depth": 1,
+        "width": 48
+      },
+      "parameter_target": 60000,
+      "trial_id": "gt-f8981f06d597",
+      "weight_decay": 0.0001
+    },
+    {
+      "comparison_group": "cg-6c10393731",
+      "learning_rate": 0.0003,
+      "model": {
+        "depth": 2,
+        "dropout": 0.05,
+        "family": "edge_attention",
+        "heads": 4,
+        "temporal_depth": 1,
+        "width": 48
+      },
+      "parameter_target": 60000,
+      "trial_id": "gt-9a788a8fbc64",
+      "weight_decay": 0.0001
+    },
+    {
+      "comparison_group": "cg-6c10393731",
+      "learning_rate": 0.0003,
+      "model": {
+        "depth": 2,
+        "dropout": 0.05,
+        "family": "edge_null",
+        "heads": 4,
+        "temporal_depth": 1,
+        "width": 48
+      },
+      "parameter_target": 60000,
+      "trial_id": "gt-584dca47b2ff",
+      "weight_decay": 0.0001
+    },
+    {
+      "comparison_group": "cg-c75753e626",
+      "learning_rate": 0.0003,
+      "model": {
+        "depth": 2,
+        "dropout": 0.05,
+        "family": "directed_mpnn",
+        "heads": 4,
+        "temporal_depth": 1,
+        "width": 48
+      },
+      "parameter_target": 60000,
+      "trial_id": "gt-d84aa937a9b3",
+      "weight_decay": 0.0
+    },
+    {
+      "comparison_group": "cg-c75753e626",
+      "learning_rate": 0.0003,
+      "model": {
+        "depth": 2,
+        "dropout": 0.05,
+        "family": "edge_attention",
+        "heads": 4,
+        "temporal_depth": 1,
+        "width": 48
+      },
+      "parameter_target": 60000,
+      "trial_id": "gt-8b465f29a268",
+      "weight_decay": 0.0
+    },
+    {
+      "comparison_group": "cg-c75753e626",
+      "learning_rate": 0.0003,
+      "model": {
+        "depth": 2,
+        "dropout": 0.05,
+        "family": "edge_null",
+        "heads": 4,
+        "temporal_depth": 1,
+        "width": 48
+      },
+      "parameter_target": 60000,
+      "trial_id": "gt-68798895afa6",
+      "weight_decay": 0.0
+    }
+  ],
+  "selection_metric": "intact capacity_normalized_mse",
+  "selection_role": "development",
+  "split": {
+    "audit_graph_seeds": [
+      1103,
+      2411,
+      2683
+    ],
+    "cluster_disjoint": true,
+    "dependence_cluster": "graph_seed",
+    "development_graph_seeds": [
+      1427
+    ],
+    "sample_counts": {
+      "audit": 24,
+      "development": 8,
+      "train": 40
+    },
+    "train_graph_seeds": [
+      1213,
+      1601,
+      1871,
+      2017,
+      2237
+    ]
+  },
+  "synthetic_scm_only": true,
+  "target_definition": "candidate-minus-baseline movement queue delta at H1/H2/H4",
+  "traffic_or_sota_evidence": false
+}

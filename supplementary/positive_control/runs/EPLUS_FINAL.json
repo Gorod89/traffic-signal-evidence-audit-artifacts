@@ -1,0 +1,355 @@
+{
+  "question": "On data where graph causality is guaranteed, do graph architectures detect it?",
+  "audit_samples": 576,
+  "audit_graph_clusters": 24,
+  "trials": 36,
+  "capacity_matched_groups": 4,
+  "generator_graph_dependence": {
+    "adjacency_shuffle_target_shift": 0.8528425997150719,
+    "no_edge_target_shift": 0.6043822243972515,
+    "reading": "the label genuinely depends on topology; the positive control is real"
+  },
+  "graph_gain_vs_blind": [
+    {
+      "comparison_group": "cg-3ca83a03e6",
+      "family": "directed_mpnn",
+      "replicate": 0,
+      "graph_params": 97023,
+      "blind_params": 101955,
+      "graph_gain": 0.18351462042623937,
+      "ci95": [
+        0.15756836726193615,
+        0.2120481425001014
+      ]
+    },
+    {
+      "comparison_group": "cg-3ca83a03e6",
+      "family": "directed_mpnn",
+      "replicate": 1,
+      "graph_params": 97023,
+      "blind_params": 101955,
+      "graph_gain": 0.15612839883526922,
+      "ci95": [
+        0.12303660718461629,
+        0.19206868773481056
+      ]
+    },
+    {
+      "comparison_group": "cg-3ca83a03e6",
+      "family": "directed_mpnn",
+      "replicate": 2,
+      "graph_params": 97023,
+      "blind_params": 101955,
+      "graph_gain": 0.19123060862468233,
+      "ci95": [
+        0.15994666895365886,
+        0.22123792637579312
+      ]
+    },
+    {
+      "comparison_group": "cg-3ca83a03e6",
+      "family": "edge_attention",
+      "replicate": 0,
+      "graph_params": 96919,
+      "blind_params": 101955,
+      "graph_gain": 0.1999615215093368,
+      "ci95": [
+        0.17021500556834362,
+        0.23348434976489413
+      ]
+    },
+    {
+      "comparison_group": "cg-3ca83a03e6",
+      "family": "edge_attention",
+      "replicate": 1,
+      "graph_params": 96919,
+      "blind_params": 101955,
+      "graph_gain": 0.1750806203341486,
+      "ci95": [
+        0.14170970554526863,
+        0.21496474537162044
+      ]
+    },
+    {
+      "comparison_group": "cg-3ca83a03e6",
+      "family": "edge_attention",
+      "replicate": 2,
+      "graph_params": 96919,
+      "blind_params": 101955,
+      "graph_gain": 0.1827049667973548,
+      "ci95": [
+        0.1570841308067686,
+        0.21133840157595363
+      ]
+    },
+    {
+      "comparison_group": "cg-5b8e1c2f9d",
+      "family": "directed_mpnn",
+      "replicate": 0,
+      "graph_params": 59139,
+      "blind_params": 56003,
+      "graph_gain": 0.19845455684035582,
+      "ci95": [
+        0.1739588495822292,
+        0.22462829219768332
+      ]
+    },
+    {
+      "comparison_group": "cg-5b8e1c2f9d",
+      "family": "directed_mpnn",
+      "replicate": 1,
+      "graph_params": 59139,
+      "blind_params": 56003,
+      "graph_gain": 0.20471140054968825,
+      "ci95": [
+        0.17940993369885982,
+        0.22976906290793964
+      ]
+    },
+    {
+      "comparison_group": "cg-5b8e1c2f9d",
+      "family": "directed_mpnn",
+      "replicate": 2,
+      "graph_params": 59139,
+      "blind_params": 56003,
+      "graph_gain": 0.20398280172210556,
+      "ci95": [
+        0.17076595505508912,
+        0.23853892666634174
+      ]
+    },
+    {
+      "comparison_group": "cg-5b8e1c2f9d",
+      "family": "edge_attention",
+      "replicate": 0,
+      "graph_params": 59091,
+      "blind_params": 56003,
+      "graph_gain": 0.20810905707364924,
+      "ci95": [
+        0.18117987651076148,
+        0.23812249873269836
+      ]
+    },
+    {
+      "comparison_group": "cg-5b8e1c2f9d",
+      "family": "edge_attention",
+      "replicate": 1,
+      "graph_params": 59091,
+      "blind_params": 56003,
+      "graph_gain": 0.21889467669501664,
+      "ci95": [
+        0.18444279853850315,
+        0.2540071883730545
+      ]
+    },
+    {
+      "comparison_group": "cg-5b8e1c2f9d",
+      "family": "edge_attention",
+      "replicate": 2,
+      "graph_params": 59091,
+      "blind_params": 56003,
+      "graph_gain": 0.22231672948511402,
+      "ci95": [
+        0.19509618722504152,
+        0.25110931580411167
+      ]
+    },
+    {
+      "comparison_group": "cg-87e2c65299",
+      "family": "directed_mpnn",
+      "replicate": 0,
+      "graph_params": 96771,
+      "blind_params": 101843,
+      "graph_gain": 0.2093018584258918,
+      "ci95": [
+        0.1807528413737498,
+        0.23979224280867323
+      ]
+    },
+    {
+      "comparison_group": "cg-87e2c65299",
+      "family": "directed_mpnn",
+      "replicate": 1,
+      "graph_params": 96771,
+      "blind_params": 101843,
+      "graph_gain": 0.18547009131656375,
+      "ci95": [
+        0.16103116615940793,
+        0.21423397759679208
+      ]
+    },
+    {
+      "comparison_group": "cg-87e2c65299",
+      "family": "directed_mpnn",
+      "replicate": 2,
+      "graph_params": 96771,
+      "blind_params": 101843,
+      "graph_gain": 0.1956174783314991,
+      "ci95": [
+        0.16194971980422765,
+        0.2263221306362978
+      ]
+    },
+    {
+      "comparison_group": "cg-87e2c65299",
+      "family": "edge_attention",
+      "replicate": 0,
+      "graph_params": 96707,
+      "blind_params": 101843,
+      "graph_gain": 0.2092644922498656,
+      "ci95": [
+        0.1793922733357743,
+        0.2427542348309699
+      ]
+    },
+    {
+      "comparison_group": "cg-87e2c65299",
+      "family": "edge_attention",
+      "replicate": 1,
+      "graph_params": 96707,
+      "blind_params": 101843,
+      "graph_gain": 0.17113359669940367,
+      "ci95": [
+        0.13832935419746786,
+        0.20733183667285449
+      ]
+    },
+    {
+      "comparison_group": "cg-87e2c65299",
+      "family": "edge_attention",
+      "replicate": 2,
+      "graph_params": 96707,
+      "blind_params": 101843,
+      "graph_gain": 0.20211392956378146,
+      "ci95": [
+        0.15953313655230317,
+        0.2442669127412747
+      ]
+    },
+    {
+      "comparison_group": "cg-ad6ab1b659",
+      "family": "directed_mpnn",
+      "replicate": 0,
+      "graph_params": 62643,
+      "blind_params": 58035,
+      "graph_gain": 0.1750860744387555,
+      "ci95": [
+        0.14388977334029665,
+        0.20817596103438643
+      ]
+    },
+    {
+      "comparison_group": "cg-ad6ab1b659",
+      "family": "directed_mpnn",
+      "replicate": 1,
+      "graph_params": 62643,
+      "blind_params": 58035,
+      "graph_gain": 0.185772617612874,
+      "ci95": [
+        0.15883195949523382,
+        0.2165820484091589
+      ]
+    },
+    {
+      "comparison_group": "cg-ad6ab1b659",
+      "family": "directed_mpnn",
+      "replicate": 2,
+      "graph_params": 62643,
+      "blind_params": 58035,
+      "graph_gain": 0.1631961850071436,
+      "ci95": [
+        0.13024639735956428,
+        0.19826634165285964
+      ]
+    },
+    {
+      "comparison_group": "cg-ad6ab1b659",
+      "family": "edge_attention",
+      "replicate": 0,
+      "graph_params": 62563,
+      "blind_params": 58035,
+      "graph_gain": 0.17356876109192498,
+      "ci95": [
+        0.14235041445302493,
+        0.20690888609940403
+      ]
+    },
+    {
+      "comparison_group": "cg-ad6ab1b659",
+      "family": "edge_attention",
+      "replicate": 1,
+      "graph_params": 62563,
+      "blind_params": 58035,
+      "graph_gain": 0.191046955587366,
+      "ci95": [
+        0.15606521996645664,
+        0.22711861324268992
+      ]
+    },
+    {
+      "comparison_group": "cg-ad6ab1b659",
+      "family": "edge_attention",
+      "replicate": 2,
+      "graph_params": 62563,
+      "blind_params": 58035,
+      "graph_gain": 0.18377121890296688,
+      "ci95": [
+        0.15228284796592895,
+        0.21593593026955907
+      ]
+    }
+  ],
+  "control_response": [
+    {
+      "family": "edge_null",
+      "n_trials": 12,
+      "adjacency_shuffle": {
+        "mean": 0.0,
+        "max": 0.0
+      },
+      "no_edge": {
+        "mean": 0.0,
+        "max": 0.0
+      },
+      "action_shuffle": {
+        "mean": 4.174287525296392,
+        "max": 4.712050235307204
+      }
+    },
+    {
+      "family": "directed_mpnn",
+      "n_trials": 12,
+      "adjacency_shuffle": {
+        "mean": 0.7179523205992825,
+        "max": 0.790584821106791
+      },
+      "no_edge": {
+        "mean": 0.40521649536190624,
+        "max": 0.48016093764734663
+      },
+      "action_shuffle": {
+        "mean": 5.78194493585195,
+        "max": 6.1372882365385175
+      }
+    },
+    {
+      "family": "edge_attention",
+      "n_trials": 12,
+      "adjacency_shuffle": {
+        "mean": 0.6216930584031687,
+        "max": 0.7157492908060947
+      },
+      "no_edge": {
+        "mean": 0.5909206945952425,
+        "max": 0.6984209259905747
+      },
+      "action_shuffle": {
+        "mean": 5.871819192958991,
+        "max": 6.178861421591424
+      }
+    }
+  ],
+  "cluster_unit": "graph_seed",
+  "bootstrap_replicates": 2000,
+  "evidence_class": "synthetic_positive_control_only; not traffic evidence"
+}

@@ -1,0 +1,121 @@
+{
+  "input": "artifacts/derived/v6/paired_branches.csv",
+  "input_sha256": "24231bba4eadff8051da0af7705ff429d86c93ec10c554ede9247836aea55d8e",
+  "target": "gain_h4",
+  "reference_predictor": "training mean, as defined by the V4/V5 Stage-B gate",
+  "train_rows": 960,
+  "train_clusters": 160,
+  "eval_rows": 1800,
+  "eval_clusters": 300,
+  "mean_predictor_rmse": 220.67782656235477,
+  "ladder": [
+    {
+      "rung": "0. zero effect",
+      "n_features": null,
+      "rmse": 225.20785399270602,
+      "rmse_gain": -0.020527787050101498,
+      "rmse_gain_ci95": [
+        -0.025573337542084768,
+        -0.01541022284975394
+      ],
+      "auroc": 0.5,
+      "auroc_ci95": [
+        0.5,
+        0.5
+      ]
+    },
+    {
+      "rung": "1. training mean (Stage-B reference)",
+      "n_features": null,
+      "rmse": 220.67782656235477,
+      "rmse_gain": 0.0,
+      "rmse_gain_ci95": [
+        0.0,
+        0.0
+      ],
+      "auroc": 0.5,
+      "auroc_ci95": [
+        0.5,
+        0.5
+      ]
+    },
+    {
+      "rung": "2. ridge, current observation",
+      "n_features": 10,
+      "rmse": 196.61422509237053,
+      "rmse_gain": 0.1090440387457089,
+      "rmse_gain_ci95": [
+        0.082613599106656,
+        0.13649720409808352
+      ],
+      "auroc": 0.7090771511726621,
+      "auroc_ci95": [
+        0.6864371770054124,
+        0.732203845438546
+      ]
+    },
+    {
+      "rung": "3. ridge, action contrast",
+      "n_features": 81,
+      "rmse": 202.1061723529792,
+      "rmse_gain": 0.08415731883297284,
+      "rmse_gain_ci95": [
+        0.06289993876176872,
+        0.1059809296779003
+      ],
+      "auroc": 0.7434849511830898,
+      "auroc_ci95": [
+        0.7187317838776561,
+        0.7670567977586614
+      ]
+    },
+    {
+      "rung": "4. trees, current observation",
+      "n_features": 10,
+      "rmse": 207.75776890914813,
+      "rmse_gain": 0.058547149273993515,
+      "rmse_gain_ci95": [
+        0.03944738396382563,
+        0.07965713696559402
+      ],
+      "auroc": 0.7185377253178147,
+      "auroc_ci95": [
+        0.6962134911706102,
+        0.7420211939242916
+      ]
+    },
+    {
+      "rung": "5. trees, action contrast",
+      "n_features": 81,
+      "rmse": 189.06843879498217,
+      "rmse_gain": 0.14323771563175625,
+      "rmse_gain_ci95": [
+        0.11456377277530433,
+        0.17193862327736767
+      ],
+      "auroc": 0.7707082496099593,
+      "auroc_ci95": [
+        0.7480992667649623,
+        0.7933398828107188
+      ]
+    },
+    {
+      "rung": "6. trees, contrast + 8-step history",
+      "n_features": 169,
+      "rmse": 187.24925523802344,
+      "rmse_gain": 0.15148133296883703,
+      "rmse_gain_ci95": [
+        0.1249476161971328,
+        0.17805286472744902
+      ],
+      "auroc": 0.7738860613450018,
+      "auroc_ci95": [
+        0.7508119646176784,
+        0.7977351600267919
+      ]
+    }
+  ],
+  "history_increment_pp": 0.8243617337080789,
+  "zero_reference_increment_pp": 16.376550268185774,
+  "evidence_class": "retrospective_diagnostic_not_confirmatory"
+}

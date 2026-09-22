@@ -1,0 +1,268 @@
+{
+  "conformal_audit": {
+    "audit_finding": "The published q is exactly reproduced, but pooled sealed simultaneous cluster coverage is below 90%, with the largest failure on the network absent from calibration. Model selection also used the same calibration labels later reused for conformal scores. The descriptive selection and harm counts remain reproducible; the nominal conformal guarantee does not.",
+    "calibration": {
+      "alpha": 0.1,
+      "clusters": 120,
+      "coverage_on_same_calibration_clusters": {
+        "clusters": 120,
+        "covered_clusters": 109,
+        "finite_sample_order_statistic_k": 109,
+        "finite_sample_q_at_nominal_level": 321.7316666666667,
+        "nominal_coverage": 0.9,
+        "published_q_shortfall": 0.0,
+        "simultaneous_cluster_coverage": 0.9083333333333333
+      },
+      "network_rows": {
+        "cologne8": 360,
+        "moscow": 360
+      },
+      "order_statistic_k": 109,
+      "q_difference": 0.0,
+      "recomputed_q": 321.7316666666667,
+      "rows": 720,
+      "stored_q": 321.7316666666667
+    },
+    "model_selection_recorded_in_artifact": "calibration-split RMSE and AUROC; sealed block not consulted",
+    "published_model": "ExtraTreesRegressor(n_estimators=300, random_state=20260811)",
+    "sealed": {
+      "clusters": 300,
+      "coverage_by_network": {
+        "cologne8": {
+          "clusters": 100,
+          "covered_clusters": 84,
+          "finite_sample_order_statistic_k": 91,
+          "finite_sample_q_at_nominal_level": 359.23833333333334,
+          "nominal_coverage": 0.9,
+          "published_q_shortfall": 37.50666666666666,
+          "simultaneous_cluster_coverage": 0.84
+        },
+        "ingolstadt21": {
+          "clusters": 100,
+          "covered_clusters": 45,
+          "finite_sample_order_statistic_k": 91,
+          "finite_sample_q_at_nominal_level": 753.4449999999999,
+          "nominal_coverage": 0.9,
+          "published_q_shortfall": 431.71333333333325,
+          "simultaneous_cluster_coverage": 0.45
+        },
+        "moscow": {
+          "clusters": 100,
+          "covered_clusters": 94,
+          "finite_sample_order_statistic_k": 91,
+          "finite_sample_q_at_nominal_level": 272.28833333333336,
+          "nominal_coverage": 0.9,
+          "published_q_shortfall": -49.44333333333333,
+          "simultaneous_cluster_coverage": 0.94
+        }
+      },
+      "coverage_pooled": {
+        "clusters": 300,
+        "covered_clusters": 223,
+        "finite_sample_order_statistic_k": 271,
+        "finite_sample_q_at_nominal_level": 519.5716666666667,
+        "nominal_coverage": 0.9,
+        "published_q_shortfall": 197.84000000000003,
+        "simultaneous_cluster_coverage": 0.7433333333333333
+      },
+      "default_rule_selection": {
+        "active_clusters": 13,
+        "by_network": {
+          "cologne8": {
+            "active_clusters": 3,
+            "harmful_rows": 1,
+            "mean_realised_gain": 92.83333333333326,
+            "selected_rows": 3
+          },
+          "ingolstadt21": {
+            "active_clusters": 6,
+            "harmful_rows": 1,
+            "mean_realised_gain": 518.9285714285714,
+            "selected_rows": 7
+          },
+          "moscow": {
+            "active_clusters": 4,
+            "harmful_rows": 1,
+            "mean_realised_gain": 204.625,
+            "selected_rows": 4
+          }
+        },
+        "harmful_rows": 3,
+        "selected_rows": 14
+      },
+      "network_rows": {
+        "cologne8": 600,
+        "ingolstadt21": 600,
+        "moscow": 600
+      },
+      "rows": 1800
+    },
+    "validity_checks": {
+      "calibration_network_set": [
+        "cologne8",
+        "moscow"
+      ],
+      "model_selected_using_same_calibration_labels_used_for_conformal_scores": true,
+      "sealed_contains_network_absent_from_calibration": [
+        "ingolstadt21"
+      ],
+      "sealed_network_set": [
+        "cologne8",
+        "ingolstadt21",
+        "moscow"
+      ],
+      "sealed_pooled_coverage_meets_nominal": false
+    }
+  },
+  "environment": {
+    "numpy": "2.3.5",
+    "pandas": "3.0.1",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "scikit_learn": "1.9.0"
+  },
+  "input_sha256": {
+    "evaluate_sealed_py": "81ba1f12771c273e3578860a939bb4bdf616a147b0b70da64ee991f6ae56b333",
+    "frozen_estimator": "e4f2dea4100555241d0c17e8564e4c78189dd05eb8fd0ad356ccad6aa64302dc",
+    "phase2_common_py": "dc60b9a3be9af9dfb31e0facfa74ca4a8b79cb21c4f4189d5a233190be9426fa",
+    "prediction_lock": "fd328c7a32057134fdb3c42e75a908de6d7b1b81796b8958fcd841dc9b9633cf",
+    "sealed_raw_manifest_name_and_content_sha256": "5dfa6b8ef1caafeb7326ac1346f9bb69552c1cedc262a4d6a9e2bcea312e2b9a",
+    "selective_policy_py": "cda6ba8181f3652b7249aa8a38eecf639639880863f4222be26cabe37968449f",
+    "selective_policy_result": "3a4bbc641381c9d091ce7c6f7d664ea8f6111a30121d39ee00f77d5180d894a8",
+    "stored_sealed_confirmation": "f8bd8bc61e0a42727f2e39dd8996478dcd128de5cf231cf029ae6ae7c543c43c",
+    "training_source": "24231bba4eadff8051da0af7705ff429d86c93ec10c554ede9247836aea55d8e"
+  },
+  "schema_version": "audit-sealed-interim-and-conformal-v1",
+  "script": {
+    "path": "audit_sealed_interim_and_conformal.py",
+    "sha256": "f8c5b6141d79c136d9234e95ba28145bcca4f409ea094266aa87f3e5b54cbde2"
+  },
+  "sealed_interim_audit": {
+    "audit_finding": "The first score file was created before three expected records existed. The reconstructed interim and final analyses both meet the locked rule, but the outcome was exposed before the fixed 1,800-cell population completed.",
+    "evaluator_static_checks": {
+      "checks_duplicate_population_keys": false,
+      "checks_expected_cartesian_population": false,
+      "checks_six_rows_per_cluster": false,
+      "mentions_locked_training_source_sha": false,
+      "verifies_frozen_model_sha": true
+    },
+    "filesystem": {
+      "ctime_interpretation": "creation time on Windows; the interim JSON was overwritten and is not recovered",
+      "final_score_file_mtime_local": "2026-08-11T15:28:32.817211+03:00",
+      "first_score_file_creation_local": "2026-08-11T15:19:04.747820+03:00",
+      "os_name": "nt",
+      "platform": "Windows-10-10.0.19045-SP0"
+    },
+    "final_reconstruction": {
+      "analysable_rows": 1800,
+      "analysis_clusters": 300,
+      "ci95": [
+        0.10870764488427018,
+        0.17073282757063235
+      ],
+      "decision_rule": {
+        "confirmed": true,
+        "lower_bound_above_zero": true,
+        "point_at_least_threshold": true,
+        "threshold": 0.1
+      },
+      "incomplete_cluster_keys": [],
+      "rmse_gain": 0.13992387139559503,
+      "rows_per_cluster_max": 6,
+      "rows_per_cluster_min": 6
+    },
+    "final_reconstruction_minus_stored": {
+      "ci95_lower": 0.0,
+      "ci95_upper": 0.0,
+      "rmse_gain": 0.0
+    },
+    "interim_reconstruction": {
+      "analysable_rows": 1797,
+      "analysis_clusters": 300,
+      "ci95": [
+        0.10898377875003643,
+        0.1713843989610433
+      ],
+      "decision_rule": {
+        "confirmed": true,
+        "lower_bound_above_zero": true,
+        "point_at_least_threshold": true,
+        "threshold": 0.1
+      },
+      "incomplete_cluster_keys": [
+        "ingolstadt21|9900"
+      ],
+      "rmse_gain": 0.1404507485698574,
+      "rows_per_cluster_max": 6,
+      "rows_per_cluster_min": 3
+    },
+    "late_record_count": 3,
+    "late_records_after_first_score_creation": [
+      {
+        "condition": "demand_shock",
+        "creation_time_local": "2026-08-11T15:20:41.315171+03:00",
+        "file": "ingolstadt21_demand_shock_9900.json",
+        "mtime_local": "2026-08-11T15:20:41.315171+03:00",
+        "network": "ingolstadt21",
+        "seed": 9900,
+        "sha256": "547622ad1c2583bec05e105b23a115863e051b41581a59d3404c9a20537aa0b8"
+      },
+      {
+        "condition": "emergency_vehicle",
+        "creation_time_local": "2026-08-11T15:28:08.705780+03:00",
+        "file": "ingolstadt21_emergency_vehicle_9900.json",
+        "mtime_local": "2026-08-11T15:28:08.705780+03:00",
+        "network": "ingolstadt21",
+        "seed": 9900,
+        "sha256": "4171c2941b46601e0a919e2a5b448d6aa67cb6ec47e2b38e2df338d89426c93d"
+      },
+      {
+        "condition": "normal",
+        "creation_time_local": "2026-08-11T15:21:42.821468+03:00",
+        "file": "ingolstadt21_normal_9900.json",
+        "mtime_local": "2026-08-11T15:21:42.821468+03:00",
+        "network": "ingolstadt21",
+        "seed": 9900,
+        "sha256": "c00588e53b2ce3029a439169780975be8a5496f04594f40d1195b060845989fb"
+      }
+    ],
+    "locked_training_source": {
+      "actual_sha256": "24231bba4eadff8051da0af7705ff429d86c93ec10c554ede9247836aea55d8e",
+      "locked_sha256": "24231bba4eadff8051da0af7705ff429d86c93ec10c554ede9247836aea55d8e",
+      "matches_lock": true,
+      "path": "v6/results/cfra/paired_branches.csv",
+      "reference_mean": -22.935416666666665
+    },
+    "population_integrity_at_first_score_creation": {
+      "actual_unique_key_count": 1797,
+      "duplicate_keys": [],
+      "missing_keys": [
+        "ingolstadt21|9900|demand_shock",
+        "ingolstadt21|9900|emergency_vehicle",
+        "ingolstadt21|9900|normal"
+      ],
+      "unexpected_keys": []
+    },
+    "population_integrity_current_final": {
+      "actual_unique_key_count": 1800,
+      "duplicate_keys": [],
+      "expected_key_count": 1800,
+      "missing_keys": [],
+      "unexpected_keys": []
+    },
+    "records_in_final_directory": 1800,
+    "records_present_by_first_score_creation": 1797,
+    "scope": "read-only reconstruction from current frozen estimator, current raw records, the prediction lock, and Windows file-system times",
+    "stored_final_result": {
+      "analysable_rows": 1800,
+      "analysis_clusters": 300,
+      "ci95": [
+        0.10870764488427018,
+        0.17073282757063235
+      ],
+      "met": true,
+      "rmse_gain": 0.13992387139559503
+    }
+  },
+  "source_root": "<external-artifact-root>"
+}

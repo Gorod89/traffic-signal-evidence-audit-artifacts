@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "complete": true,
+  "checks": {
+    "required_artifacts": {
+      "pass": true,
+      "missing": []
+    },
+    "fail_closed": {
+      "pass": true,
+      "stopped": true,
+      "freeze_exists": false,
+      "untouched_test_files": []
+    },
+    "v1_v4_immutable": {
+      "pass": true,
+      "changed_paths": []
+    },
+    "authorship_marker_scan": {
+      "pass": true,
+      "hits": []
+    },
+    "multi_llm": {
+      "pass": true,
+      "families": [
+        "Qwen",
+        "SmolLM"
+      ],
+      "authority": "proposal_only"
+    },
+    "paper_macros": {
+      "pass": true,
+      "undefined": [],
+      "defined": 66,
+      "used": 66
+    },
+    "artifact_hashes": {
+      "configs/preregistered_protocol.yaml": "c8cecfaa2a8dcb229791a1a9e214595aa17b90934a03f580684a92eadb7d01a4",
+      "configs/PROTOCOL_AMENDMENT_1.md": "0181b9c82471b8ae4e4785fcbdaffc4c906e3fd3c0ff5fe7957d9e019e9460ba",
+      "results/protocol/stage_a_representation.json": "50efe1412a2f0299f7e7875c2db0a1d4a95a58cff0c482c326defb8728ecfdba",
+      "results/protocol/stage_b_verifier.json": "d44ed4a2a5cf894609335afcddccd0ffe294b451fc35bd0f37820898043bbb80",
+      "results/protocol/jepa_ablations.json": "c61bcdfe9afd5f8ffde035b73599dbc983af9e10264c83d9caea66e5547d2423",
+      "results/protocol/legacy_jepa_comparison.json": "578952cfbfd7bc40ef375465d4445885d5d993814ad847a445b1f5c536fefb0f",
+      "results/protocol/multi_llm_comparison.json": "b0f58cc540340463c89b015696ac79b8d123da976a923429ee7cfd367ee04b2c",
+      "results/protocol/paired_branch_manifest.json": "0a3655c24298519326d2b114e46b0a079511d9519f8894e0865ae051b21569e3",
+      "results/protocol/training_manifest.json": "6eb8baec261f743c0c4ef334de369defc3452733e32f299a0de876a07a626965",
+      "results/V5_ANALYSIS.md": "1f68d80ad22ed60370af9059a050c21b3d000e6947771c00d91b27c092032a49",
+      "paper/manuscript.tex": "df2d17ba8ed1df53d3dfabeb2063e22abb73ec91a9437e7e8877318a1bf3acde",
+      "paper/results_macros.tex": "367b9694909c423ff0d3352a9034d57cf5a8e04810dea70153ab6ca5b97a1547",
+      "models/qwen_v5_policy_table.json": "218f95d908e5d489a56a7becdd46cc2e3d0b341a5322daab653aca2ac7503728",
+      "models/smollm2_policy_table.json": "966ba5d771eabbf76db86f46d0533a71482ffd72df189662e1b25d4c4378f974",
+      "models/multi_llm_policy_panel.json": "8bc232727615667fff0f4c7ecfa8c8e07b55c8ebb6c05aea7958145c7a7f7941"
+    }
+  }
+}

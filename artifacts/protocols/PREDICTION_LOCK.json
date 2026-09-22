@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "written_utc": "2026-08-05T10:46:14.196609+00:00",
+  "purpose": "Out-of-sample confirmation of the sample-size account of the V4/V5 Stage-B failures. Registered before the sealed data were generated.",
+  "training": {
+    "source": "v6/results/cfra/paired_branches.csv",
+    "source_sha256": "24231bba4eadff8051da0af7705ff429d86c93ec10c554ede9247836aea55d8e",
+    "splits": [
+      "representation_train",
+      "development"
+    ],
+    "rows": 960,
+    "clusters": 160,
+    "target": "gain_h4"
+  },
+  "frozen_estimator": {
+    "path": "sealed/frozen_estimator.pkl",
+    "sha256": "e4f2dea4100555241d0c17e8564e4c78189dd05eb8fd0ad356ccad6aa64302dc",
+    "spec": "ExtraTreesRegressor(n_estimators=300, random_state=20260805)",
+    "features": "feature_vector only; no history, no graph, no JEPA",
+    "note": "This exact object will be applied to the sealed data. It is not refitted."
+  },
+  "evaluation_population": {
+    "seed_block": "untouched_test, seeds 9801-9900",
+    "networks": [
+      "moscow",
+      "cologne8",
+      "ingolstadt21"
+    ],
+    "conditions": [
+      "normal",
+      "packet_loss",
+      "sensor_delay_noise",
+      "lane_closure",
+      "emergency_vehicle",
+      "demand_shock"
+    ],
+    "status_when_locked": "not generated; no paired branch exists for these seeds",
+    "protocol_note": "V6 reserved this block for a confirmatory traffic grid that was never opened and defined no paired-branch configuration for it. This is a new operation for a new question, mirroring the validation split's configuration."
+  },
+  "predictions": {
+    "primary": {
+      "statement": "RMSE gain of the frozen estimator over the training-set mean, on the sealed block, is at least 10%.",
+      "threshold": 0.1,
+      "rationale": "10% is the Stage-B gate that terminated V4 (observed 5.34%) and V5 (observed 8.99%).",
+      "decision_rule": "confirmed if the point estimate >= 0.10 AND the 95% cluster-bootstrap lower bound > 0"
+    },
+    "secondary_interval": {
+      "statement": "The point estimate falls inside the validation-split 95% interval.",
+      "interval": [
+        0.1146,
+        0.1719
+      ],
+      "source": "verify_fact2.py on the consumed validation split"
+    },
+    "falsification": "A point estimate below 10% on the sealed block would show that the validation-split result did not generalise, and would weaken the claim that V4 and V5 failed for sample-size reasons rather than model-class reasons. It would not be reinterpreted post hoc."
+  },
+  "fixed_analysis": {
+    "reference_predictor": "mean of the training target, as in the V4/V5 Stage-B gate",
+    "statistic": "1 - RMSE_model / RMSE_mean",
+    "cluster_unit": "(network, seed)",
+    "bootstrap_replicates": 2000,
+    "bootstrap_seed": 20260805,
+    "confidence_level": 0.95,
+    "secondary_endpoints": [
+      "benefit AUROC",
+      "per-network breakdown"
+    ],
+    "no_other_model_will_be_fitted": true
+  },
+  "attrition_policy": "Failed or incomplete branch pairs are reported as attrition and are not silently dropped. If more than 10% of scheduled pairs fail, the result is reported as inconclusive."
+}

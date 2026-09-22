@@ -1,0 +1,1087 @@
+{
+  "analysis": "PACE Phase 1 -- measurement core (hypotheses P1, P2)",
+  "generated_by": "<SOURCE_ROOT>\\v10_proposal\\phase1\\estimate_pace_ate.py",
+  "inputs": {
+    "directory": "<SOURCE_ROOT>\\v10_proposal\\phase0\\sealed\\raw",
+    "file_count": 1800,
+    "manifest_sha256": "ab90647388b95aa703968bfed20bc9380f2293575b0a1d028b6e73eb89a02e89",
+    "first_file": "cologne8_demand_shock_9801.json",
+    "last_file": "moscow_sensor_delay_noise_9900.json"
+  },
+  "provenance": {
+    "scheduled": 1800,
+    "analysable": 1800,
+    "status_counts": {
+      "complete": 1800
+    },
+    "attrition": 0.0
+  },
+  "estimand": {
+    "definition": "Mean effect, in window cost units, of applying the complement of the PPO incumbent action at one intersection for one decision interval, relative to the PPO incumbent action, over the population of states probed by the collection pipeline. Positive = the deviation is better.",
+    "not": "This is NOT the mean effect over all decisions the controller makes, and NOT the effect of a deployed policy.",
+    "identification": "Exact paired counterfactual: both branches fork from one snapshot and one PRNG state with byte-identical prefixes, so both potential outcomes are observed for every unit. No unconfoundedness assumption is used.",
+    "sampling_uncertainty": "Only over which (network, seed) clusters were drawn.",
+    "cost_weights": {
+      "stopped_vehicle_seconds": 1.0,
+      "terminal_queue": 2.0,
+      "hard_braking": 0.5,
+      "teleports": 30.0
+    },
+    "horizons": "h1/h2/h4 are nested cumulative windows of 1, 2 and 4 decision intervals."
+  },
+  "probe_population": {
+    "decision_step": "deterministic_target_step(): SHA-256 of network|condition|seed|snapshot_index reduced modulo the admissible span [24, n_decisions - horizon]. A fixed pseudorandom draw, independent of the episode state -- as-if uniform over decision steps.",
+    "intersection": "argmax over legally contrastable intersections of total_queue * (0.25 + imbalance), with a hash tie-break (cfra_branching.py ranked[snapshot_index % len(ranked)], snapshot_index == 0 throughout). NOT randomised: the single most pressured intersection is probed every time. The probe population is congestion biased.",
+    "branch_orientation": "NOT randomised. Baseline is always the PPO ensemble action; candidate is always its complement. This is why no sign-flip test is reported.",
+    "eligibility": "Both HOLD and ADVANCE legal at the probed intersection, and the applied actions of the two branches genuinely differ (distinct_applied_action).",
+    "consequence_for_generalisation": "Identified for probed states. Extrapolation to all controller decisions is not licensed: uncongested intersections are never probed, and the PACE design of 01_METHOD_PACE.md section 5 (probe at the decision boundary, uniformly over eligible intersections) is a different, not-yet-collected population."
+  },
+  "inference": {
+    "cluster_unit": "(network, seed)",
+    "n_clusters": 300,
+    "rows_per_cluster": 6,
+    "collapse": "rows averaged within cluster before any aggregation",
+    "interval_method": "percentile cluster bootstrap, clusters resampled with replacement",
+    "replicates": 20000,
+    "bootstrap_seed": 20260811,
+    "p_value_method": "two-sided centered studentized cluster bootstrap (+1 corrected)",
+    "sign_flip_permutation_test": {
+      "run": false,
+      "reason": "Branch orientation was not prospectively randomised -- the baseline label is always the PPO action -- so the two labels are not sign-exchangeable and the sign-flip null is not the null of interest. v9/src/v9evidence/statistics.py::cluster_permutation_test raises on exactly this condition."
+    },
+    "row_level_intervals": "not reported; rows within a cluster share a route file"
+  },
+  "ate_by_horizon": {
+    "h1": {
+      "estimate": -22.94722222222222,
+      "ci95": [
+        -26.291951388888886,
+        -19.705270833333337
+      ],
+      "bootstrap_se": 1.6736774372528949,
+      "cluster_sd": 28.951696109305907,
+      "n_clusters": 300,
+      "excludes_zero": true,
+      "studentized_test": {
+        "p_value": 4.999750012499375e-05,
+        "t_statistic": -13.728299244163127,
+        "n_clusters": 300,
+        "replicates_valid": 20000,
+        "mode": "two_sided_centered_studentized_cluster_bootstrap_plus_one",
+        "branch_orientation_randomized": false
+      },
+      "row_level_mean": -22.947222222222223,
+      "row_level_sd": 57.06652343346459,
+      "cluster_mean_median": -17.833333333333332,
+      "sensitivity_network_stratified_ci95": [
+        -25.190305555555558,
+        -20.699993055555556
+      ]
+    },
+    "h2": {
+      "estimate": -55.87527777777779,
+      "ci95": [
+        -63.53650694444445,
+        -48.52025694444445
+      ],
+      "bootstrap_se": 3.788531833805593,
+      "cluster_sd": 65.05341454295946,
+      "n_clusters": 300,
+      "excludes_zero": true,
+      "studentized_test": {
+        "p_value": 4.999750012499375e-05,
+        "t_statistic": -14.876824018856896,
+        "n_clusters": 300,
+        "replicates_valid": 20000,
+        "mode": "two_sided_centered_studentized_cluster_bootstrap_plus_one",
+        "branch_orientation_randomized": false
+      },
+      "row_level_mean": -55.875277777777775,
+      "row_level_sd": 131.26010429855504,
+      "cluster_mean_median": -45.75,
+      "sensitivity_network_stratified_ci95": [
+        -61.242243055555555,
+        -50.499368055555564
+      ]
+    },
+    "h4": {
+      "estimate": -57.73,
+      "ci95": [
+        -68.53000694444445,
+        -47.07254166666669
+      ],
+      "bootstrap_se": 5.478240370893371,
+      "cluster_sd": 94.57844143837788,
+      "n_clusters": 300,
+      "excludes_zero": true,
+      "studentized_test": {
+        "p_value": 4.999750012499375e-05,
+        "t_statistic": -10.57231347865889,
+        "n_clusters": 300,
+        "replicates_valid": 20000,
+        "mode": "two_sided_centered_studentized_cluster_bootstrap_plus_one",
+        "branch_orientation_randomized": false
+      },
+      "row_level_mean": -57.73,
+      "row_level_sd": 221.18437169309084,
+      "cluster_mean_median": -38.541666666666664,
+      "sensitivity_network_stratified_ci95": [
+        -66.91840277777779,
+        -48.4369375
+      ]
+    }
+  },
+  "sensitivity_route_seed_clusters": {
+    "rationale": "v9/src/v9evidence/statistics.py declares the numeric route seed, not the compound network|seed key, the only admissible independent unit. Reported so the headline does not depend on the looser choice.",
+    "n_clusters": 100,
+    "by_horizon": {
+      "h1": {
+        "estimate": -22.947222222222223,
+        "ci95": [
+          -25.211979166666666,
+          -20.719708333333333
+        ],
+        "bootstrap_se": 1.1415796970108836,
+        "cluster_sd": 11.432451724170518,
+        "n_clusters": 100,
+        "excludes_zero": true,
+        "studentized_test": {
+          "p_value": 4.999750012499375e-05,
+          "t_statistic": -20.072004479762768,
+          "n_clusters": 100,
+          "replicates_valid": 20000,
+          "mode": "two_sided_centered_studentized_cluster_bootstrap_plus_one",
+          "branch_orientation_randomized": false
+        }
+      },
+      "h2": {
+        "estimate": -55.87527777777777,
+        "ci95": [
+          -60.66563194444445,
+          -50.92764583333335
+        ],
+        "bootstrap_se": 2.484685627616159,
+        "cluster_sd": 24.92986092401759,
+        "n_clusters": 100,
+        "excludes_zero": true,
+        "studentized_test": {
+          "p_value": 4.999750012499375e-05,
+          "t_statistic": -22.41299217355327,
+          "n_clusters": 100,
+          "replicates_valid": 20000,
+          "mode": "two_sided_centered_studentized_cluster_bootstrap_plus_one",
+          "branch_orientation_randomized": false
+        }
+      },
+      "h4": {
+        "estimate": -57.72999999999999,
+        "ci95": [
+          -66.81630555555554,
+          -48.570347222222246
+        ],
+        "bootstrap_se": 4.641298704987421,
+        "cluster_sd": 46.7491343306848,
+        "n_clusters": 100,
+        "excludes_zero": true,
+        "studentized_test": {
+          "p_value": 4.999750012499375e-05,
+          "t_statistic": -12.348891765918255,
+          "n_clusters": 100,
+          "replicates_valid": 20000,
+          "mode": "two_sided_centered_studentized_cluster_bootstrap_plus_one",
+          "branch_orientation_randomized": false
+        }
+      }
+    }
+  },
+  "conditional_effects": {
+    "by_condition": {
+      "normal": {
+        "estimate": -63.19833333333333,
+        "ci95": [
+          -82.08683333333333,
+          -44.78987500000001
+        ],
+        "bootstrap_se": 9.554150286829769,
+        "cluster_sd": 165.66126184519632,
+        "n_clusters": 300,
+        "excludes_zero": true,
+        "studentized_test": {
+          "p_value": 4.999750012499375e-05,
+          "t_statistic": -6.607623476229195,
+          "n_clusters": 300,
+          "replicates_valid": 20000,
+          "mode": "two_sided_centered_studentized_cluster_bootstrap_plus_one",
+          "branch_orientation_randomized": false
+        },
+        "n_rows": 300,
+        "clusters_with_data": 300,
+        "mde_at_observed_sd": 31.003337429320485,
+        "holm": {
+          "raw_p_value": 4.999750012499375e-05,
+          "holm_adjusted_p_value": 0.0002999850007499625,
+          "holm_threshold": 0.0125,
+          "rejected_at_alpha_0.05": true,
+          "family_size": 6
+        }
+      },
+      "packet_loss": {
+        "estimate": -65.06666666666666,
+        "ci95": [
+          -89.86,
+          -41.218083333333354
+        ],
+        "bootstrap_se": 12.386988373341387,
+        "cluster_sd": 214.338066095317,
+        "n_clusters": 300,
+        "excludes_zero": true,
+        "studentized_test": {
+          "p_value": 4.999750012499375e-05,
+          "t_statistic": -5.257991480416613,
+          "n_clusters": 300,
+          "replicates_valid": 20000,
+          "mode": "two_sided_centered_studentized_cluster_bootstrap_plus_one",
+          "branch_orientation_randomized": false
+        },
+        "n_rows": 300,
+        "clusters_with_data": 300,
+        "mde_at_observed_sd": 40.113152061528865,
+        "holm": {
+          "raw_p_value": 4.999750012499375e-05,
+          "holm_adjusted_p_value": 0.0002999850007499625,
+          "holm_threshold": 0.016666666666666666,
+          "rejected_at_alpha_0.05": true,
+          "family_size": 6
+        }
+      },
+      "sensor_delay_noise": {
+        "estimate": -27.79,
+        "ci95": [
+          -60.44108333333331,
+          4.705249999999978
+        ],
+        "bootstrap_se": 16.587024191636928,
+        "cluster_sd": 286.4835019501683,
+        "n_clusters": 300,
+        "excludes_zero": false,
+        "studentized_test": {
+          "p_value": 0.09209539523023849,
+          "t_statistic": -1.680155807042306,
+          "n_clusters": 300,
+          "replicates_valid": 20000,
+          "mode": "two_sided_centered_studentized_cluster_bootstrap_plus_one",
+          "branch_orientation_randomized": false
+        },
+        "n_rows": 300,
+        "clusters_with_data": 300,
+        "mde_at_observed_sd": 53.615097337567526,
+        "holm": {
+          "raw_p_value": 0.09209539523023849,
+          "holm_adjusted_p_value": 0.09209539523023849,
+          "holm_threshold": 0.05,
+          "rejected_at_alpha_0.05": false,
+          "family_size": 6
+        }
+      },
+      "lane_closure": {
+        "estimate": -39.94166666666667,
+        "ci95": [
+          -60.662208333333325,
+          -19.47987500000001
+        ],
+        "bootstrap_se": 10.509910856347766,
+        "cluster_sd": 181.9784041100216,
+        "n_clusters": 300,
+        "excludes_zero": true,
+        "studentized_test": {
+          "p_value": 0.00014999250037498125,
+          "t_statistic": -3.8016047202953303,
+          "n_clusters": 300,
+          "replicates_valid": 20000,
+          "mode": "two_sided_centered_studentized_cluster_bootstrap_plus_one",
+          "branch_orientation_randomized": false
+        },
+        "n_rows": 300,
+        "clusters_with_data": 300,
+        "mde_at_observed_sd": 34.0570740837674,
+        "holm": {
+          "raw_p_value": 0.00014999250037498125,
+          "holm_adjusted_p_value": 0.0002999850007499625,
+          "holm_threshold": 0.025,
+          "rejected_at_alpha_0.05": true,
+          "family_size": 6
+        }
+      },
+      "emergency_vehicle": {
+        "estimate": -64.70333333333333,
+        "ci95": [
+          -83.20837499999999,
+          -46.751666666666665
+        ],
+        "bootstrap_se": 9.349412677852426,
+        "cluster_sd": 162.73657948732054,
+        "n_clusters": 300,
+        "excludes_zero": true,
+        "studentized_test": {
+          "p_value": 4.999750012499375e-05,
+          "t_statistic": -6.88655624355986,
+          "n_clusters": 300,
+          "replicates_valid": 20000,
+          "mode": "two_sided_centered_studentized_cluster_bootstrap_plus_one",
+          "branch_orientation_randomized": false
+        },
+        "n_rows": 300,
+        "clusters_with_data": 300,
+        "mde_at_observed_sd": 30.455986087160994,
+        "holm": {
+          "raw_p_value": 4.999750012499375e-05,
+          "holm_adjusted_p_value": 0.0002999850007499625,
+          "holm_threshold": 0.01,
+          "rejected_at_alpha_0.05": true,
+          "family_size": 6
+        }
+      },
+      "demand_shock": {
+        "estimate": -85.68,
+        "ci95": [
+          -116.71841666666667,
+          -53.735
+        ],
+        "bootstrap_se": 16.03972466891163,
+        "cluster_sd": 277.7825945461233,
+        "n_clusters": 300,
+        "excludes_zero": true,
+        "studentized_test": {
+          "p_value": 4.999750012499375e-05,
+          "t_statistic": -5.342383436045724,
+          "n_clusters": 300,
+          "replicates_valid": 20000,
+          "mode": "two_sided_centered_studentized_cluster_bootstrap_plus_one",
+          "branch_orientation_randomized": false
+        },
+        "n_rows": 300,
+        "clusters_with_data": 300,
+        "mde_at_observed_sd": 51.986731326200555,
+        "holm": {
+          "raw_p_value": 4.999750012499375e-05,
+          "holm_adjusted_p_value": 0.0002999850007499625,
+          "holm_threshold": 0.008333333333333333,
+          "rejected_at_alpha_0.05": true,
+          "family_size": 6
+        }
+      }
+    },
+    "by_network": {
+      "moscow": {
+        "estimate": -2.490833333333335,
+        "ci95": [
+          -11.247520833333333,
+          6.514208333333329
+        ],
+        "bootstrap_se": 4.4931155670456455,
+        "cluster_sd": 45.15985122427004,
+        "n_clusters": 100,
+        "excludes_zero": false,
+        "studentized_test": {
+          "p_value": 0.5744712764361782,
+          "t_statistic": -0.5515592425146649,
+          "n_clusters": 100,
+          "replicates_valid": 20000,
+          "mode": "two_sided_centered_studentized_cluster_bootstrap_plus_one",
+          "branch_orientation_randomized": false
+        },
+        "n_rows": 600,
+        "mde_at_observed_sd": 14.638635998298085,
+        "holm": {
+          "raw_p_value": 0.5744712764361782,
+          "holm_adjusted_p_value": 0.5744712764361782,
+          "holm_threshold": 0.05,
+          "rejected_at_alpha_0.05": false,
+          "family_size": 3
+        }
+      },
+      "cologne8": {
+        "estimate": -48.44083333333334,
+        "ci95": [
+          -61.9595,
+          -34.67162500000001
+        ],
+        "bootstrap_se": 6.991916209338397,
+        "cluster_sd": 70.07619439712792,
+        "n_clusters": 100,
+        "excludes_zero": true,
+        "studentized_test": {
+          "p_value": 4.999750012499375e-05,
+          "t_statistic": -6.912594747770534,
+          "n_clusters": 100,
+          "replicates_valid": 20000,
+          "mode": "two_sided_centered_studentized_cluster_bootstrap_plus_one",
+          "branch_orientation_randomized": false
+        },
+        "n_rows": 600,
+        "mde_at_observed_sd": 22.71530738290453,
+        "holm": {
+          "raw_p_value": 4.999750012499375e-05,
+          "holm_adjusted_p_value": 0.00014999250037498125,
+          "holm_threshold": 0.016666666666666666,
+          "rejected_at_alpha_0.05": true,
+          "family_size": 3
+        }
+      },
+      "ingolstadt21": {
+        "estimate": -122.25833333333334,
+        "ci95": [
+          -144.16904166666666,
+          -100.2147291666667
+        ],
+        "bootstrap_se": 11.236407974287024,
+        "cluster_sd": 112.65236439962563,
+        "n_clusters": 100,
+        "excludes_zero": true,
+        "studentized_test": {
+          "p_value": 4.999750012499375e-05,
+          "t_statistic": -10.852709038545457,
+          "n_clusters": 100,
+          "replicates_valid": 20000,
+          "mode": "two_sided_centered_studentized_cluster_bootstrap_plus_one",
+          "branch_orientation_randomized": false
+        },
+        "n_rows": 600,
+        "mde_at_observed_sd": 36.51643909551894,
+        "holm": {
+          "raw_p_value": 4.999750012499375e-05,
+          "holm_adjusted_p_value": 0.00014999250037498125,
+          "holm_threshold": 0.025,
+          "rejected_at_alpha_0.05": true,
+          "family_size": 3
+        }
+      }
+    },
+    "holm_family": {
+      "members": [
+        "normal",
+        "packet_loss",
+        "sensor_delay_noise",
+        "lane_closure",
+        "emergency_vehicle",
+        "demand_shock"
+      ],
+      "size": 6,
+      "horizon": "h4",
+      "alpha": 0.05,
+      "note": "Family fixed a priori as the six operating conditions at the primary horizon."
+    },
+    "network_holm_family": {
+      "members": [
+        "moscow",
+        "cologne8",
+        "ingolstadt21"
+      ],
+      "size": 3,
+      "note": "Separate family from the six conditions; not pooled with it."
+    },
+    "exploratory_by_deviation_direction": {
+      "status": "exploratory, not pre-specified, not in any Holm family",
+      "note": "Cluster membership is unbalanced because which direction gets probed is decided by the PPO action at the probed state. Only clusters that contain at least one row of the stratum enter its interval.",
+      "interpretation_warning": "The two strata are different interventions, not two levels of one. Conditioning is on a pre-deviation variable (the incumbent's own action), so each stratum effect is itself identified, but the pooled ATE mixes them.",
+      "strata": {
+        "ppo_chose_advance_candidate_holds": {
+          "estimate": -104.7499436936937,
+          "ci95": [
+            -115.71256123310813,
+            -94.03344101914415
+          ],
+          "bootstrap_se": 5.568186536106604,
+          "cluster_sd": 96.00870255888334,
+          "n_clusters": 296,
+          "excludes_zero": true,
+          "studentized_test": {
+            "p_value": 4.999750012499375e-05,
+            "t_statistic": -18.771071024627208,
+            "n_clusters": 296,
+            "replicates_valid": 20000,
+            "mode": "two_sided_centered_studentized_cluster_bootstrap_plus_one",
+            "branch_orientation_randomized": false
+          },
+          "n_rows": 1174,
+          "row_share": 0.6522222222222223,
+          "share_gain_lt_0": {
+            "estimate": 0.769313063063063,
+            "ci95": [
+              0.7431306306306307,
+              0.7948775337837837
+            ],
+            "bootstrap_se": 0.013151495872979157,
+            "cluster_sd": 0.22700360708401657,
+            "n_clusters": 296,
+            "excludes_zero": true
+          },
+          "h1_effect": {
+            "estimate": -43.02896959459459,
+            "ci95": [
+              -46.643424127252246,
+              -39.41691793355856
+            ],
+            "bootstrap_se": 1.8485811681646864,
+            "cluster_sd": 31.93349932960251,
+            "n_clusters": 296,
+            "excludes_zero": true
+          },
+          "h2_effect": {
+            "estimate": -99.01858108108108,
+            "ci95": [
+              -105.8081813063063,
+              -92.35064752252252
+            ],
+            "bootstrap_se": 3.4423078190827474,
+            "cluster_sd": 59.66980696763005,
+            "n_clusters": 296,
+            "excludes_zero": true
+          }
+        },
+        "ppo_chose_hold_candidate_advances": {
+          "estimate": 56.307948179271705,
+          "ci95": [
+            34.7502293417367,
+            80.14138042717084
+          ],
+          "bootstrap_se": 11.46043425814287,
+          "cluster_sd": 176.4827197205604,
+          "n_clusters": 238,
+          "excludes_zero": true,
+          "studentized_test": {
+            "p_value": 9.99950002499875e-05,
+            "t_statistic": 4.922163015447856,
+            "n_clusters": 238,
+            "replicates_valid": 20000,
+            "mode": "two_sided_centered_studentized_cluster_bootstrap_plus_one",
+            "branch_orientation_randomized": false
+          },
+          "n_rows": 626,
+          "row_share": 0.3477777777777778,
+          "share_gain_lt_0": {
+            "estimate": 0.3218487394957983,
+            "ci95": [
+              0.27891981792717085,
+              0.3656862745098039
+            ],
+            "bootstrap_se": 0.022175911530055496,
+            "cluster_sd": 0.3450660053532423,
+            "n_clusters": 238,
+            "excludes_zero": true
+          },
+          "h1_effect": {
+            "estimate": 12.807352941176473,
+            "ci95": [
+              9.958308823529414,
+              15.642054446778712
+            ],
+            "bootstrap_se": 1.4580569493870452,
+            "cluster_sd": 22.608119716019008,
+            "n_clusters": 238,
+            "excludes_zero": true
+          },
+          "h2_effect": {
+            "estimate": 34.50686274509804,
+            "ci95": [
+              25.583957457983193,
+              43.52725577731092
+            ],
+            "bootstrap_se": 4.597029425977999,
+            "cluster_sd": 70.91982201920457,
+            "n_clusters": 238,
+            "excludes_zero": true
+          }
+        }
+      }
+    }
+  },
+  "decomposition": {
+    "h1": {
+      "total_effect": -22.94722222222222,
+      "components": {
+        "stopped_vehicle_seconds": {
+          "estimate": -18.311666666666667,
+          "ci95": [
+            -21.16508333333333,
+            -15.57052777777778
+          ],
+          "bootstrap_se": 1.4200555604966822,
+          "cluster_sd": 24.587567762593334,
+          "n_clusters": 300,
+          "excludes_zero": true,
+          "weight": 1.0,
+          "unweighted_cluster_mean": -18.311666666666667,
+          "share_of_total_effect": 0.7979905580438205
+        },
+        "terminal_queue": {
+          "estimate": -4.6433333333333335,
+          "ci95": [
+            -5.22,
+            -4.07
+          ],
+          "bootstrap_se": 0.2913488432726473,
+          "cluster_sd": 5.021008632224755,
+          "n_clusters": 300,
+          "excludes_zero": true,
+          "weight": 2.0,
+          "unweighted_cluster_mean": -2.3216666666666668,
+          "share_of_total_effect": 0.20234838397288468
+        },
+        "hard_braking": {
+          "estimate": 0.007777777777777777,
+          "ci95": [
+            0.0005555555555555558,
+            0.015
+          ],
+          "bootstrap_se": 0.0036773969333520748,
+          "cluster_sd": 0.06382362200336673,
+          "n_clusters": 300,
+          "excludes_zero": true,
+          "weight": 0.5,
+          "unweighted_cluster_mean": 0.015555555555555553,
+          "share_of_total_effect": -0.00033894201670499937
+        },
+        "teleports": {
+          "estimate": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "bootstrap_se": 0.0,
+          "cluster_sd": 0.0,
+          "n_clusters": 300,
+          "excludes_zero": false,
+          "weight": 30.0,
+          "unweighted_cluster_mean": 0.0,
+          "share_of_total_effect": -0.0
+        }
+      },
+      "identity_max_abs_residual": 5.684341886080802e-14,
+      "identity": "gain = stopped + 2.0*terminal_queue + 0.5*hard_braking + 30.0*teleports"
+    },
+    "h2": {
+      "total_effect": -55.87527777777779,
+      "components": {
+        "stopped_vehicle_seconds": {
+          "estimate": -54.001111111111115,
+          "ci95": [
+            -61.402263888888896,
+            -46.9393888888889
+          ],
+          "bootstrap_se": 3.6536405973322923,
+          "cluster_sd": 62.7550847952389,
+          "n_clusters": 300,
+          "excludes_zero": true,
+          "weight": 1.0,
+          "unweighted_cluster_mean": -54.001111111111115,
+          "share_of_total_effect": 0.9664580340142479
+        },
+        "terminal_queue": {
+          "estimate": -1.8811111111111112,
+          "ci95": [
+            -2.3966666666666665,
+            -1.37
+          ],
+          "bootstrap_se": 0.26032507752307504,
+          "cluster_sd": 4.505533022976546,
+          "n_clusters": 300,
+          "excludes_zero": true,
+          "weight": 2.0,
+          "unweighted_cluster_mean": -0.9405555555555556,
+          "share_of_total_effect": 0.03366625072706573
+        },
+        "hard_braking": {
+          "estimate": -0.009722222222222222,
+          "ci95": [
+            -0.0225,
+            0.0027777777777777766
+          ],
+          "bootstrap_se": 0.0064248842694538295,
+          "cluster_sd": 0.11146184424571381,
+          "n_clusters": 300,
+          "excludes_zero": false,
+          "weight": 0.5,
+          "unweighted_cluster_mean": -0.019444444444444445,
+          "share_of_total_effect": 0.00017399863783923517
+        },
+        "teleports": {
+          "estimate": 0.016666666666666666,
+          "ci95": [
+            0.0,
+            0.05
+          ],
+          "bootstrap_se": 0.0164583409734815,
+          "cluster_sd": 0.2886751345948129,
+          "n_clusters": 300,
+          "excludes_zero": false,
+          "weight": 30.0,
+          "unweighted_cluster_mean": 0.0005555555555555556,
+          "share_of_total_effect": -0.0002982833791529746
+        }
+      },
+      "identity_max_abs_residual": 1.1368683772161603e-13,
+      "identity": "gain = stopped + 2.0*terminal_queue + 0.5*hard_braking + 30.0*teleports"
+    },
+    "h4": {
+      "total_effect": -57.73,
+      "components": {
+        "stopped_vehicle_seconds": {
+          "estimate": -58.12222222222221,
+          "ci95": [
+            -68.86838888888889,
+            -47.487069444444465
+          ],
+          "bootstrap_se": 5.4719682935314715,
+          "cluster_sd": 94.44853271147952,
+          "n_clusters": 300,
+          "excludes_zero": true,
+          "weight": 1.0,
+          "unweighted_cluster_mean": -58.12222222222221,
+          "share_of_total_effect": 1.006794079719768
+        },
+        "terminal_queue": {
+          "estimate": 0.42222222222222217,
+          "ci95": [
+            -0.02222222222222231,
+            0.87
+          ],
+          "bootstrap_se": 0.2274692189768939,
+          "cluster_sd": 3.930682678598151,
+          "n_clusters": 300,
+          "excludes_zero": false,
+          "weight": 2.0,
+          "unweighted_cluster_mean": 0.21111111111111108,
+          "share_of_total_effect": -0.007313740208249129
+        },
+        "hard_braking": {
+          "estimate": -0.01333333333333333,
+          "ci95": [
+            -0.03861111111111111,
+            0.010833333333333334
+          ],
+          "bootstrap_se": 0.012583700834683766,
+          "cluster_sd": 0.21885737530327296,
+          "n_clusters": 300,
+          "excludes_zero": false,
+          "weight": 0.5,
+          "unweighted_cluster_mean": -0.02666666666666666,
+          "share_of_total_effect": 0.00023096021710260404
+        },
+        "teleports": {
+          "estimate": -0.016666666666666666,
+          "ci95": [
+            -0.13333333333333333,
+            0.1
+          ],
+          "bootstrap_se": 0.06048141229088921,
+          "cluster_sd": 1.0424383986301946,
+          "n_clusters": 300,
+          "excludes_zero": false,
+          "weight": 30.0,
+          "unweighted_cluster_mean": -0.0005555555555555557,
+          "share_of_total_effect": 0.0002887002713782551
+        }
+      },
+      "identity_max_abs_residual": 2.2737367544323206e-13,
+      "identity": "gain = stopped + 2.0*terminal_queue + 0.5*hard_braking + 30.0*teleports"
+    }
+  },
+  "persistence": {
+    "definition": "Cumulative delta_stopped_vehicle_seconds and its per-interval increments. A flat increment means the two branches have re-converged.",
+    "cumulative": {
+      "h1": {
+        "estimate": -18.311666666666667,
+        "ci95": [
+          -21.16508333333333,
+          -15.57052777777778
+        ],
+        "bootstrap_se": 1.4200555604966822,
+        "cluster_sd": 24.587567762593334,
+        "n_clusters": 300,
+        "excludes_zero": true
+      },
+      "h2": {
+        "estimate": -54.001111111111115,
+        "ci95": [
+          -61.402263888888896,
+          -46.9393888888889
+        ],
+        "bootstrap_se": 3.6536405973322923,
+        "cluster_sd": 62.7550847952389,
+        "n_clusters": 300,
+        "excludes_zero": true
+      },
+      "h4": {
+        "estimate": -58.12222222222221,
+        "ci95": [
+          -68.86838888888889,
+          -47.487069444444465
+        ],
+        "bootstrap_se": 5.4719682935314715,
+        "cluster_sd": 94.44853271147952,
+        "n_clusters": 300,
+        "excludes_zero": true
+      }
+    },
+    "increments": {
+      "interval_2": {
+        "estimate": -35.68944444444445,
+        "ci95": [
+          -40.89958333333333,
+          -30.653875000000006
+        ],
+        "bootstrap_se": 2.5872880254928616,
+        "cluster_sd": 44.34417369903757,
+        "n_clusters": 300,
+        "excludes_zero": true
+      },
+      "intervals_3_4_per_interval": {
+        "estimate": -2.0605555555555553,
+        "ci95": [
+          -5.3225,
+          1.1894652777777759
+        ],
+        "bootstrap_se": 1.6616283166275858,
+        "cluster_sd": 28.94116505294108,
+        "n_clusters": 300,
+        "excludes_zero": false
+      },
+      "interval_1": {
+        "estimate": -18.311666666666667,
+        "ci95": [
+          -21.16508333333333,
+          -15.57052777777778
+        ],
+        "bootstrap_se": 1.4200555604966822,
+        "cluster_sd": 24.587567762593334,
+        "n_clusters": 300,
+        "excludes_zero": true
+      }
+    }
+  },
+  "harmful_share": {
+    "h1": {
+      "share_gain_lt_0": {
+        "estimate": 0.5777777777777777,
+        "ci95": [
+          0.5522222222222222,
+          0.6033333333333334
+        ],
+        "bootstrap_se": 0.01309094372703141,
+        "cluster_sd": 0.2270017415356663,
+        "n_clusters": 300,
+        "excludes_zero": true
+      },
+      "share_gain_gt_0": {
+        "estimate": 0.33555555555555555,
+        "ci95": [
+          0.31222222222222223,
+          0.3594444444444444
+        ],
+        "bootstrap_se": 0.011992773446326476,
+        "cluster_sd": 0.20850253255536666,
+        "n_clusters": 300,
+        "excludes_zero": true
+      },
+      "share_gain_eq_0": {
+        "estimate": 0.08666666666666666,
+        "ci95": [
+          0.07333333333333333,
+          0.10055555555555555
+        ],
+        "bootstrap_se": 0.006879074073427086,
+        "cluster_sd": 0.1191759143062248,
+        "n_clusters": 300,
+        "excludes_zero": true
+      },
+      "mean_realised_harm_per_probe": {
+        "estimate": 31.69,
+        "ci95": [
+          28.81713194444445,
+          34.683062500000005
+        ],
+        "bootstrap_se": 1.4939958079814322,
+        "cluster_sd": 25.791336957566084,
+        "n_clusters": 300,
+        "excludes_zero": true,
+        "definition": "E[max(0, -gain)] per probed deviation"
+      }
+    },
+    "h2": {
+      "share_gain_lt_0": {
+        "estimate": 0.6133333333333333,
+        "ci95": [
+          0.5883333333333334,
+          0.6388888888888888
+        ],
+        "bootstrap_se": 0.012846594506087643,
+        "cluster_sd": 0.22299938426125598,
+        "n_clusters": 300,
+        "excludes_zero": true
+      },
+      "share_gain_gt_0": {
+        "estimate": 0.32944444444444443,
+        "ci95": [
+          0.30666666666666664,
+          0.3522222222222222
+        ],
+        "bootstrap_se": 0.011725907643104123,
+        "cluster_sd": 0.20374528026320152,
+        "n_clusters": 300,
+        "excludes_zero": true
+      },
+      "share_gain_eq_0": {
+        "estimate": 0.057222222222222216,
+        "ci95": [
+          0.04611111111111111,
+          0.06888888888888887
+        ],
+        "bootstrap_se": 0.005822894223444094,
+        "cluster_sd": 0.10092321268869665,
+        "n_clusters": 300,
+        "excludes_zero": true
+      },
+      "mean_realised_harm_per_probe": {
+        "estimate": 79.43833333333333,
+        "ci95": [
+          73.29269444444445,
+          85.95840277777776
+        ],
+        "bootstrap_se": 3.2254491946295927,
+        "cluster_sd": 55.456686398776284,
+        "n_clusters": 300,
+        "excludes_zero": true,
+        "definition": "E[max(0, -gain)] per probed deviation"
+      }
+    },
+    "h4": {
+      "share_gain_lt_0": {
+        "estimate": 0.5988888888888889,
+        "ci95": [
+          0.576111111111111,
+          0.6222222222222222
+        ],
+        "bootstrap_se": 0.011782223662044325,
+        "cluster_sd": 0.20409835311215588,
+        "n_clusters": 300,
+        "excludes_zero": true
+      },
+      "share_gain_gt_0": {
+        "estimate": 0.36666666666666664,
+        "ci95": [
+          0.34444444444444444,
+          0.3883333333333333
+        ],
+        "bootstrap_se": 0.011216414712917322,
+        "cluster_sd": 0.1946898170440524,
+        "n_clusters": 300,
+        "excludes_zero": true
+      },
+      "share_gain_eq_0": {
+        "estimate": 0.03444444444444444,
+        "ci95": [
+          0.025555555555555554,
+          0.04388888888888889
+        ],
+        "bootstrap_se": 0.004702672849173053,
+        "cluster_sd": 0.08132283013003926,
+        "n_clusters": 300,
+        "excludes_zero": true
+      },
+      "mean_realised_harm_per_probe": {
+        "estimate": 104.87916666666666,
+        "ci95": [
+          95.60216666666668,
+          114.42980555555556
+        ],
+        "bootstrap_se": 4.794354366000829,
+        "cluster_sd": 82.68967029802849,
+        "n_clusters": 300,
+        "excludes_zero": true,
+        "definition": "E[max(0, -gain)] per probed deviation"
+      }
+    }
+  },
+  "harm_bound_input": {
+    "note": "Design bound of 01_METHOD_PACE.md section 2.1 is E[harm per decision] <= p_max * E[|delta^-|]. The measured E[max(0,-gain)] at h4 is the E[|delta^-|] factor for the probed population; multiplying by p_max gives the per-decision bound.",
+    "e_abs_negative_h4": 104.87916666666666,
+    "per_decision_bound_at_p_max": {
+      "p_max=0.001": 0.10487916666666666,
+      "p_max=0.005": 0.5243958333333333,
+      "p_max=0.01": 1.0487916666666666
+    }
+  },
+  "scale_reference": {
+    "baseline_cost_h4_mean": 5172.865118898242,
+    "baseline_cost_h4_median": 1852.0,
+    "ate_h4_as_share_of_mean_baseline_cost": -0.011160159538877711,
+    "harm_bound_p_max_0.01_as_share_of_mean_baseline_cost": 0.00020274869778356922
+  },
+  "post_hoc_mde": {
+    "h1": {
+      "cluster_sd": 28.951696109305907,
+      "n_clusters": 300,
+      "mde": 5.418280614491068,
+      "observed_effect": -22.94722222222222,
+      "observed_abs_effect_over_mde": 4.235148353307947,
+      "row_level_sd_for_reference": 57.06652343346459,
+      "variance_reduction_vs_row_sd": 0.49266760322167735
+    },
+    "h2": {
+      "cluster_sd": 65.05341454295946,
+      "n_clusters": 300,
+      "mde": 12.174680667889165,
+      "observed_effect": -55.87527777777779,
+      "observed_abs_effect_over_mde": 4.589465572197664,
+      "row_level_sd_for_reference": 131.26010429855504,
+      "variance_reduction_vs_row_sd": 0.5043930911787673
+    },
+    "h4": {
+      "cluster_sd": 94.57844143837788,
+      "n_clusters": 300,
+      "mde": 17.700259558528064,
+      "observed_effect": -57.73,
+      "observed_abs_effect_over_mde": 3.261534092712523,
+      "row_level_sd_for_reference": 221.18437169309084,
+      "variance_reduction_vs_row_sd": 0.5723999814525221
+    },
+    "parameters": {
+      "power": 0.9,
+      "alpha_one_sided": 0.025,
+      "z_alpha": 1.9599639845400536,
+      "z_power": 1.2815515655446008,
+      "formula": "mde = (z_alpha + z_power) * cluster_sd / sqrt(n_clusters)",
+      "note": "Post hoc, computed from the observed cluster SD. This is a precision statement about the design, not a retrospective power calculation on the observed effect."
+    },
+    "phase0_planning_comparison": {
+      "planned_row_sd": 190.89,
+      "planned_n_for_delta_40": 240,
+      "note": "Phase 0 planned with a row-level SD. Cluster averaging over six conditions changes the relevant SD; the realised cluster SD is reported above."
+    }
+  },
+  "verdict": {
+    "p1_measurement": {
+      "identified": true,
+      "why": "exact paired counterfactual per unit; interval width set by cluster count",
+      "h4_estimate": -57.73,
+      "h4_ci95": [
+        -68.53000694444445,
+        -47.07254166666669
+      ],
+      "h4_ci_halfwidth": 10.728732638888882,
+      "class": "identified_negative"
+    },
+    "p2_conditional": {
+      "any_condition_rejected_after_holm": true,
+      "conditions_rejected_after_holm": [
+        "normal",
+        "packet_loss",
+        "lane_closure",
+        "emergency_vehicle",
+        "demand_shock"
+      ],
+      "conditions_with_positive_lower_bound": []
+    }
+  }
+}

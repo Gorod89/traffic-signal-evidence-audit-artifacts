@@ -1,0 +1,23 @@
+{
+  "confirmatory_admissible": false,
+  "failures": 0,
+  "finalist_search_gate_diagnostics": {
+    "m-9a27c224c2fa": {
+      "F0_structural": true,
+      "F1_h4_engineering_effect": false,
+      "F2_all_horizon_engineering_effect": false,
+      "F3_action_sensitivity": false,
+      "F7_resource_contract": true,
+      "complete": true,
+      "corruption_zero_control_positive": false
+    }
+  },
+  "finalists": [
+    "m-9a27c224c2fa"
+  ],
+  "quick_audit_opened": false,
+  "reason": "legacy paired proxy has no fresh sealed traffic outcomes or heterogeneous graph trajectories",
+  "schema_version": 1,
+  "status": "engineering_search_complete",
+  "trials": 16
+}

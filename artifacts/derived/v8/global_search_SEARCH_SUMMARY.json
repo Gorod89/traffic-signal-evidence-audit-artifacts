@@ -1,0 +1,14 @@
+{
+  "confirmatory_admissible": false,
+  "failures": 0,
+  "finalists": [
+    "m-60b0b252595b",
+    "m-32c477fd36e1",
+    "m-fabd35226c66"
+  ],
+  "quick_audit_opened": false,
+  "reason": "legacy paired proxy has no fresh sealed traffic outcomes or heterogeneous graph trajectories",
+  "schema_version": 1,
+  "status": "engineering_search_complete",
+  "trials": 104
+}

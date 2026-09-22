@@ -1,0 +1,62 @@
+{
+  "consequence": "fresh validation, shadow, actuation, untouched test and untouched ablation remain unopened",
+  "criteria": {
+    "effective_rank_fraction": {
+      "operator": ">=",
+      "passed": true,
+      "threshold": 0.25,
+      "value": 0.5177706464137648
+    },
+    "forced_action_swap_degradation": {
+      "operator": ">=",
+      "passed": true,
+      "threshold": 0.05,
+      "value": 0.6906138221087623
+    },
+    "h4_improvement_over_no_history": {
+      "operator": ">=",
+      "passed": false,
+      "threshold": 0.05,
+      "value": 0.03740620010281437
+    },
+    "h4_improvement_over_persistence": {
+      "operator": ">=",
+      "passed": true,
+      "threshold": 0.1,
+      "value": 0.26630586406057133
+    },
+    "paired_effect_improvement_over_zero": {
+      "operator": ">=",
+      "passed": true,
+      "threshold": 0.05,
+      "value": 0.1727940865624119
+    },
+    "worst_network_improvement": {
+      "operator": ">",
+      "passed": true,
+      "threshold": 0.0,
+      "value": 0.2238030440178762
+    }
+  },
+  "decision": "STOP",
+  "evidence_class": "legacy_v6_pretest_development_only",
+  "failed_hypotheses": [
+    "h4_improvement_over_no_history"
+  ],
+  "hashes": {
+    "protocol": "4226af423b07fad0421b3a11cd361a104e2d1c307686257e0d1fc844ecf463c6",
+    "representation_metrics": "f9298af986166537b026a76c264fd0b0f1956639a707a5295626f0d4f620150f",
+    "verifier_metrics": "b37d881977c438ff59ecbc67d84abb1946ab2aba877e2834831a9d57737f5d63"
+  },
+  "passed": 5,
+  "schema_version": 1,
+  "stage": "development_readiness_before_fresh_V7_lock",
+  "total": 6,
+  "verifier_diagnostics_not_gate_inputs": {
+    "M1_over_M0_rmse_improvement": 0.06377937647404353,
+    "M2_over_M1_rmse_improvement": -0.0020220304387008614,
+    "benefit_auroc": 0.78360131497502,
+    "ingolstadt_support_rate": 0.9166666666666666,
+    "selected_interventions": 0
+  }
+}

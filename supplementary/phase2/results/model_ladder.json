@@ -1,0 +1,238 @@
+{
+  "task": "PACE Phase 2 / task 1 -- effect-model ladder (P3)",
+  "evidence_class": "held_out_evaluation_on_sealed_seeds_no_refit_no_tuning",
+  "inputs": {
+    "paired_archive": "v6/results/cfra/paired_branches.csv",
+    "paired_archive_sha256": "24231bba4eadff8051da0af7705ff429d86c93ec10c554ede9247836aea55d8e",
+    "sealed": {
+      "source": "v10_proposal/phase0/sealed/raw/*.json",
+      "scheduled": 1800,
+      "analysable": 1800,
+      "dropped_incomplete": 0,
+      "attrition": 0.0,
+      "clusters": 300,
+      "seed_block": [
+        9801,
+        9900
+      ],
+      "manifest_sha256": "ec590e327ce64044331b6c06fd7c0f105844c7021d4272f3b0ba718604aea513"
+    }
+  },
+  "training": {
+    "splits": [
+      "representation_train",
+      "development"
+    ],
+    "rows": 960,
+    "clusters": 160,
+    "target": "gain_h4"
+  },
+  "calibration": {
+    "rows": 720,
+    "clusters": 120
+  },
+  "cluster_key": "network|seed",
+  "interval": {
+    "method": "cluster_percentile_bootstrap",
+    "confidence_level": 0.95,
+    "replicates": 4000,
+    "seed": 20260811
+  },
+  "hyperparameters": {
+    "training_mean": -22.935416666666665,
+    "ridge_observation_alpha": 100.0,
+    "ridge_contrast_alpha": 10.0,
+    "extratrees": {
+      "n_estimators": 300,
+      "random_state": 20260811
+    }
+  },
+  "sealed_target_summary": {
+    "mean": -57.73,
+    "sd": 221.18437169309084,
+    "beneficial_fraction": 0.36666666666666664,
+    "harmful_fraction": 0.5988888888888889,
+    "exact_zero_fraction": 0.034444444444444444
+  },
+  "ladder": [
+    {
+      "rung": "0. zero effect",
+      "n_features": null,
+      "sealed": {
+        "rmse": 228.5346800816016,
+        "rmse_ci95": [
+          212.8483026674679,
+          244.21236169657712
+        ],
+        "auroc": 0.5,
+        "auroc_ci95": [
+          0.5,
+          0.5
+        ],
+        "auroc_beats_chance": false,
+        "degenerate_replicates": 0,
+        "constant_predictor": true
+      },
+      "calibration": {
+        "rmse": 157.0434620044188,
+        "rmse_ci95": [
+          141.76417510033824,
+          173.2937526908439
+        ],
+        "auroc": 0.5,
+        "auroc_ci95": [
+          0.5,
+          0.5
+        ],
+        "auroc_beats_chance": false,
+        "degenerate_replicates": 0,
+        "constant_predictor": true
+      }
+    },
+    {
+      "rung": "1. training mean",
+      "n_features": null,
+      "sealed": {
+        "rmse": 223.84371809219994,
+        "rmse_ci95": [
+          208.1753372531712,
+          239.31735310984388
+        ],
+        "auroc": 0.5,
+        "auroc_ci95": [
+          0.5,
+          0.5
+        ],
+        "auroc_beats_chance": false,
+        "degenerate_replicates": 0,
+        "constant_predictor": true
+      },
+      "calibration": {
+        "rmse": 155.09223756921085,
+        "rmse_ci95": [
+          140.26304119759382,
+          170.92462823473963
+        ],
+        "auroc": 0.5,
+        "auroc_ci95": [
+          0.5,
+          0.5
+        ],
+        "auroc_beats_chance": false,
+        "degenerate_replicates": 0,
+        "constant_predictor": true
+      }
+    },
+    {
+      "rung": "2. ridge, context_observation",
+      "n_features": 10,
+      "sealed": {
+        "rmse": 202.67582863360195,
+        "rmse_ci95": [
+          188.07021240641043,
+          217.21305875553614
+        ],
+        "auroc": 0.6935832004253057,
+        "auroc_ci95": [
+          0.6679316766520321,
+          0.7177194584296654
+        ],
+        "auroc_beats_chance": true,
+        "degenerate_replicates": 0,
+        "constant_predictor": false
+      },
+      "calibration": {
+        "rmse": 145.15139430900498,
+        "rmse_ci95": [
+          131.03405355313487,
+          159.77279787927344
+        ],
+        "auroc": 0.6833095238095239,
+        "auroc_ci95": [
+          0.6447864639446235,
+          0.7210361157943717
+        ],
+        "auroc_beats_chance": true,
+        "degenerate_replicates": 0,
+        "constant_predictor": false
+      }
+    },
+    {
+      "rung": "3. ridge, feature_vector",
+      "n_features": 81,
+      "sealed": {
+        "rmse": 209.09771259284335,
+        "rmse_ci95": [
+          192.2755135122298,
+          225.52746898679038
+        ],
+        "auroc": 0.7197142477405636,
+        "auroc_ci95": [
+          0.693898550344552,
+          0.7454789928566837
+        ],
+        "auroc_beats_chance": true,
+        "degenerate_replicates": 0,
+        "constant_predictor": false
+      },
+      "calibration": {
+        "rmse": 139.15385342112083,
+        "rmse_ci95": [
+          124.27701800692742,
+          154.48889437897094
+        ],
+        "auroc": 0.7718253968253967,
+        "auroc_ci95": [
+          0.7371114552707055,
+          0.8059906395621712
+        ],
+        "auroc_beats_chance": true,
+        "degenerate_replicates": 0,
+        "constant_predictor": false
+      }
+    },
+    {
+      "rung": "4. extratrees, feature_vector",
+      "n_features": 81,
+      "sealed": {
+        "rmse": 192.74694267604198,
+        "rmse_ci95": [
+          177.12931938452812,
+          208.36246844609732
+        ],
+        "auroc": 0.7636097820308346,
+        "auroc_ci95": [
+          0.7386635468453273,
+          0.7863563319988517
+        ],
+        "auroc_beats_chance": true,
+        "degenerate_replicates": 0,
+        "constant_predictor": false
+      },
+      "calibration": {
+        "rmse": 115.42209720428869,
+        "rmse_ci95": [
+          105.74831259638201,
+          125.11574427242469
+        ],
+        "auroc": 0.8112142857142858,
+        "auroc_ci95": [
+          0.7777454625352156,
+          0.8441576723171924
+        ],
+        "auroc_beats_chance": true,
+        "degenerate_replicates": 0,
+        "constant_predictor": false
+      }
+    }
+  ],
+  "p3_verdict": {
+    "claim": "a low-capacity model trained on paired data ranks effects better than chance",
+    "rungs_with_auroc_lower_bound_above_half": [
+      "2. ridge, context_observation",
+      "3. ridge, feature_vector",
+      "4. extratrees, feature_vector"
+    ],
+    "supported": true
+  }
+}

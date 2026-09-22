@@ -1,0 +1,72 @@
+{
+  "config": {
+    "batch_size": 16,
+    "corruption_modes": [
+      "mcar",
+      "burst",
+      "spatial",
+      "mnar"
+    ],
+    "depths": [
+      1,
+      2
+    ],
+    "dropout": 0.05,
+    "epochs": 12,
+    "generation_seed": 20260817,
+    "graph_seeds": [
+      1103,
+      1213,
+      1427,
+      1601,
+      1871,
+      2017,
+      2237,
+      2411,
+      2683
+    ],
+    "graph_sizes": [
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "heads": 4,
+    "latency_repetitions": 30,
+    "latency_warmups": 5,
+    "learning_rates": [
+      0.0003,
+      0.001
+    ],
+    "max_trials": 12,
+    "maximum_capacity_deviation": 0.08,
+    "mixed_precision": true,
+    "parameter_targets": [
+      60000,
+      100000
+    ],
+    "patience": 4,
+    "requested_device": "cuda",
+    "samples_per_graph": 8,
+    "search_seed": 19001,
+    "split_seed": 8807,
+    "temporal_depths": [
+      1
+    ],
+    "weight_decays": [
+      0.0,
+      0.0001
+    ]
+  },
+  "config_source": "v8search.graph_search.GraphSearchConfig() defaults, unmodified",
+  "cuda_device": "NVIDIA GeForce RTX 3070 Ti",
+  "numpy": "2.3.5",
+  "python": "3.12.13",
+  "torch": "2.7.1+cu128",
+  "wall_clock_seconds": 8.643570899963379
+}

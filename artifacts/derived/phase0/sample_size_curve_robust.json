@@ -1,0 +1,90 @@
+{
+  "input_sha256": "24231bba4eadff8051da0af7705ff429d86c93ec10c554ede9247836aea55d8e",
+  "target": "gain_h4",
+  "gate": 0.1,
+  "repeats": 200,
+  "supersedes": "results/sample_size_curve.json (12 resamples)",
+  "note": "Identical analysis at 200 resamples; quantile band replaces the one-SD ribbon and the clearance share is now resolvable to 0.5%.",
+  "training_curve": [
+    {
+      "train_clusters": 10,
+      "repeats": 200,
+      "median": 0.02154103948989694,
+      "mean": 0.0011344845805896881,
+      "q05": -0.17366921061957807,
+      "q95": 0.10436910708781975,
+      "sd": 0.0863549503220125,
+      "share_clearing_gate": 0.065
+    },
+    {
+      "train_clusters": 20,
+      "repeats": 200,
+      "median": 0.0510242458016581,
+      "mean": 0.040366971114156984,
+      "q05": -0.06386593258776932,
+      "q95": 0.11086628400990738,
+      "sd": 0.061224485239893614,
+      "share_clearing_gate": 0.105
+    },
+    {
+      "train_clusters": 30,
+      "repeats": 200,
+      "median": 0.07155703180519757,
+      "mean": 0.06089563855793147,
+      "q05": -0.04261623622726472,
+      "q95": 0.12546362408982703,
+      "sd": 0.05595758309790122,
+      "share_clearing_gate": 0.245
+    },
+    {
+      "train_clusters": 40,
+      "repeats": 200,
+      "median": 0.08273055032173504,
+      "mean": 0.0809443180516541,
+      "q05": 0.02261049376271318,
+      "q95": 0.13181303439395453,
+      "sd": 0.036800886312339375,
+      "share_clearing_gate": 0.3
+    },
+    {
+      "train_clusters": 60,
+      "repeats": 200,
+      "median": 0.1085542458235339,
+      "mean": 0.10692150406623338,
+      "q05": 0.05816435418946606,
+      "q95": 0.1470810398738494,
+      "sd": 0.027158920289574687,
+      "share_clearing_gate": 0.64
+    },
+    {
+      "train_clusters": 80,
+      "repeats": 200,
+      "median": 0.11862785154177735,
+      "mean": 0.11656608791087551,
+      "q05": 0.07216790889167038,
+      "q95": 0.15170846408735872,
+      "sd": 0.023570633947294996,
+      "share_clearing_gate": 0.785
+    },
+    {
+      "train_clusters": 120,
+      "repeats": 200,
+      "median": 0.13497788066986605,
+      "mean": 0.1338622731177649,
+      "q05": 0.10871969656002772,
+      "q95": 0.1535662437576087,
+      "sd": 0.013614688953207868,
+      "share_clearing_gate": 0.985
+    },
+    {
+      "train_clusters": 160,
+      "repeats": 200,
+      "median": 0.14642876001056382,
+      "mean": 0.14640037768435088,
+      "q05": 0.1422122140012564,
+      "q95": 0.1505385718412267,
+      "sd": 0.0023635926567102685,
+      "share_clearing_gate": 1.0
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "checks": {
+    "authorship_marker_scan": {
+      "hits": [],
+      "pass": true
+    },
+    "citation_integrity": {
+      "missing": [],
+      "pass": true
+    },
+    "diagnostic_firewall": {
+      "pass": true
+    },
+    "immutable_v1_v5": {
+      "pass": true,
+      "unexpected_paths": []
+    },
+    "seed_firewall": {
+      "counts": {
+        "calibration": 60,
+        "development": 30,
+        "feasibility_pilot": 10,
+        "representation_train": 50,
+        "shadow_validation": 100,
+        "untouched_ablation": 50,
+        "untouched_test": 100,
+        "validation": 100
+      },
+      "pass": true
+    },
+    "sumo_phase0_smoke": {
+      "checks": {
+        "censored_endpoint_present": true,
+        "per_second_sampling": true,
+        "unique_event_endpoints_present": true,
+        "warmup_excluded": true
+      },
+      "pass": true
+    },
+    "tests": {
+      "pass": true,
+      "summary": [
+        "-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html"
+      ]
+    },
+    "untouched_test_sealed": {
+      "files": [],
+      "pass": true
+    }
+  },
+  "pass": true,
+  "release_kind": "implemented_preconfirmatory_v6",
+  "schema_version": 1,
+  "traffic_superiority_claim_permitted": false
+}
