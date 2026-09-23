@@ -1,0 +1,60 @@
+{
+  "schema_version": "decision-denominators-v1",
+  "evidence_status": "inspection-only aggregate; private row-level inputs are not distributed",
+  "unit": "one controlled junction at one controller decision step",
+  "sources": {
+    "v3_run_table": {
+      "logical_path": "private-archive:v3/results/analysis/all_runs.csv",
+      "sha256": "1fd36882fe0e42dc38bacdafbe06a0ae53d84b70a73ef612d5e39c9b63e14297"
+    },
+    "v3_aggregate_check": {
+      "logical_path": "private-archive:analysis/v3_opportunities_check.json",
+      "sha256": "8b5f6735ef3d9089ea3e10aaf5f89394fd169ba943b8281d8924a8370c170ee9"
+    },
+    "v4_stage_c_summary": {
+      "logical_path": "private-archive:v4/results/cfra/stage_c_shadow.json",
+      "sha256": "469c08f6abef6c300ecd0d33c8f0506fbf46b20d8972b6feb21e915d9ca74a7c"
+    },
+    "v4_run_totals": {
+      "logical_path": "private-archive:analysis/v4_run_level_totals.json",
+      "sha256": "5249437e827382c7ca8ae4cac066ef4f79910f1e0bdda4451d8d3b0b7300900a"
+    }
+  },
+  "v3_full_method": {
+    "controller_decisions": 1123200,
+    "not_selected_for_proposal_evaluation": 1063121,
+    "selected_for_proposal_evaluation": 60079,
+    "candidate_matched_incumbent": 50032,
+    "candidate_differed_from_incumbent": 10047,
+    "executed_deviations": 70,
+    "identities": {
+      "selection_partition": "1063121 + 60079 = 1123200",
+      "proposal_partition": "50032 + 10047 = 60079"
+    },
+    "rates": {
+      "selection_rate_all_decisions": 0.0534891381766382,
+      "incumbent_match_rate_selected": 0.83277018592187,
+      "executed_deviation_rate_all_decisions": 0.0000623219373219373,
+      "executed_deviation_rate_selected": 0.00116513257544233
+    }
+  },
+  "v4_shadow": {
+    "controller_decisions": 280800,
+    "candidate_matched_incumbent": 199673,
+    "candidate_differed_from_incumbent": 81127,
+    "queried_after_disagreement": 824,
+    "not_queried_after_disagreement": 80303,
+    "accepted_overrides": 133,
+    "identities": {
+      "proposal_partition": "199673 + 81127 = 280800",
+      "query_partition": "824 + 80303 = 81127"
+    },
+    "rates": {
+      "incumbent_match_rate_all_decisions": 0.711086182336182,
+      "disagreement_rate_all_decisions": 0.288913817663818,
+      "query_rate_disagreements": 0.0101569144674399,
+      "accepted_override_rate_all_decisions": 0.000473646723646724,
+      "accepted_override_rate_disagreements": 0.00163940488370086
+    }
+  }
+}

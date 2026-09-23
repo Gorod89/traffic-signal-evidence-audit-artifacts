@@ -1,8 +1,9 @@
 """Phase 0 / Analysis C: why the supervisory channel stayed silent.
 
 Across V1-V4 the guarded supervisor almost never changed the incumbent action:
-V1 accepted 0.056% of decision opportunities, V2 accepted 0.000%, V3 accepted 70
-out of 187,200 decisions, V4 permitted 133 out of 280,800.  Every published
+V1 accepted 0.056% of decision opportunities, V2 accepted 0.000%, the V3 full
+method executed 70 deviations out of 1,123,200 controller decisions, and V4
+permitted 133 out of 280,800 controller decisions.  Every published
 report noted the rate; none decomposed it.  The per-decision evidence needed for
 that decomposition was written to disk and never opened:
 

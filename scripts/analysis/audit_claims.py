@@ -2,10 +2,10 @@
 
 Claims arrive from three places and carry different risk:
   own      - computed by the Phase-0 scripts in this directory
-  inventory - reported by the evidence inventory and copied into the text
+  agent — reported by an inventory subagent and copied into the text
   archive  - quoted from a V1-V8 result file
 
-The `inventory` class is the one that must not be trusted without a check,
+The `agent` class is the one that must not be trusted without a check,
 because any secondary transcription can contain an error. This
 script re-reads the primary source for each claim and reports MATCH or MISMATCH.
 It fails loudly rather than silently passing when a source file is missing.
@@ -13,15 +13,41 @@ It fails loudly rather than silently passing when a source file is missing.
 
 from __future__ import annotations
 
+import argparse
 import json
 import os
 import re
 from pathlib import Path
 
 CURATED_ROOT = Path(__file__).resolve().parents[2]
-REPO = Path(os.environ.get("ARTICLE_SOURCE_ROOT", CURATED_ROOT)).resolve()
 RESULTS = CURATED_ROOT / "artifacts" / "derived" / "phase0"
 SUPPLEMENTARY = CURATED_ROOT / "supplementary"
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--scope",
+        choices=("public", "all"),
+        default="public",
+        help="public checks released artifacts only; all also checks the private V1--V8 archive",
+    )
+    parser.add_argument(
+        "--source-root",
+        type=Path,
+        help="root of the private V1--V8 archive (required for --scope all unless ARTICLE_SOURCE_ROOT is set)",
+    )
+    args = parser.parse_args()
+    env_root = os.environ.get("ARTICLE_SOURCE_ROOT")
+    if args.scope == "all" and args.source_root is None and not env_root:
+        parser.error("--scope all requires --source-root or ARTICLE_SOURCE_ROOT")
+    args.source_root = (args.source_root or (Path(env_root) if env_root else CURATED_ROOT)).resolve()
+    return args
+
+
+ARGS = parse_args()
+INCLUDE_ARCHIVE = ARGS.scope == "all"
+REPO = ARGS.source_root
 
 results: list[tuple[str, str, str, object, object, bool]] = []
 
@@ -35,6 +61,31 @@ def check(claim: str, source: str, origin: str, expected, actual, tol: float = 5
     else:
         ok = expected == actual
     results.append((claim, source, origin, expected, actual, ok))
+
+
+PUBLIC_REQUIRED = (
+    RESULTS / "baseline_ladder.json",
+    RESULTS / "sample_size_curve_robust.json",
+    RESULTS / "sample_size_curve.json",
+    RESULTS / "history_increment_ci.json",
+    RESULTS / "cost_weight_sensitivity.json",
+    RESULTS / "aar_funnel.json",
+    RESULTS / "dormancy_anatomy.json",
+    RESULTS / "fact2_verification.json",
+    RESULTS / "sealed_confirmation.json",
+    SUPPLEMENTARY / "positive_control" / "runs" / "EPLUS_FINAL.json",
+    SUPPLEMENTARY / "dplus" / "headline_comparison.csv",
+    SUPPLEMENTARY / "dplus" / "trials_candidate_level.csv",
+    SUPPLEMENTARY / "dplus" / "matched_worst_condition.csv",
+)
+for required_path in PUBLIC_REQUIRED:
+    check(
+        f"required public source exists: {required_path.relative_to(CURATED_ROOT)}",
+        str(required_path.relative_to(CURATED_ROOT)),
+        "own",
+        True,
+        required_path.is_file(),
+    )
 
 
 def load_json(path: Path):
@@ -149,14 +200,15 @@ if inc:
 # Historical fitting budgets, read from the V4/V5 corpora themselves.
 import pandas as _pd
 
-for version, split, expected in (("v4", "training", 30), ("v5", "representation_train", 20)):
-    path = REPO / version / "results" / "cfra" / "paired_branches.csv"
-    if path.exists():
-        frame = _pd.read_csv(path)
-        frame = frame[frame.split == split]
-        check(f"{version.upper()} fitted on {expected} clusters",
-              f"{version}/results/cfra/paired_branches.csv", "archive",
-              expected, int(frame.groupby(["network", "seed"]).ngroups))
+if INCLUDE_ARCHIVE:
+    for version, split, expected in (("v4", "training", 30), ("v5", "representation_train", 20)):
+        path = REPO / version / "results" / "cfra" / "paired_branches.csv"
+        if path.exists():
+            frame = _pd.read_csv(path)
+            frame = frame[frame.split == split]
+            check(f"{version.upper()} fitted on {expected} clusters",
+                  f"{version}/results/cfra/paired_branches.csv", "archive",
+                  expected, int(frame.groupby(["network", "seed"]).ngroups))
 
 # Cost-weight sensitivity: the null must not depend on the utility.
 cw = load_json(RESULTS / "cost_weight_sensitivity.json")
@@ -310,14 +362,14 @@ if eplus:
           0.853, dig(eplus, "generator_graph_dependence", "adjacency_shuffle_target_shift"), tol=0.02)
 
 # --------------------------------------------------------- archive quotations
-v4gate = load_json(REPO / "v4" / "results" / "cfra" / "stage_b_verifier.json")
+v4gate = load_json(REPO / "v4" / "results" / "cfra" / "stage_b_verifier.json") if INCLUDE_ARCHIVE else None
 if v4gate is not None:
     blob = json.dumps(v4gate)
     m = re.search(r'"(?:rmse_improvement[a-z_]*|improvement_over_mean)"\s*:\s*([0-9.eE-]+)', blob)
     check("V4 Stage-B RMSE gain = 5.34%", "v4/results/cfra/stage_b_verifier.json", "archive",
           0.0534, float(m.group(1)) if m else None, tol=0.02)
 
-v5gate = load_json(REPO / "v5" / "results" / "protocol" / "stage_b_verifier.json")
+v5gate = load_json(REPO / "v5" / "results" / "protocol" / "stage_b_verifier.json") if INCLUDE_ARCHIVE else None
 if v5gate is not None:
     blob = json.dumps(v5gate)
     m = re.search(r'"(?:rmse_improvement[a-z_]*|improvement_over_mean)"\s*:\s*([0-9.eE-]+)', blob)
@@ -378,7 +430,7 @@ if v5gate is not None:
                   ("protocol", "gates", "B_verifier", "criteria") + path + ("threshold",),
               ), tol=1e-9)
 
-v6gate = load_json(REPO / "v6" / "results" / "protocol" / "stage_b_representation.json")
+v6gate = load_json(REPO / "v6" / "results" / "protocol" / "stage_b_representation.json") if INCLUDE_ARCHIVE else None
 if v6gate is not None:
     metrics = v6gate.get("metrics", {})
     check("V6.1 gain over persistence = 21.80%", "v6/.../stage_b_representation.json", "archive",
@@ -394,42 +446,64 @@ def count_csv_rows(path: Path) -> int | None:
     return sum(1 for _ in path.open(encoding="utf-8")) - 1 if path.exists() else None
 
 
-v1_metrics = load_json(REPO / "results" / "raw" / "confirmatory" / "metrics.json")
-check("V1 corpus = 160 runs", "results/raw/confirmatory/metrics.json", "archive",
-      160, len(v1_metrics) if v1_metrics is not None else None)
-check("V2 corpus = 1600 runs", "v2/results/analysis/all_runs.csv", "archive",
-      1600, count_csv_rows(REPO / "v2" / "results" / "analysis" / "all_runs.csv"))
-check("V3 corpus = 4680 runs", "v3/results/analysis/all_runs.csv", "archive",
-      4680, count_csv_rows(REPO / "v3" / "results" / "analysis" / "all_runs.csv"))
-check("V8 = 376 architecture-search trials", "v8/results/*/trials/*.json", "archive",
-      376, len(list((REPO / "v8" / "results").glob("*/trials/*.json"))))
+if INCLUDE_ARCHIVE:
+    required_archive_sources = (
+        REPO / "v4" / "results" / "cfra" / "paired_branches.csv",
+        REPO / "v5" / "results" / "cfra" / "paired_branches.csv",
+        REPO / "v4" / "results" / "cfra" / "stage_b_verifier.json",
+        REPO / "v5" / "results" / "protocol" / "stage_b_verifier.json",
+        REPO / "v4" / "configs" / "study.yaml",
+        REPO / "v5" / "configs" / "preregistered_protocol.yaml",
+        REPO / "v6" / "results" / "protocol" / "stage_b_representation.json",
+        REPO / "results" / "raw" / "confirmatory" / "metrics.json",
+        REPO / "v2" / "results" / "analysis" / "all_runs.csv",
+        REPO / "v3" / "results" / "analysis" / "all_runs.csv",
+        REPO / "v6" / "results" / "cfra" / "paired_branches.csv",
+        REPO / "results" / "analysis" / "summary.csv",
+    )
+    for path in required_archive_sources:
+        check(f"required archive source exists: {path.relative_to(REPO)}",
+              str(path.relative_to(REPO)), "archive", True, path.exists())
+    v8_trials = list((REPO / "v8" / "results").glob("*/trials/*.json"))
+    check("required archive source exists: V8 trial files", "v8/results/*/trials/*.json",
+          "archive", True, bool(v8_trials))
 
-paired = REPO / "v6" / "results" / "cfra" / "paired_branches.csv"
-check("V6.1 paired records = 3480", "v6/results/cfra/paired_branches.csv", "archive",
-      3480, count_csv_rows(paired))
+    v1_metrics = load_json(REPO / "results" / "raw" / "confirmatory" / "metrics.json")
+    check("V1 corpus = 160 runs", "results/raw/confirmatory/metrics.json", "archive",
+          160, len(v1_metrics) if v1_metrics is not None else None)
+    check("V2 corpus = 1600 runs", "v2/results/analysis/all_runs.csv", "archive",
+          1600, count_csv_rows(REPO / "v2" / "results" / "analysis" / "all_runs.csv"))
+    check("V3 corpus = 4680 runs", "v3/results/analysis/all_runs.csv", "archive",
+          4680, count_csv_rows(REPO / "v3" / "results" / "analysis" / "all_runs.csv"))
+    check("V8 = 376 architecture-search trials", "v8/results/*/trials/*.json", "archive",
+          376, len(v8_trials))
 
-# V2 authority activity ratio is claimed to be exactly zero for the full method.
-v2_runs = REPO / "v2" / "results" / "analysis" / "all_runs.csv"
-if v2_runs.exists():
-    rows = list(_csv.DictReader(v2_runs.open(encoding="utf-8")))
-    ergs = [float(r["override_accept_rate"]) for r in rows if r.get("method") == "ergs_v2"]
-    check("V2 full-method override rate = exactly 0", "v2/results/analysis/all_runs.csv", "archive",
-          0.0, max(ergs) if ergs else None, tol=1.0)
+    paired = REPO / "v6" / "results" / "cfra" / "paired_branches.csv"
+    check("V6.1 paired records = 3480", "v6/results/cfra/paired_branches.csv", "archive",
+          3480, count_csv_rows(paired))
 
-# V1: the incumbent PPO is beaten by fixed-time in every demand regime.
-v1_summary = REPO / "results" / "analysis" / "summary.csv"
-if v1_summary.exists():
-    rows = [r for r in _csv.DictReader(v1_summary.open(encoding="utf-8"))
-            if "wait" in r.get("metric", "").lower()]
-    beaten = 0
-    for scenario in ("low", "medium", "high", "variable"):
-        cell = {r["method"]: float(r["mean"]) for r in rows if r.get("scenario") == scenario}
-        if cell.get("ppo") and cell.get("fixed") and cell["ppo"] > cell["fixed"]:
-            beaten += 1
-    check("V1: fixed-time beats PPO in all 4 regimes", "results/analysis/summary.csv", "archive",
-          4, beaten)
+    # V2 authority activity ratio is claimed to be exactly zero for the full method.
+    v2_runs = REPO / "v2" / "results" / "analysis" / "all_runs.csv"
+    if v2_runs.exists():
+        rows = list(_csv.DictReader(v2_runs.open(encoding="utf-8")))
+        ergs = [float(r["override_accept_rate"]) for r in rows if r.get("method") == "ergs_v2"]
+        check("V2 full-method override rate = exactly 0", "v2/results/analysis/all_runs.csv", "archive",
+              0.0, max(ergs) if ergs else None, tol=1.0)
 
-# ------------------------------------------------------------ D+ (inventory-fed)
+    # V1: the incumbent PPO is beaten by fixed-time in every demand regime.
+    v1_summary = REPO / "results" / "analysis" / "summary.csv"
+    if v1_summary.exists():
+        rows = [r for r in _csv.DictReader(v1_summary.open(encoding="utf-8"))
+                if "wait" in r.get("metric", "").lower()]
+        beaten = 0
+        for scenario in ("low", "medium", "high", "variable"):
+            cell = {r["method"]: float(r["mean"]) for r in rows if r.get("scenario") == scenario}
+            if cell.get("ppo") and cell.get("fixed") and cell["ppo"] > cell["fixed"]:
+                beaten += 1
+        check("V1: fixed-time beats PPO in all 4 regimes", "results/analysis/summary.csv", "archive",
+              4, beaten)
+
+# ------------------------------------------------------------ D+ (agent-reported inventory)
 dplus = None
 for name in ("dplus_summary.json", "headline_comparison.csv"):
     p = SUPPLEMENTARY / "dplus" / name
@@ -458,11 +532,11 @@ if dplus.exists():
                     except (TypeError, ValueError):
                         pass
         return None
-    check("D+ best neural overall = 0.17694", "dplus/headline_comparison.csv", "inventory",
+    check("D+ best neural overall = 0.17694", "dplus/headline_comparison.csv", "agent",
           0.17694, num(best, "overall"), tol=0.02)
-    check("D+ history_ridge overall = 0.20145", "dplus/headline_comparison.csv", "inventory",
+    check("D+ history_ridge overall = 0.20145", "dplus/headline_comparison.csv", "agent",
           0.20145, num(ridge, "overall"), tol=0.02)
-    check("D+ current_ridge overall = 0.18057", "dplus/headline_comparison.csv", "inventory",
+    check("D+ current_ridge overall = 0.18057", "dplus/headline_comparison.csv", "agent",
           0.18057, num(cur, "overall"), tol=0.02)
 
     trials_csv = SUPPLEMENTARY / "dplus" / "trials_candidate_level.csv"
@@ -470,10 +544,10 @@ if dplus.exists():
         tr = list(_csv.DictReader(trials_csv.open(encoding="utf-8")))
         h4 = [float(r["h4_improvement"]) for r in tr if r.get("h4_improvement")]
         ov = [float(r["overall_improvement"]) for r in tr if r.get("overall_improvement")]
-        check("D+ trials analysed = 94", "dplus/trials_candidate_level.csv", "inventory", 94, len(tr))
-        check("D+ max h4 across trials = 0.00366", "dplus/trials_candidate_level.csv", "inventory",
+        check("D+ trials analysed = 94", "dplus/trials_candidate_level.csv", "agent", 94, len(tr))
+        check("D+ max h4 across trials = 0.00366", "dplus/trials_candidate_level.csv", "agent",
               0.003661, max(h4) if h4 else None, tol=0.02)
-        check("D+ trials beating current_ridge(100) = 0", "dplus/trials_candidate_level.csv", "inventory",
+        check("D+ trials beating current_ridge(100) = 0", "dplus/trials_candidate_level.csv", "agent",
               0, sum(1 for x in ov if x > 0.1805747640975042))
 
     mw = SUPPLEMENTARY / "dplus" / "matched_worst_condition.csv"
@@ -486,32 +560,41 @@ if dplus.exists():
         ridge_h = row_for("history_ridge_alpha=100")
         neural_g = row_for("m-e27868141735")
         check("D+ matched worst-condition, best neural = 0.1265",
-              "dplus/matched_worst_condition.csv", "inventory",
+              "dplus/matched_worst_condition.csv", "agent",
               0.12653, float(best_n["min_mean_condition"]) if best_n else None, tol=0.02)
         check("D+ matched worst-condition, best ridge = 0.0748",
-              "dplus/matched_worst_condition.csv", "inventory",
+              "dplus/matched_worst_condition.csv", "agent",
               0.074757, float(best_b["min_mean_condition"]) if best_b else None, tol=0.02)
         check("D+ ridge on degraded sensing = -0.153",
-              "dplus/matched_worst_condition.csv", "inventory",
+              "dplus/matched_worst_condition.csv", "agent",
               -0.15254, float(ridge_h["cond_sensor_delay_noise"]) if ridge_h else None, tol=0.02)
         check("D+ neural on degraded sensing = +0.111",
-              "dplus/matched_worst_condition.csv", "inventory",
+              "dplus/matched_worst_condition.csv", "agent",
               0.111366, float(neural_g["cond_sensor_delay_noise"]) if neural_g else None, tol=0.02)
 
 # --------------------------------------------------------------------- report
-width = max(len(c) for c, *_ in results)
-n_ok = sum(1 for *_, ok in results if ok)
-print(f"{'claim':<{width}}  origin   status   expected      actual")
-print("-" * (width + 45))
-for claim, source, origin, expected, actual, ok in results:
-    status = "MATCH" if ok else "MISMATCH"
-    exp = f"{expected:.5g}" if isinstance(expected, (int, float)) else str(expected)
-    act = f"{actual:.5g}" if isinstance(actual, (int, float)) else str(actual)
-    print(f"{claim:<{width}}  {origin:<7}  {status:<8} {exp:>10}  {act:>10}")
-print("-" * (width + 45))
-print(f"{n_ok}/{len(results)} verified against a file on disk")
-missing = [r for r in results if not r[5]]
-if missing:
-    print("\nUNVERIFIED OR MISMATCHED:")
-    for claim, source, origin, expected, actual, _ in missing:
-        print(f"  [{origin}] {claim}  (source: {source}, read back: {actual})")
+def main() -> int:
+    if not results:
+        print("no claims were evaluated")
+        return 1
+    width = max(len(c) for c, *_ in results)
+    n_ok = sum(1 for *_, ok in results if ok)
+    print(f"{'claim':<{width}}  origin   status   expected      actual")
+    print("-" * (width + 45))
+    for claim, source, origin, expected, actual, ok in results:
+        status = "MATCH" if ok else "MISMATCH"
+        exp = f"{expected:.5g}" if isinstance(expected, (int, float)) else str(expected)
+        act = f"{actual:.5g}" if isinstance(actual, (int, float)) else str(actual)
+        print(f"{claim:<{width}}  {origin:<7}  {status:<8} {exp:>10}  {act:>10}")
+    print("-" * (width + 45))
+    print(f"{n_ok}/{len(results)} verified against a file on disk (scope={ARGS.scope})")
+    missing = [r for r in results if not r[5]]
+    if missing:
+        print("\nUNVERIFIED OR MISMATCHED:")
+        for claim, source, origin, expected, actual, _ in missing:
+            print(f"  [{origin}] {claim}  (source: {source}, read back: {actual})")
+    return 1 if missing else 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

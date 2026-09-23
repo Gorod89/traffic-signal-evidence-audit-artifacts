@@ -1,21 +1,29 @@
-MIT License
+License notice for this repository
 
 Copyright (c) 2026 Mikhail Gorodnichev
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+This repository is a mixed code-and-research-record package. No single license
+applies to every file.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+1. Author-created software is licensed under the MIT License. The applicable
+   text is in LICENSES/MIT.txt and the software scope is defined in
+   LICENSES.md.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+2. Author-created derived research records in the scopes listed in LICENSES.md
+   are licensed under Creative Commons Attribution 4.0 International (CC BY
+   4.0), unless a file-level notice or provenance entry says otherwise. The
+   license reference is in LICENSES/CC-BY-4.0.txt.
+
+3. A source-file notice, an upstream license, or a NOASSERTION entry in the
+   provenance register overrides the defaults above. NOASSERTION is not a
+   license grant. See LICENSES/NOASSERTION.txt.
+
+4. No rights are granted here for omitted road networks, route files, raw
+   traces, model weights, journal templates, or other third-party material.
+
+The controlling scope and precedence rules are in LICENSES.md. Source and
+attribution information is in docs/DATA_LICENSES.md. File-level provenance is
+recorded in docs/PROVENANCE.csv when that register is present in a release.
+
+This notice is not legal advice. Users remain responsible for complying with
+all applicable upstream licenses and attribution requirements.

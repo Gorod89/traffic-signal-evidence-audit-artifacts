@@ -1,0 +1,10 @@
+NOASSERTION
+
+`NOASSERTION` is a provenance and rights-status marker. It is not a license,
+permission, public-domain dedication, fair-use determination, or waiver.
+
+A file marked `NOASSERTION` has not received a sufficiently supported rights
+determination for open redistribution. Unless an independent license notice
+clearly grants the required rights, exclude the file from an open archival
+deposit and provide only lawful acquisition instructions, source identifiers,
+checksums, and citations.

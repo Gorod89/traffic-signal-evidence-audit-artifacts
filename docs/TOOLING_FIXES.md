@@ -212,3 +212,63 @@ working directories, local paths, credentials, or stale diagnosis/provenance
 notes. The existing `v10_proposal/README.md` and `aar/REPORTING_STANDARD.md`
 must not be released unchanged: they contain superseded statements and a stale
 V1 row count.
+
+## 7. Claim-Origin Labels and Historical Source Identity
+
+An earlier public-cleaning pass changed the generic origin class
+`agent -- reported by an inventory subagent` to `inventory` in
+`scripts/analysis/audit_claims.py`, including the D+ check labels, and changed a
+matching sentence in `verify_fact2.py`. That was not a numerical correction or
+a removal of a product name: the label described how a secondary inventory had
+supplied the candidate values. Making the substitution without recording it
+obscured provenance.
+
+The generic historical wording has therefore been restored. It does not mean
+that an automated agent is treated as a primary source: every such claim is
+checked against the named file. A byte-exact copy of the historical checker is
+retained under `artifacts/historical_scripts/`, while the active public checker
+adds explicit public/full scopes and a non-zero exit status for mismatches.
+
+Several other historical programs and evidence objects had also been
+normalised to LF by Git attributes. Three released evidence files have been
+restored byte-for-byte and marked `-text`; the original sealed registration,
+collection and evaluation programs and the unmodified Phase-2 common module
+are retained in the same non-normalising historical directory. The active
+Phase-2 module remains the portable path adaptation. `docs/PROVENANCE.csv`
+records which object is byte-exact and which was transformed, including five
+Phase-0 JSON files kept under their historical filenames but regenerated or
+path-normalised during review.
+
+## 8. Fail-Closed Analysis Utilities
+
+The earlier D+ extractor wrote both committed CSVs before it had established
+that any trial population or promotion record existed. A missing input could
+therefore truncate both references and then raise an exception. The corrected
+interface validates the 94 JSON records, required fields, rungs and promotion
+record first, builds both tables in memory, and publishes them atomically below
+`build/` by default. Replacing the released references requires the explicit
+`--update-reference` flag.
+
+The claim audit previously printed five mismatches but returned process status
+zero, and optional `if artifact:` branches could omit checks silently. Its
+public mode now tests only the artifacts represented by the public package and
+returns status 1 for a failed check. Full-archive mode requires an explicit
+source root and retains the archive-only checks. Configuration and schema
+errors return a distinct non-zero status. Continuous integration runs the
+public mode.
+
+## 9. Tree-Seed and Toolchain Sensitivity
+
+The first forty-seed JSON was generated under Python 3.13.2 and
+scikit-learn 1.7.2, whereas the repository declared Python 3.12 and later pinned
+scikit-learn 1.9.0. Because the reported overstatement factor divides by a
+history increment close to zero, this was not a harmless packaging difference.
+The old result is retained with its environment in its filename as a
+non-canonical toolchain-sensitivity record.
+
+The released reference is regenerated in the canonical CPython 3.12.14 lock,
+with `n_jobs=1` and a one-thread numerical thread pool. The script records the
+interpreter, package versions, platform and thread-pool state rather than a
+hard-coded environment sentence. Like the D+ extractor, a normal run writes a
+candidate below `build/`; changing the reference requires
+`--update-reference`.

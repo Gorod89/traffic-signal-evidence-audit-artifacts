@@ -1,0 +1,18 @@
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+SPDX-License-Identifier: CC-BY-4.0
+
+Official legal code:
+https://creativecommons.org/licenses/by/4.0/legalcode
+
+Human-readable summary:
+https://creativecommons.org/licenses/by/4.0/
+
+This repository applies CC BY 4.0 by reference only to author-created derived
+research records explicitly assigned that license by `LICENSES.md` and the
+file-level provenance register. Under the license, reuse requires appropriate
+credit, a link to the license, and an indication of whether changes were made.
+No warranties are given. The official legal code at the URL above controls.
+
+CC BY 4.0 does not override an upstream license, database right, privacy
+restriction, contractual term, or `NOASSERTION` entry.

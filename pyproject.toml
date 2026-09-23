@@ -6,13 +6,20 @@ build-backend = "setuptools.build_meta"
 name = "traffic-evidence-tools"
 version = "0.1.0"
 description = "Fail-closed AAR and sealed-evidence tools for the accompanying article"
-requires-python = ">=3.11"
+requires-python = "==3.12.14"
 dependencies = [
+  "joblib>=1.5,<2",
+  "matplotlib>=3.11,<4",
   "numpy>=2.3,<3",
   "pandas>=3.0,<4",
+  "PyYAML>=6.0,<7",
   "scikit-learn>=1.9,<2",
   "scipy>=1.18,<2",
+  "threadpoolctl>=3.6,<4",
 ]
+
+[project.optional-dependencies]
+test = ["pytest>=9,<10"]
 
 [project.scripts]
 aar = "evidence_tools.aar:main"

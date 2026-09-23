@@ -12,6 +12,12 @@ This document prevents corrected release code from being confused with historica
 
 Any corrected evaluator in this repository is prospective tooling. It must not be described as the exact program that produced the August 2026 historical result.
 
+The surviving historical registration, collection and evaluation files are now
+released byte-for-byte in `artifacts/historical_scripts/`. Their hashes prove
+identity with the surviving private-archive copies, not identity with the
+executables that actually ran; no contemporaneous version-control record closes
+that evidential gap.
+
 ## Interval and conformal claims
 
 - The original AAR tool paired a pooled point estimate with a bootstrap interval for a different, equal-weight cluster estimand.
@@ -21,3 +27,23 @@ Any corrected evaluator in this repository is prospective tooling. It must not b
 ## Missing provenance
 
 The exact historical package lock, the executable hash of every collector/evaluator run, an append-only access log, and the overwritten first result are unavailable. No later reconstruction can recreate those missing primary records. The repository documents the gap instead of silently backfilling it.
+
+## Review-time transformations and toolchain sensitivity
+
+An earlier public export normalised line endings in three evidence files and
+ported paths in `phase2_common.py`, so four hashes recorded by the audit no
+longer described the public bytes. The three evidence files are now restored
+byte-for-byte; the portable module remains active and its byte-exact historical
+counterpart is stored separately. Five Phase-0 JSON records also retain their
+historical filenames despite review-time recomputation or path normalisation.
+Every such relationship is explicit in `docs/PROVENANCE.csv`; filename alone is
+not evidence of byte identity.
+
+The original forty-tree-seed record was generated under Python 3.13.2 and
+scikit-learn 1.7.2, not the repository's canonical CPU environment. It is
+retained under a legacy filename. The canonical reference is regenerated under
+Python 3.12.14 and scikit-learn 1.9.0 with one estimator job and one numerical
+thread. The difference is substantive because the reported factor divides by a
+history increment close to zero; the manuscript therefore reports the
+canonical result and identifies the legacy run as a toolchain-sensitivity
+diagnostic.

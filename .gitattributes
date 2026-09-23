@@ -27,5 +27,12 @@
 LICENSE text eol=lf
 
 # These two evidence artifacts are byte-identity objects with historical CRLF.
-artifacts/protocols/PREDICTION_LOCK.json -text -diff
-artifacts/derived/v6/paired_branches.csv -text -diff
+artifacts/protocols/PREDICTION_LOCK.json -text -diff !eol
+artifacts/derived/v6/paired_branches.csv -text -diff !eol
+
+# Historical evidence is stored byte-for-byte.  Do not normalise line endings
+# on add, checkout, archive creation, or a platform-specific clone.
+artifacts/derived/phase0/sealed_confirmation.json -text -diff !eol
+supplementary/phase2/results/selective_policy.json -text -diff !eol
+artifacts/derived/v5/V5_ANALYSIS.md -text -diff !eol
+artifacts/historical_scripts/*.py -text -diff !eol

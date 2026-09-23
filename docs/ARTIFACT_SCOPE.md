@@ -12,7 +12,10 @@ This repository is a curated public companion to the evidence audit. It is not a
 6. Synthetic-positive-control scripts, final JSONs, the retained residual array, and the preliminary locked-run JSONs.
 7. V8 D+ scripts and derived CSV/JSON records.
 8. Incumbent-invariance and forty-tree-seed scripts and derived records.
-9. A release manifest, explicit artifact map, provenance limitations, and licensing notes.
+9. Byte-exact copies of five surviving historical analysis/collection programs,
+   kept separately from the hardened public interfaces.
+10. A release manifest, explicit artifact map, file-level provenance register,
+    mixed-license map, source attributions, and release procedure.
 
 ## Not included
 
@@ -21,7 +24,9 @@ This repository is a curated public companion to the evidence audit. It is not a
 - sealed raw branch records and the frozen estimator;
 - complete road-network and route assets;
 - complete V8 trial JSONs and the physical representation-training table;
-- the full historical V1-V8 source snapshots, which await a file-level authorship and licensing review;
+- the full historical V1-V8 source snapshots; only the five provenance-relevant
+  historical programs named in `artifacts/historical_scripts/README.md` are
+  included after file-level review;
 - overwritten intermediates, unsuccessful interactive commands, local environments, caches, telemetry, review material, and unrelated studies.
 
 The omitted trace/model inputs are roughly one gigabyte in the private archive. A future immutable deposit should include only material that passes provenance and license review, with acquisition instructions and checksums where redistribution is not permitted.
@@ -39,4 +44,4 @@ No absent branch is silently removed from an audit denominator.
 
 ## Historical versus corrected code
 
-The historical evaluator accepted whichever complete rows were present and overwrote its result path. The corrected implementation fails closed on the expected Cartesian population, validates key uniqueness and training-source integrity, and writes results once. It is a prospective repair, not evidence that the historical run used the corrected implementation.
+The historical evaluator accepted whichever complete rows were present and overwrote its result path. The corrected implementation fails closed on the expected Cartesian population, validates key uniqueness and training-source integrity, and writes results once. A surviving historical evaluator is now retained byte-for-byte for inspection, but the absence of a contemporaneous version-control record means that its presence does not prove that those exact bytes performed the historical run. The corrected implementation is a prospective repair, not evidence that the historical run used it.

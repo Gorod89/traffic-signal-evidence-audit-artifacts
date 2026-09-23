@@ -1,19 +1,25 @@
 cff-version: 1.2.0
-message: "If you use these tools or derived artifacts, please cite this repository and the associated article."
+message: "This metadata describes the repository before its first archived release. No version, release date, or DOI is asserted. Cite the exact commit used until a versioned release exists."
 title: "Traffic-Signal Evidence Audit: Code and Derived Artifacts"
 type: software
-version: 0.1.0
-date-released: 2026-09-22
+abstract: >-
+  A curated, partial inspection and reproduction package containing corrected
+  evidence tools, tests, protocol records, selected derived research records,
+  and retained supplementary analyses for an audit of guarded traffic-signal
+  control experiments. The package is not a complete execution ledger and does
+  not include the manuscript, road networks, route files, raw traces, or model
+  weights.
 authors:
   - family-names: Gorodnichev
     given-names: Mikhail
     email: m.g.gorodnichev@mtuci.ru
     affiliation: "Faculty of Information Technology, Moscow Technical University of Communication and Informatics"
 repository-code: "https://github.com/Gorod89/traffic-signal-evidence-audit-artifacts"
-preferred-citation:
-  type: article
-  title: "Baselines, Sample Size, and Supervisory Activity in Guarded Reinforcement-Learning Traffic-Signal Control: A SUMO Evidence Audit"
-  authors:
-    - family-names: Gorodnichev
-      given-names: Mikhail
-  year: 2026
+url: "https://github.com/Gorod89/traffic-signal-evidence-audit-artifacts"
+keywords:
+  - traffic signal control
+  - evidence audit
+  - reproducibility
+  - SUMO
+  - reinforcement learning
+  - counterfactual evaluation

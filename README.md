@@ -18,7 +18,7 @@ This is a curated inspection and partial-reproduction package. It contains corre
 | Synthetic graph positive control | yes | yes | retained residual array present | summary rerunnable; training environment not bundled |
 | V8 D+ re-scoring | yes | yes | no: complete trial-JSON population omitted | inspection only |
 | Incumbent invariance | yes | yes | partial: sealed block omitted | partial |
-| Forty-tree-seed sensitivity | yes | yes | yes: V6 paired derivative | rerunnable |
+| Forty-tree-seed sensitivity | yes | yes | yes: V6 paired derivative | rerunnable in the canonical Python 3.12.14 environment; the earlier Python 3.13 result is retained only as a toolchain-sensitivity record |
 
 The machine-readable version of this table is [`docs/ARTIFACT_MAP.csv`](docs/ARTIFACT_MAP.csv).
 
@@ -31,8 +31,9 @@ The machine-readable version of this table is [`docs/ARTIFACT_MAP.csv`](docs/ART
 - `artifacts/derived/` — selected derived tables and JSON outputs, including the V6 paired derivative.
 - `artifacts/protocols/` — preserved prediction-lock and population-contract records.
 - `artifacts/audit/` — post-opening integrity audit output.
+- `artifacts/historical_scripts/` — byte-exact historical programs retained for provenance; these are not the hardened public interfaces.
 - `supplementary/` — Phase 1, Phase 2, positive-control, D+, incumbent-invariance, and tree-seed modules and retained outputs.
-- `docs/` — exact inclusion boundary, licensing notes, known deviations, and reproduction instructions.
+- `docs/` — exact inclusion boundary, file-level provenance, licensing and attribution records, known deviations, and reproduction instructions.
 
 ## Deliberate omissions
 
@@ -42,7 +43,9 @@ The following are not distributed here:
 - raw paired-branch and per-decision traces;
 - the frozen estimator and model weights;
 - road-network and route files;
-- the complete historical V1-V8 source snapshots, pending file-level licensing review;
+- the complete historical V1-V8 source snapshots; only five provenance-relevant
+  historical programs are retained byte-for-byte under
+  `artifacts/historical_scripts/` after file-level review;
 - the complete V8 trial-JSON population;
 - local review notes, prompts, caches, environments, telemetry, and unrelated follow-up studies.
 
@@ -51,10 +54,15 @@ See [`docs/ARTIFACT_SCOPE.md`](docs/ARTIFACT_SCOPE.md) and [`docs/DATA_LICENSES.
 ## Verify the repository
 
 ```powershell
+# Use CPython 3.12.14; `.python-version` records the exact patch release.
 python -m pip install -r requirements-lock.txt
 python -m pip install --no-deps -e .
 python -m unittest discover -s tests -v
 python scripts/audit/check_aar_artifact.py
+python scripts/analysis/audit_claims.py --scope public
+python scripts/analysis/check_decision_denominators.py
+python scripts/audit/audit_inventory.py
+python scripts/audit/check_provenance.py
 python scripts/audit/check_release.py
 python scripts/audit/build_manifest.py --check
 ```
@@ -67,6 +75,17 @@ To rerun the forty-tree-seed sensitivity from the committed V6 derivative:
 python supplementary/incumbent_invariance/seed_sensitivity.py
 ```
 
+The command writes a candidate result below `build/`; it never overwrites the
+committed reference. Updating that reference is a deliberate maintainer action
+requiring `--update-reference`. The canonical reference was generated with one
+estimator job and a one-thread numerical thread-pool limit. The retained legacy
+record demonstrates that the unstable ratio also changes with the Python and
+scikit-learn toolchain.
+
+The D+ trial extractor follows the same rule: it validates the complete
+94-trial population and promotion record before writing, emits candidates below
+`build/` by default, and requires `--update-reference` to replace released CSVs.
+
 To recompute the positive-control summary from the retained residual array:
 
 ```powershell
@@ -75,15 +94,25 @@ python supplementary/positive_control/analyze_scaled_final.py
 
 ## Integrity and citation
 
-`MANIFEST.sha256` covers every tracked release file other than the manifest itself. Continuous integration rejects manuscript/template material, private paths, placeholder metadata, assistant-brand provenance, and secret-like values.
+`MANIFEST.sha256` covers every tracked release file other than the manifest itself. `docs/PROVENANCE.csv` separately distinguishes byte-exact historical objects, portable adaptations, reconstructed outputs, and derived records. The two headline decision denominators are recorded with their arithmetic and source digests in `artifacts/derived/decision_denominators.json`. Continuous integration rejects manuscript/template material, private paths, placeholder metadata, unreviewed assistant provenance, and secret-like values.
 
 Citation metadata are in [`CITATION.cff`](CITATION.cff).
+No GitHub release or Zenodo DOI exists yet. [`docs/ZENODO_RELEASE.md`](docs/ZENODO_RELEASE.md) gives the controlled release procedure; no DOI should be cited until that record is published.
 
 Mikhail Gorodnichev<br>
 Faculty of Information Technology, Moscow Technical University of Communication and Informatics<br>
 Moscow 111024, Russia<br>
 m.g.gorodnichev@mtuci.ru
 
-## Licensing
+## Licensing and attribution
 
-The root MIT license applies only to the author-owned software scopes named in [`LICENSES.md`](LICENSES.md). Derived research records are provided for verification and retain the provenance and license statements attached to them. No road-network, route, model-weight, or journal-template rights are granted here.
+This is a mixed-license package. Author-owned code is MIT licensed; eligible
+author-created derived research records are CC BY 4.0; upstream rights and
+redistribution restrictions override those defaults. The controlling path
+defaults and file-level overrides are described in [`LICENSE`](LICENSE),
+[`LICENSES.md`](LICENSES.md), and the audited-transform register
+[`docs/PROVENANCE.csv`](docs/PROVENANCE.csv). Source attribution for
+RESCO, TAPASCologne, InTAS, OpenStreetMap and the two compact language models is
+recorded in [`docs/DATA_LICENSES.md`](docs/DATA_LICENSES.md). No rights in
+omitted road networks, routes, model weights, or journal-template material are
+granted here.
