@@ -49,6 +49,36 @@ class ClaimAuditCliTests(unittest.TestCase):
         self.assertIn("required archive source exists", completed.stdout)
 
 
+class DecisionDenominatorCliTests(unittest.TestCase):
+    def test_public_aggregate_check_succeeds_without_private_sources(self) -> None:
+        completed = subprocess.run(
+            [sys.executable, "scripts/analysis/check_decision_denominators.py"],
+            cwd=ROOT,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        self.assertEqual(completed.returncode, 0, completed.stdout + completed.stderr)
+        self.assertIn("source bytes not supplied", completed.stdout)
+
+    def test_source_verification_fails_closed_when_archive_is_missing(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            completed = subprocess.run(
+                [
+                    sys.executable,
+                    "scripts/analysis/check_decision_denominators.py",
+                    "--source-root",
+                    tmp,
+                ],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+        self.assertNotEqual(completed.returncode, 0)
+        self.assertIn("private source missing", completed.stdout)
+
+
 class ExtractTrialsCliTests(unittest.TestCase):
     def test_missing_input_cannot_truncate_existing_outputs(self) -> None:
         released = [

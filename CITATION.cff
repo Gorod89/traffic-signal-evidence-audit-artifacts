@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "This metadata describes the repository before its first archived release. No version, release date, or DOI is asserted. Cite the exact commit used until a versioned release exists."
+message: "This metadata describes the repository before its first archived release. No version, release date, or DOI is asserted. Cite the exact commit used until a versioned release exists. The package is mixed-license, so no single CFF license field is asserted; see LICENSES.md for the controlling path-level mapping."
 title: "Traffic-Signal Evidence Audit: Code and Derived Artifacts"
 type: software
 abstract: >-

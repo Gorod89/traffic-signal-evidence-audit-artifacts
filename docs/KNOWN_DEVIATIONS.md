@@ -36,14 +36,21 @@ longer described the public bytes. The three evidence files are now restored
 byte-for-byte; the portable module remains active and its byte-exact historical
 counterpart is stored separately. Five Phase-0 JSON records also retain their
 historical filenames despite review-time recomputation or path normalisation.
-Every such relationship is explicit in `docs/PROVENANCE.csv`; filename alone is
-not evidence of byte identity.
+Each of these nine transformed-or-restored relationships is explicit in the
+current 15-entry `docs/PROVENANCE.csv`; that curated register is not a claim to
+enumerate every file covered by the release manifest. Filename alone is not
+evidence of byte identity.
 
 The original forty-tree-seed record was generated under Python 3.13.2 and
 scikit-learn 1.7.2, not the repository's canonical CPU environment. It is
-retained under a legacy filename. The canonical reference is regenerated under
-Python 3.12.14 and scikit-learn 1.9.0 with one estimator job and one numerical
-thread. The difference is substantive because the reported factor divides by a
-history increment close to zero; the manuscript therefore reports the
-canonical result and identifies the legacy run as a toolchain-sensitivity
-diagnostic.
+retained as
+`supplementary/incumbent_invariance/results/seed_sensitivity_py313_sklearn172.json`.
+The canonical reference,
+`supplementary/incumbent_invariance/results/seed_sensitivity.json`, is
+regenerated under Python 3.12.14 and scikit-learn 1.9.0 with `n_jobs=1` and a
+one-thread numerical thread pool. Holding those concurrency settings fixed
+reproduced the canonical record, so the observed discrepancy is attributed to
+the software toolchain rather than parallel scheduling. The difference is
+substantive because the reported factor divides by a history increment close
+to zero; the manuscript therefore reports the canonical result and treats the
+legacy run only as a toolchain-sensitivity diagnostic.

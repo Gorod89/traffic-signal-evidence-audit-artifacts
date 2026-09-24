@@ -263,8 +263,11 @@ The first forty-seed JSON was generated under Python 3.13.2 and
 scikit-learn 1.7.2, whereas the repository declared Python 3.12 and later pinned
 scikit-learn 1.9.0. Because the reported overstatement factor divides by a
 history increment close to zero, this was not a harmless packaging difference.
-The old result is retained with its environment in its filename as a
-non-canonical toolchain-sensitivity record.
+The old result is retained as
+`supplementary/incumbent_invariance/results/seed_sensitivity_py313_sklearn172.json`,
+a non-canonical toolchain-sensitivity record. The canonical manuscript
+reference is
+`supplementary/incumbent_invariance/results/seed_sensitivity.json`.
 
 The released reference is regenerated in the canonical CPython 3.12.14 lock,
 with `n_jobs=1` and a one-thread numerical thread pool. The script records the
@@ -272,3 +275,19 @@ interpreter, package versions, platform and thread-pool state rather than a
 hard-coded environment sentence. Like the D+ extractor, a normal run writes a
 candidate below `build/`; changing the reference requires
 `--update-reference`.
+
+## 10. Decision-Denominator Source Verification
+
+The first published denominator register transposed two hexadecimal characters
+in the recorded SHA-256 of `v4_run_level_totals.json`. The corrected digest is
+`5249437e827382c7ca8ae4cac066ef4f79910f1e0bbdd4451d8d3b0b7300900a`;
+the other three recorded source digests were independently rechecked and
+already matched their private source bytes.
+
+The public checker originally compared the register with constants embedded in
+the checker. That detects later alteration of the released aggregate but cannot
+authenticate an omitted primary source. The corrected checker retains that
+public integrity check and adds `--source-root` (or `ARTICLE_SOURCE_ROOT`) to
+hash all four authorised private sources directly. The released V4 aggregate
+also prints the complete decision-path accounting identity
+`199673 + 80303 + 824 = 280800`.

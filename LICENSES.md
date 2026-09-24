@@ -12,6 +12,7 @@ Unless a file carries a different notice, the MIT License in
 - `src/`;
 - `tests/`;
 - Python source under `supplementary/`;
+- Python source under `artifacts/historical_scripts/`;
 - author-created build and continuous-integration configuration.
 
 The MIT grant applies to the software itself. It does not grant rights in the
@@ -26,7 +27,10 @@ Markdown, protocol, checksum, and similar research records in:
 - `artifacts/audit/`, `artifacts/derived/`, and `artifacts/protocols/`;
 - non-software outputs under `supplementary/`;
 - author-created documentation in `docs/`, except where a file-level notice or
-  upstream right applies.
+  upstream right applies;
+- author-created root documentation and metadata (`README.md`, `CITATION.cff`,
+  and `LICENSES.md`), `MANIFEST.sha256`, and documentation under
+  `artifacts/historical_scripts/`.
 
 The file-level provenance register can confirm or override this path default.
 An upstream notice or `NOASSERTION` entry always takes precedence. Thus every

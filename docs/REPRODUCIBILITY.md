@@ -55,11 +55,13 @@ Do not overwrite a previous result. If a population is incomplete or contains du
 `requirements-lock.txt` pins the complete CPU audit environment verified with
 CPython 3.12.14; `.python-version` pins the interpreter patch release. It is the
 canonical reproduction environment, not proof of the exact historical runtime.
-The committed canonical forty-tree-seed output was regenerated in that
-environment with one estimator job and one numerical thread. The earlier
-Python 3.13.2 / scikit-learn 1.7.2 output is retained under an explicitly named
-legacy filename because the ratio changes materially across toolchains; it is
-not the manuscript reference.
+The committed canonical forty-tree-seed output,
+`supplementary/incumbent_invariance/results/seed_sensitivity.json`, was
+regenerated in that environment with one estimator job and one numerical
+thread. The earlier Python 3.13.2 / scikit-learn 1.7.2 output is retained as
+`supplementary/incumbent_invariance/results/seed_sensitivity_py313_sklearn172.json`
+because the ratio changes materially across toolchains; it is not the
+manuscript reference.
 
 GPU positive-control training remains a separate historical environment and is
 not covered by the CPU lock. Every future archival release should keep that

@@ -69,6 +69,13 @@ python scripts/audit/build_manifest.py --check
 
 The repository-only suite skips tests that require private raw artifacts. Set `ARTICLE_SOURCE_ROOT` to an authorised local archive to enable those checks. Absence is reported as unavailable; it must not be read as a successful reproduction.
 
+When that archive is available, the denominator checker also validates the
+four recorded source digests against the source bytes:
+
+```powershell
+python scripts/analysis/check_decision_denominators.py --source-root C:\path\to\archive
+```
+
 To rerun the forty-tree-seed sensitivity from the committed V6 derivative:
 
 ```powershell
@@ -78,9 +85,12 @@ python supplementary/incumbent_invariance/seed_sensitivity.py
 The command writes a candidate result below `build/`; it never overwrites the
 committed reference. Updating that reference is a deliberate maintainer action
 requiring `--update-reference`. The canonical reference was generated with one
-estimator job and a one-thread numerical thread-pool limit. The retained legacy
-record demonstrates that the unstable ratio also changes with the Python and
-scikit-learn toolchain.
+estimator job and a one-thread numerical thread-pool limit. It is
+`supplementary/incumbent_invariance/results/seed_sensitivity.json`; the retained
+legacy record is
+`supplementary/incumbent_invariance/results/seed_sensitivity_py313_sklearn172.json`.
+The latter demonstrates that the unstable ratio also changes with the Python
+and scikit-learn toolchain.
 
 The D+ trial extractor follows the same rule: it validates the complete
 94-trial population and promotion record before writing, emits candidates below

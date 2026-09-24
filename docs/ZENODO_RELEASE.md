@@ -16,18 +16,22 @@ mapping rather than label the entire archive MIT.
 
 Before creating a deposit draft:
 
-1. Ensure every tracked release file has an entry in `docs/PROVENANCE.csv` with
+1. Disable the Zenodo--GitHub integration for this repository and confirm that
+   no automatic Zenodo draft, duplicate deposit, or previously reserved DOI
+   already exists. The first production record must be the single manual
+   deposit described below.
+2. Ensure every tracked release file has an entry in `docs/PROVENANCE.csv` with
    its SHA-256, creator or source, transformation, redistribution status, and
    release license.
-2. Exclude every file marked `NOASSERTION` from the open archive. Where useful,
+3. Exclude every file marked `NOASSERTION` from the open archive. Where useful,
    retain only an upstream URL, version or commit, lawful acquisition
    instructions, and a checksum.
-3. Confirm that the archive contains no manuscript, journal template, road
+4. Confirm that the archive contains no manuscript, journal template, road
    network, route file, raw trace, model weight, private path, credential,
    review record, cache, or local environment.
-4. Run the repository tests, release audit, provenance audit, and manifest
+5. Run the repository tests, release audit, provenance audit, and manifest
    check from the pinned environment.
-5. Regenerate `MANIFEST.sha256` only after the release tree is final, then
+6. Regenerate `MANIFEST.sha256` only after the release tree is final, then
    verify every entry from a clean checkout.
 
 ## 2. Test in Zenodo Sandbox
