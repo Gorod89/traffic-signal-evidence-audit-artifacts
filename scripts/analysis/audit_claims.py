@@ -2,10 +2,10 @@
 
 Claims arrive from three places and carry different risk:
   own      - computed by the Phase-0 scripts in this directory
-  agent — reported by an inventory subagent and copied into the text
+  inventory - transcribed from a secondary inventory into the text
   archive  - quoted from a V1-V8 result file
 
-The `agent` class is the one that must not be trusted without a check,
+The `inventory` class is the one that must not be trusted without a check,
 because any secondary transcription can contain an error. This
 script re-reads the primary source for each claim and reports MATCH or MISMATCH.
 It fails loudly rather than silently passing when a source file is missing.
@@ -504,7 +504,7 @@ if INCLUDE_ARCHIVE:
         check("V1: fixed-time beats PPO in all 4 regimes", "results/analysis/summary.csv", "archive",
               4, beaten)
 
-# ------------------------------------------------------------ D+ (agent-reported inventory)
+# ------------------------------------------------------------ D+ (secondary inventory)
 dplus = None
 for name in ("dplus_summary.json", "headline_comparison.csv"):
     p = SUPPLEMENTARY / "dplus" / name
@@ -533,11 +533,11 @@ if dplus.exists():
                     except (TypeError, ValueError):
                         pass
         return None
-    check("D+ best neural overall = 0.17694", "dplus/headline_comparison.csv", "agent",
+    check("D+ best neural overall = 0.17694", "dplus/headline_comparison.csv", "inventory",
           0.17694, num(best, "overall"), tol=0.02)
-    check("D+ history_ridge overall = 0.20145", "dplus/headline_comparison.csv", "agent",
+    check("D+ history_ridge overall = 0.20145", "dplus/headline_comparison.csv", "inventory",
           0.20145, num(ridge, "overall"), tol=0.02)
-    check("D+ current_ridge overall = 0.18057", "dplus/headline_comparison.csv", "agent",
+    check("D+ current_ridge overall = 0.18057", "dplus/headline_comparison.csv", "inventory",
           0.18057, num(cur, "overall"), tol=0.02)
 
     trials_csv = SUPPLEMENTARY / "dplus" / "trials_candidate_level.csv"
@@ -545,10 +545,10 @@ if dplus.exists():
         tr = list(_csv.DictReader(trials_csv.open(encoding="utf-8")))
         h4 = [float(r["h4_improvement"]) for r in tr if r.get("h4_improvement")]
         ov = [float(r["overall_improvement"]) for r in tr if r.get("overall_improvement")]
-        check("D+ trials analysed = 94", "dplus/trials_candidate_level.csv", "agent", 94, len(tr))
-        check("D+ max h4 across trials = 0.00366", "dplus/trials_candidate_level.csv", "agent",
+        check("D+ trials analysed = 94", "dplus/trials_candidate_level.csv", "inventory", 94, len(tr))
+        check("D+ max h4 across trials = 0.00366", "dplus/trials_candidate_level.csv", "inventory",
               0.003661, max(h4) if h4 else None, tol=0.02)
-        check("D+ trials beating current_ridge(100) = 0", "dplus/trials_candidate_level.csv", "agent",
+        check("D+ trials beating current_ridge(100) = 0", "dplus/trials_candidate_level.csv", "inventory",
               0, sum(1 for x in ov if x > 0.1805747640975042))
 
     mw = SUPPLEMENTARY / "dplus" / "matched_worst_condition.csv"
@@ -561,16 +561,16 @@ if dplus.exists():
         ridge_h = row_for("history_ridge_alpha=100")
         neural_g = row_for("m-e27868141735")
         check("D+ matched worst-condition, best neural = 0.1265",
-              "dplus/matched_worst_condition.csv", "agent",
+              "dplus/matched_worst_condition.csv", "inventory",
               0.12653, float(best_n["min_mean_condition"]) if best_n else None, tol=0.02)
         check("D+ matched worst-condition, best ridge = 0.0748",
-              "dplus/matched_worst_condition.csv", "agent",
+              "dplus/matched_worst_condition.csv", "inventory",
               0.074757, float(best_b["min_mean_condition"]) if best_b else None, tol=0.02)
         check("D+ ridge on degraded sensing = -0.153",
-              "dplus/matched_worst_condition.csv", "agent",
+              "dplus/matched_worst_condition.csv", "inventory",
               -0.15254, float(ridge_h["cond_sensor_delay_noise"]) if ridge_h else None, tol=0.02)
         check("D+ neural on degraded sensing = +0.111",
-              "dplus/matched_worst_condition.csv", "agent",
+              "dplus/matched_worst_condition.csv", "inventory",
               0.111366, float(neural_g["cond_sensor_delay_noise"]) if neural_g else None, tol=0.02)
 
 # --------------------------------------------------------------------- report

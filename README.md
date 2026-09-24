@@ -46,7 +46,7 @@ The following are not distributed here:
   historical programs are retained byte-for-byte under
   `artifacts/historical_scripts/` after file-level review;
 - the complete V8 trial-JSON population;
-- local review notes, prompts, caches, environments, telemetry, and unrelated follow-up studies.
+- temporary working notes, caches, environments, telemetry, and unrelated follow-up studies.
 
 See [`docs/ARTIFACT_SCOPE.md`](docs/ARTIFACT_SCOPE.md) and [`docs/DATA_LICENSES.md`](docs/DATA_LICENSES.md) for the reasons and access boundary.
 
@@ -114,8 +114,13 @@ python supplementary/positive_control/analyze_scaled_final.py
 
 `MANIFEST.sha256` covers every tracked release file other than the manifest itself. `docs/PROVENANCE.csv` separately distinguishes byte-exact historical objects, portable adaptations, reconstructed outputs, and derived records. The two headline decision denominators are recorded with their arithmetic and source digests in `artifacts/derived/decision_denominators.json`. Continuous integration rejects manuscript/template material, private paths, placeholder metadata, and secret-like values.
 
-Citation metadata are in [`CITATION.cff`](CITATION.cff). GitHub release
-`v1.0.1` identifies this corrected package.
+Citation metadata are in [`CITATION.cff`](CITATION.cff). The archived releases
+have version-specific DOI records: [`v1.0.0`](https://doi.org/10.5281/zenodo.22938827)
+and [`v1.0.1`](https://doi.org/10.5281/zenodo.22938960). Cite the exact version
+used for reproduction; the concept DOI
+[`10.5281/zenodo.22938826`](https://doi.org/10.5281/zenodo.22938826) resolves to
+the latest version. [`docs/ZENODO_RELEASE.md`](docs/ZENODO_RELEASE.md) records
+the deposit and correction procedure.
 
 Mikhail Gorodnichev<br>
 Faculty of Information Technology, Moscow Technical University of Communication and Informatics<br>

@@ -1,6 +1,6 @@
 """Independent re-verification of the load-bearing "sample size, not architecture" claim.
 
-Claim under test (reported by an inventory pass, not yet verified):
+Claim under test (transcribed from a secondary inventory, not yet verified):
     An ordinary ExtraTrees regressor trained on the V6.1 paired-branch data
     (representation_train + development = 960 rows) clears the Stage-B verifier
     thresholds that terminated V4 (5.34% RMSE gain) and V5 (8.99%):

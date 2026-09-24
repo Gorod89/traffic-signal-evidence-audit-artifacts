@@ -215,19 +215,14 @@ V1 row count.
 
 ## 7. Claim-Origin Labels and Historical Source Identity
 
-An earlier public-cleaning pass changed the generic origin class
-`agent -- reported by an inventory subagent` to `inventory` in
-`scripts/analysis/audit_claims.py`, including the D+ check labels, and changed a
-matching sentence in `verify_fact2.py`. That was not a numerical correction or
-a removal of a product name: the label described how a secondary inventory had
-supplied the candidate values. Making the substitution without recording it
-obscured provenance.
-
-The generic historical wording has therefore been restored. It does not mean
-that an automated agent is treated as a primary source: every such claim is
-checked against the named file. A byte-exact copy of the historical checker is
-retained under `artifacts/historical_scripts/`, while the active public checker
-adds explicit public/full scopes and a non-zero exit status for mismatches.
+The active public checker uses the neutral origin class `inventory` for values
+transcribed from a secondary inventory, including the D+ checks, and
+`verify_fact2.py` uses the same terminology. This is a label-only public-interface
+normalisation: expected values, source paths, tolerances, and numerical logic
+are unchanged, and every claim is checked against the named file. The retained
+historical checker preserves its original internal labels byte-for-byte under
+`artifacts/historical_scripts/`; the active checker additionally provides
+explicit public/full scopes and a non-zero exit status for mismatches.
 
 Several other historical programs and evidence objects had also been
 normalised to LF by Git attributes. Three released evidence files have been

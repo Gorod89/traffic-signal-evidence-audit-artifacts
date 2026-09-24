@@ -1,9 +1,10 @@
 cff-version: 1.2.0
-message: "Cite this versioned software release and its exact Git commit. No DOI is asserted until an archival deposit exists. The package is mixed-license, so no single CFF license field is asserted; see LICENSES.md for the controlling path-level mapping."
+message: "Cite this versioned software release by its version-specific DOI. The package is mixed-license, so no single CFF license field is asserted; see LICENSES.md for the controlling path-level mapping."
 title: "Traffic-Signal Evidence Audit: Code and Derived Artifacts"
 type: software
 version: 1.0.1
 date-released: 2026-09-24
+doi: 10.5281/zenodo.22938960
 abstract: >-
   A curated, partial inspection and reproduction package containing corrected
   evidence tools, tests, protocol records, selected derived research records,
@@ -15,7 +16,7 @@ authors:
   - family-names: Gorodnichev
     given-names: Mikhail
     email: m.g.gorodnichev@mtuci.ru
-    affiliation: "Faculty of Information Technology, Moscow Technical University of Communication and Informatics"
+    affiliation: "Faculty of Information Technology, Moscow Technical University of Communication and Informatics, Moscow 111024, Russia"
 repository-code: "https://github.com/Gorod89/traffic-signal-evidence-audit-artifacts"
 url: "https://github.com/Gorod89/traffic-signal-evidence-audit-artifacts"
 keywords:
