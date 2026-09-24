@@ -13,7 +13,7 @@ TEXT_SUFFIXES = {
     ".bib", ".cff", ".cfg", ".cls", ".csv", ".json", ".md", ".ps1",
     ".py", ".sty", ".tex", ".toml", ".txt", ".yaml", ".yml",
 }
-SKIP_PARTS = {".git", "__pycache__"}
+SKIP_PARTS = {".git", ".pytest_cache", "__pycache__"}
 MAX_FILE_BYTES = 50 * 1024 * 1024
 FORBIDDEN_PATH_PARTS = {"manuscript", "Definitions", "versions"}
 FORBIDDEN_SUFFIXES = {".bib", ".bst", ".cls", ".eps", ".pdf", ".sty", ".tex"}
@@ -46,11 +46,13 @@ FORBIDDEN_TEXT_PATTERNS = (
 
 def main() -> int:
     problems: list[str] = []
-    files = [path for path in ROOT.rglob("*") if path.is_file()]
-    for path in sorted(files):
+    discovered_files = [path for path in ROOT.rglob("*") if path.is_file()]
+    release_files: list[Path] = []
+    for path in sorted(discovered_files):
         relative = path.relative_to(ROOT)
         if any(part in SKIP_PARTS for part in relative.parts):
             continue
+        release_files.append(path)
         if path.is_symlink():
             problems.append(f"symbolic link is not allowed: {relative.as_posix()}")
         if any(part in FORBIDDEN_PATH_PARTS for part in relative.parts):
@@ -91,7 +93,7 @@ def main() -> int:
         for problem in problems:
             print(f"- {problem}")
         return 1
-    print(f"release check passed: {len(files)} files")
+    print(f"release check passed: {len(release_files)} files")
     return 0
 
 

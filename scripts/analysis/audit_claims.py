@@ -50,6 +50,7 @@ INCLUDE_ARCHIVE = ARGS.scope == "all"
 REPO = ARGS.source_root
 
 results: list[tuple[str, str, str, object, object, bool]] = []
+EXPECTED_CHECKS = {"public": 92, "all": 135}
 
 
 def check(claim: str, source: str, origin: str, expected, actual, tol: float = 5e-3) -> None:
@@ -122,7 +123,7 @@ def read_yaml_number(path: Path, keys: tuple):
 
 # ---------------------------------------------------------------- own results
 ladder = load_json(RESULTS / "baseline_ladder.json")
-if ladder:
+if ladder is not None:
     rungs = {r["rung"][3:]: r for r in ladder["ladder"]}
     check("ladder: ridge on current observation = 10.90%",
           "results/baseline_ladder.json", "own",
@@ -143,7 +144,7 @@ if ladder:
 # The published curve is the 200-resample one; the 12-resample artifact it
 # superseded is retained but no longer backs any claim in the text.
 curve = load_json(RESULTS / "sample_size_curve_robust.json")
-if curve:
+if curve is not None:
     tc = {row["train_clusters"]: row for row in curve["training_curve"]}
     check("curve: 200 resamples per budget", "results/sample_size_curve_robust.json", "own",
           200, curve.get("repeats"))
@@ -177,7 +178,7 @@ if curve:
 # The evaluation-side half-widths are still quoted, as a hypothetical
 # bound-form diagnostic rather than as the registered gate.
 legacy = load_json(RESULTS / "sample_size_curve.json")
-if legacy:
+if legacy is not None:
     ec = {row["eval_clusters"]: row for row in legacy["evaluation_curve"]}
     check("CI halfwidth at 15 eval clusters = 11.23 pp (hypothetical bound diagnostic)",
           "results/sample_size_curve.json", "own",
@@ -189,7 +190,7 @@ if legacy:
 # The paired interval on the history increment is what replaced the withdrawn
 # ratio, so it must be audited.
 inc = load_json(RESULTS / "history_increment_ci.json")
-if inc:
+if inc is not None:
     check("history increment = +0.82 pp", "results/history_increment_ci.json", "own",
           0.82, inc.get("history_increment_pp"), tol=0.02)
     check("history increment CI covers zero", "results/history_increment_ci.json", "own",
@@ -212,7 +213,7 @@ if INCLUDE_ARCHIVE:
 
 # Cost-weight sensitivity: the null must not depend on the utility.
 cw = load_json(RESULTS / "cost_weight_sensitivity.json")
-if cw:
+if cw is not None:
     check("cost weights: component deltas reconstruct the gain",
           "results/cost_weight_sensitivity.json", "own",
           True, bool(cw["identity_residual"] < 1e-6))
@@ -225,7 +226,7 @@ if cw:
 
 # AAR funnel: the pooled figure and the single-method ratio must reconcile.
 fun = load_json(RESULTS / "aar_funnel.json")
-if fun:
+if fun is not None:
     full = fun["full_method_funnel"]
     check("funnel: full-method evaluations = 60,079", "results/aar_funnel.json", "own",
           60079, full["evaluations"])
@@ -251,7 +252,7 @@ if fun:
           15844, dig(fun, "pooled_figure", "accepted"))
 
 dorm = load_json(RESULTS / "dormancy_anatomy.json")
-if dorm:
+if dorm is not None:
     v3 = dorm["v3"]
     check("V3 proposal evaluations = 427,342", "results/dormancy_anatomy.json", "own",
           427342, v3["proposal_evaluations"])
@@ -292,7 +293,7 @@ if dorm:
           0.06533, dig(v1, "by_method", "ungated", "authority_activity_ratio"), tol=0.02)
 
 fact2 = load_json(RESULTS / "fact2_verification.json")
-if fact2:
+if fact2 is not None:
     zs = dig(fact2, "results", "gain_h4_zero_shot_ingolstadt21", default={})
     check("zero-shot ingolstadt21 gain = 10.82%", "results/fact2_verification.json", "own",
           0.1082, zs.get("rmse_gain"), tol=0.02)
@@ -302,7 +303,7 @@ if fact2:
           False, zs.get("in_training"))
 
 confirm = load_json(RESULTS / "sealed_confirmation.json")
-if confirm:
+if confirm is not None:
     check("sealed: observed RMSE gain = 13.99%", "results/sealed_confirmation.json", "own",
           0.1399, dig(confirm, "primary", "observed_rmse_gain"), tol=0.02)
     check("sealed: CI lower = 10.87%", "results/sealed_confirmation.json", "own",
@@ -339,7 +340,7 @@ if confirm:
               True, bool(written < earliest))
 
 eplus = load_json(SUPPLEMENTARY / "positive_control" / "runs" / "EPLUS_FINAL.json")
-if eplus:
+if eplus is not None:
     gains = eplus["graph_gain_vs_blind"]
     mpnn = [g["graph_gain"] for g in gains if g["family"] == "directed_mpnn"]
     attn = [g["graph_gain"] for g in gains if g["family"] == "edge_attention"]
@@ -588,12 +589,19 @@ def main() -> int:
         print(f"{claim:<{width}}  {origin:<7}  {status:<8} {exp:>10}  {act:>10}")
     print("-" * (width + 45))
     print(f"{n_ok}/{len(results)} verified against a file on disk (scope={ARGS.scope})")
+    expected_count = EXPECTED_CHECKS[ARGS.scope]
+    count_mismatch = len(results) != expected_count
+    if count_mismatch:
+        print(
+            f"ERROR: scope={ARGS.scope} instantiated {len(results)} checks; "
+            f"expected the fixed denominator {expected_count}"
+        )
     missing = [r for r in results if not r[5]]
     if missing:
         print("\nUNVERIFIED OR MISMATCHED:")
         for claim, source, origin, expected, actual, _ in missing:
             print(f"  [{origin}] {claim}  (source: {source}, read back: {actual})")
-    return 1 if missing else 0
+    return 1 if missing or count_mismatch else 0
 
 
 if __name__ == "__main__":

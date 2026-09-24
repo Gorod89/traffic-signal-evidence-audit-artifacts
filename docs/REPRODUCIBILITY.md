@@ -58,10 +58,18 @@ canonical reproduction environment, not proof of the exact historical runtime.
 The committed canonical forty-tree-seed output,
 `supplementary/incumbent_invariance/results/seed_sensitivity.json`, was
 regenerated in that environment with one estimator job and one numerical
-thread. The earlier Python 3.13.2 / scikit-learn 1.7.2 output is retained as
+thread. The earlier Python 3.13 / scikit-learn 1.7.2 output is retained as
 `supplementary/incumbent_invariance/results/seed_sensitivity_py313_sklearn172.json`
 because the ratio changes materially across toolchains; it is not the
-manuscript reference.
+manuscript reference. The retained scheduling control,
+`supplementary/incumbent_invariance/results/parallelism_control.json`, reruns
+the same 40 seeds under the canonical toolchain with `n_jobs=-1` and no
+explicit thread-pool limit. Its 200 recorded per-seed scalar comparisons match
+the canonical result exactly. Regenerate a candidate with:
+
+```powershell
+python supplementary/incumbent_invariance/parallelism_control.py
+```
 
 GPU positive-control training remains a separate historical environment and is
 not covered by the CPU lock. Every future archival release should keep that

@@ -251,15 +251,15 @@ record first, builds both tables in memory, and publishes them atomically below
 
 The claim audit previously printed five mismatches but returned process status
 zero, and optional `if artifact:` branches could omit checks silently. Its
-public mode now tests only the artifacts represented by the public package and
-returns status 1 for a failed check. Full-archive mode requires an explicit
-source root and retains the archive-only checks. Configuration and schema
-errors return a distinct non-zero status. Continuous integration runs the
-public mode.
+public and full-archive denominators are now fixed at 92 and 135 checks,
+respectively; the artifact map and provenance register likewise assert 17 and
+15 rows. Missing, structurally empty, mismatched or reduced inputs return a
+non-zero status. Full-archive mode requires an explicit source root.
+Continuous integration runs the public mode.
 
 ## 9. Tree-Seed and Toolchain Sensitivity
 
-The first forty-seed JSON was generated under Python 3.13.2 and
+The first forty-seed JSON was generated under Python 3.13 and
 scikit-learn 1.7.2, whereas the repository declared Python 3.12 and later pinned
 scikit-learn 1.9.0. Because the reported overstatement factor divides by a
 history increment close to zero, this was not a harmless packaging difference.
@@ -276,10 +276,18 @@ hard-coded environment sentence. Like the D+ extractor, a normal run writes a
 candidate below `build/`; changing the reference requires
 `--update-reference`.
 
+The seed script now exposes `--estimator-jobs`, `--thread-limit` and
+`--no-thread-limit` while refusing to replace the canonical reference under
+non-canonical controls. `parallelism_control.py` uses that interface to rerun
+all 40 seeds with `n_jobs=-1` and no explicit numerical thread limit in the
+canonical toolchain. The retained control records 200 exact scalar comparisons,
+zero mismatches and maximum absolute difference 0, along with the parallel
+runtime inventory and per-seed values.
+
 ## 10. Decision-Denominator Source Verification
 
-The first published denominator register transposed two hexadecimal characters
-in the recorded SHA-256 of `v4_run_level_totals.json`. The corrected digest is
+The first published denominator register contained two incorrect hexadecimal
+characters in the recorded SHA-256 of `v4_run_level_totals.json`. The corrected digest is
 `5249437e827382c7ca8ae4cac066ef4f79910f1e0bbdd4451d8d3b0b7300900a`;
 the other three recorded source digests were independently rechecked and
 already matched their private source bytes.

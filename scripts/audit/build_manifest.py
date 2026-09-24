@@ -17,7 +17,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 OUTPUT = ROOT / "MANIFEST.sha256"
-EXCLUDED_PARTS = {".git", "__pycache__"}
+EXCLUDED_PARTS = {".git", ".pytest_cache", "__pycache__"}
 
 
 def excluded(relative: Path) -> bool:

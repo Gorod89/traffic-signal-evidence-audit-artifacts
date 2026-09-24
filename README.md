@@ -90,7 +90,16 @@ estimator job and a one-thread numerical thread-pool limit. It is
 legacy record is
 `supplementary/incumbent_invariance/results/seed_sensitivity_py313_sklearn172.json`.
 The latter demonstrates that the unstable ratio also changes with the Python
-and scikit-learn toolchain.
+and scikit-learn toolchain. To rerun the same-environment scheduling control:
+
+```powershell
+python supplementary/incumbent_invariance/parallelism_control.py
+```
+
+It compares the canonical one-job/one-thread result with `n_jobs=-1` and no
+explicit numerical thread limit, then writes a candidate below `build/`. The
+retained `results/parallelism_control.json` records the full parallel per-seed
+result, runtime metadata and an exact 200-scalar comparison.
 
 The D+ trial extractor follows the same rule: it validates the complete
 94-trial population and promotion record before writing, emits candidates below

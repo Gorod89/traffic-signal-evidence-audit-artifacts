@@ -21,6 +21,7 @@ requires the explicit ``--update-reference`` switch.
 from __future__ import annotations
 
 import argparse
+import contextlib
 import hashlib
 import importlib.metadata
 import json
@@ -58,6 +59,27 @@ def parse_args() -> argparse.Namespace:
         default=Path(os.environ.get("V6_PAIRED_PATH", PAIRED)),
         help="V6 paired derivative to analyse",
     )
+    parser.add_argument(
+        "--estimator-jobs",
+        type=int,
+        default=1,
+        help="ExtraTrees n_jobs setting; canonical reference uses 1",
+    )
+    thread_control = parser.add_mutually_exclusive_group()
+    thread_control.add_argument(
+        "--thread-limit",
+        type=int,
+        dest="thread_limit",
+        help="numerical thread-pool limit; canonical reference uses 1",
+    )
+    thread_control.add_argument(
+        "--no-thread-limit",
+        action="store_const",
+        const=None,
+        dest="thread_limit",
+        help="do not apply threadpoolctl limits",
+    )
+    parser.set_defaults(thread_limit=1)
     destination = parser.add_mutually_exclusive_group()
     destination.add_argument(
         "--output",
@@ -76,6 +98,14 @@ def parse_args() -> argparse.Namespace:
     ).resolve()
     if not args.update_reference and args.output == REFERENCE.resolve():
         parser.error("writing the canonical reference requires --update-reference")
+    if args.estimator_jobs == 0 or args.estimator_jobs < -1:
+        parser.error("--estimator-jobs must be -1 or a positive integer")
+    if args.thread_limit is not None and args.thread_limit < 1:
+        parser.error("--thread-limit must be a positive integer")
+    if args.update_reference and (args.estimator_jobs != 1 or args.thread_limit != 1):
+        parser.error(
+            "the canonical reference requires --estimator-jobs 1 and --thread-limit 1"
+        )
     return args
 
 
@@ -103,7 +133,13 @@ def sanitize_threadpools(entries: list[dict]) -> list[dict]:
     ]
 
 
-def runtime_metadata(threadpools_before: list[dict], threadpools_during: list[dict]) -> dict:
+def runtime_metadata(
+    threadpools_before: list[dict],
+    threadpools_during: list[dict],
+    *,
+    estimator_jobs: int,
+    thread_limit: int | None,
+) -> dict:
     return {
         "python": sys.version,
         "python_implementation": platform.python_implementation(),
@@ -125,7 +161,8 @@ def runtime_metadata(threadpools_before: list[dict], threadpools_during: list[di
         },
         "threadpools_before_limit": sanitize_threadpools(threadpools_before),
         "threadpools_during_limit": sanitize_threadpools(threadpools_during),
-        "thread_limit": 1,
+        "estimator_jobs": estimator_jobs,
+        "thread_limit": thread_limit,
     }
 
 
@@ -159,13 +196,21 @@ def block(frame, columns):
     return np.hstack([np.vstack([as_vector(v) for v in frame[c]]) for c in columns])
 
 
-def main() -> int:
-    args = parse_args()
-    actual = hashlib.sha256(args.paired_path.read_bytes()).hexdigest()
+def compute_report(
+    paired_path: Path,
+    *,
+    estimator_jobs: int,
+    thread_limit: int | None,
+    canonical_result: bool,
+    print_progress: bool = True,
+) -> dict:
+    """Fit the forty seeded ladders and return a fully described result."""
+
+    actual = hashlib.sha256(paired_path.read_bytes()).hexdigest()
     if actual != EXPECTED_SHA:
         raise SystemExit(f"input hash changed: {actual}")
 
-    df = pd.read_csv(args.paired_path)
+    df = pd.read_csv(paired_path)
     train = df[df.split.isin(("representation_train", "development"))].reset_index(drop=True)
     evalu = df[df.split == "validation"].reset_index(drop=True)
     y_tr = train[TARGET].to_numpy(float)
@@ -181,12 +226,21 @@ def main() -> int:
     seeds = [PHASE0_SEED] + [PHASE0_SEED + i for i in range(1, N_SEEDS)]
     rows = []
     threadpools_before = threadpool_info()
-    with threadpool_limits(limits=1):
+    thread_context = (
+        threadpool_limits(limits=thread_limit)
+        if thread_limit is not None
+        else contextlib.nullcontext()
+    )
+    with thread_context:
         threadpools_during = threadpool_info()
         for sd in seeds:
             g = {}
             for tag, xt, xe in (("contrast", con_tr, con_ev), ("history", hist_tr, hist_ev)):
-                m = ExtraTreesRegressor(n_estimators=300, random_state=sd, n_jobs=1).fit(xt, y_tr)
+                m = ExtraTreesRegressor(
+                    n_estimators=300,
+                    random_state=sd,
+                    n_jobs=estimator_jobs,
+                ).fit(xt, y_tr)
                 g[tag] = 1.0 - float(np.sqrt(np.mean((m.predict(xe) - y_ev) ** 2))) / denom
             num = 100 * (g["contrast"] - zero_gain)
             den = 100 * (g["history"] - g["contrast"])
@@ -194,34 +248,61 @@ def main() -> int:
                          "gain_history_pct": 100 * g["history"],
                          "numerator_pp": num, "denominator_pp": den,
                          "factor": num / den if den != 0 else float("nan")})
-            print(f"seed {sd}  contrast {100*g['contrast']:6.2f}%  history {100*g['history']:6.2f}%"
-                  f"  num {num:+6.2f}pp  den {den:+6.2f}pp  factor {num/den:>10.1f}")
+            if print_progress:
+                print(
+                    f"seed {sd}  contrast {100*g['contrast']:6.2f}%  "
+                    f"history {100*g['history']:6.2f}%  num {num:+6.2f}pp  "
+                    f"den {den:+6.2f}pp  factor {num/den:>10.1f}"
+                )
 
     t = pd.DataFrame(rows)
-    print("\n" + "=" * 84)
-    print("Everything below varies ONLY the ExtraTrees random_state. Data, split, fold "
-          "protocol,\nfeature blocks and metric are byte-identical across rows.")
-    print("=" * 84)
-    for col, fmt in (("numerator_pp", "{:+.2f}"), ("denominator_pp", "{:+.2f}"),
-                     ("factor", "{:.1f}")):
-        v = t[col].to_numpy()
-        print(f"{col:<16} median {fmt.format(np.median(v)):>10}   "
-              f"min {fmt.format(v.min()):>10}   max {fmt.format(v.max()):>10}   "
-              f"sd {np.std(v):>10.2f}")
-    print(f"\ndenominator <= 0 in {int((t.denominator_pp <= 0).sum())} of {len(t)} seeds")
-    print(f"factor spans {t.factor.min():.1f} to {t.factor.max():.1f} "
-          f"across {len(t)} seeds of the same estimator")
-    print(f"\nphase0/baseline_ladder.py published: numerator +16.38 pp, denominator "
-          f"+0.82 pp, factor 19.9")
-    print(f"this environment at the same seed {PHASE0_SEED}: numerator "
-          f"{t.numerator_pp.iloc[0]:+.2f} pp, denominator {t.denominator_pp.iloc[0]:+.2f} pp, "
-          f"factor {t.factor.iloc[0]:.1f}")
+    if print_progress:
+        print("\n" + "=" * 84)
+        print(
+            "Everything below varies ONLY the ExtraTrees random_state. Data, split, "
+            "fold protocol,\nfeature blocks and metric are byte-identical across rows."
+        )
+        print("=" * 84)
+        for col, fmt in (
+            ("numerator_pp", "{:+.2f}"),
+            ("denominator_pp", "{:+.2f}"),
+            ("factor", "{:.1f}"),
+        ):
+            values = t[col].to_numpy()
+            print(
+                f"{col:<16} median {fmt.format(np.median(values)):>10}   "
+                f"min {fmt.format(values.min()):>10}   "
+                f"max {fmt.format(values.max()):>10}   "
+                f"sd {np.std(values):>10.2f}"
+            )
+        print(
+            f"\ndenominator <= 0 in {int((t.denominator_pp <= 0).sum())} "
+            f"of {len(t)} seeds"
+        )
+        print(
+            f"factor spans {t.factor.min():.1f} to {t.factor.max():.1f} "
+            f"across {len(t)} seeds of the same estimator"
+        )
+        print(
+            "\nphase0/baseline_ladder.py published: numerator +16.38 pp, "
+            "denominator +0.82 pp, factor 19.9"
+        )
+        print(
+            f"this environment at the same seed {PHASE0_SEED}: numerator "
+            f"{t.numerator_pp.iloc[0]:+.2f} pp, denominator "
+            f"{t.denominator_pp.iloc[0]:+.2f} pp, factor {t.factor.iloc[0]:.1f}"
+        )
 
     report = {
         "input_sha256": actual,
         "what_varies": "ExtraTreesRegressor random_state only",
-        "canonical_result": bool(args.update_reference),
-        "runtime": runtime_metadata(threadpools_before, threadpools_during),
+        "canonical_result": canonical_result,
+        "runtime": runtime_metadata(
+            threadpools_before,
+            threadpools_during,
+            estimator_jobs=estimator_jobs,
+            thread_limit=thread_limit,
+        ),
         "n_seeds": len(t),
         "phase0_published": {"numerator_pp": 16.376550268185774,
                              "denominator_pp": 0.8243617337080789,
@@ -234,6 +315,17 @@ def main() -> int:
         "denominator_nonpositive_seeds": int((t.denominator_pp <= 0).sum()),
         "evidence_class": "retrospective_diagnostic_not_confirmatory",
     }
+    return report
+
+
+def main() -> int:
+    args = parse_args()
+    report = compute_report(
+        args.paired_path,
+        estimator_jobs=args.estimator_jobs,
+        thread_limit=args.thread_limit,
+        canonical_result=bool(args.update_reference),
+    )
     write_json_atomic(args.output, report)
     print(f"\nwrote {args.output}")
     return 0

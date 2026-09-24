@@ -26,14 +26,14 @@
         "version": "0.3.30",
         "threading_layer": "pthreads",
         "architecture": "Haswell",
-        "num_threads": 1
+        "num_threads": 20
       },
       {
         "user_api": "openmp",
         "internal_api": "openmp",
         "prefix": "vcomp",
         "version": null,
-        "num_threads": 1
+        "num_threads": 20
       },
       {
         "user_api": "blas",
@@ -42,7 +42,7 @@
         "version": "0.3.31.dev",
         "threading_layer": "pthreads",
         "architecture": "Haswell",
-        "num_threads": 1
+        "num_threads": 20
       }
     ],
     "threadpools_during_limit": [
@@ -72,6 +72,7 @@
         "num_threads": 1
       }
     ],
+    "estimator_jobs": 1,
     "thread_limit": 1
   },
   "n_seeds": 40,

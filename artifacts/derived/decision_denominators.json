@@ -24,15 +24,25 @@
     "controller_decisions": 1123200,
     "not_selected_for_proposal_evaluation": 1063121,
     "selected_for_proposal_evaluation": 60079,
+    "budget_block_flag_recorded": 815845,
+    "other_nonquery_decisions": 247276,
+    "minimum_gate_active_decisions": 875924,
     "candidate_matched_incumbent": 50032,
     "candidate_differed_from_incumbent": 10047,
     "executed_deviations": 70,
     "identities": {
       "selection_partition": "1063121 + 60079 = 1123200",
+      "nonquery_partition": "815845 + 247276 = 1063121",
+      "minimum_gate_active": "815845 + 60079 = 875924",
+      "three_way_partition": "815845 + 247276 + 60079 = 1123200",
       "proposal_partition": "50032 + 10047 = 60079"
     },
+    "budget_flag_interpretation": "The budget flag is recorded only after the selection gate is active and is disjoint from an issued query. It can coincide with an unsatisfied cooldown because the implementation gives the budget reason precedence. The other-nonquery category therefore combines inactive-gate and cooldown-only decisions.",
     "rates": {
       "selection_rate_all_decisions": 0.0534891381766382,
+      "budget_flag_rate_nonquery_decisions": 0.7674055916494924,
+      "budget_flag_rate_all_decisions": 0.7263577279202279,
+      "minimum_gate_active_rate_all_decisions": 0.779846866096866,
       "incumbent_match_rate_selected": 0.83277018592187,
       "executed_deviation_rate_all_decisions": 0.0000623219373219373,
       "executed_deviation_rate_selected": 0.00116513257544233
@@ -42,11 +52,14 @@
     "controller_decisions": 280800,
     "candidate_matched_incumbent": 199673,
     "candidate_differed_from_incumbent": 81127,
+    "scheduler_queries": 831,
     "queried_after_disagreement": 824,
+    "queries_returning_incumbent_action": 7,
     "not_queried_after_disagreement": 80303,
     "accepted_overrides": 133,
     "identities": {
       "proposal_partition": "199673 + 81127 = 280800",
+      "scheduler_query_partition": "824 + 7 = 831",
       "query_partition": "824 + 80303 = 81127",
       "decision_path_partition": "199673 + 80303 + 824 = 280800"
     },

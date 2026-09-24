@@ -97,6 +97,20 @@ The model weights are not distributed. The private working archive preserves
 download metadata for the following two snapshots; the public package records
 their identities and the licensing limits without redistributing the files.
 
+### Qwen2.5-0.5B-Instruct (V1)
+
+- **Model identifier recorded by the V1 configuration:**
+  `Qwen/Qwen2.5-0.5B-Instruct`.
+- **Source:** <https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct>
+- **Configuration evidence:** the retained private V1
+  `configs/experiment.yaml` has SHA-256
+  `ed7ce75cb6f6af299655dc35485e7177239b23e43eca99147a20ec9a124049b0`
+  and names this model explicitly.
+- **Provenance limit:** no byte-exact V1 weight snapshot, immutable model
+  revision, download record, adjacent model card or adjacent license file was
+  retained. The identifier establishes the configured model name, not the exact
+  weights that executed or their contemporaneous licensing state.
+
 ### LightGPT-0.5B-Qwen2
 
 - **Model identifier:** `lightgpt/LightGPT-0.5B-Qwen2`.

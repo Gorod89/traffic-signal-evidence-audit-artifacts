@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import argparse
 import csv
 import hashlib
 import re
@@ -10,6 +11,7 @@ from pathlib import Path, PurePosixPath
 
 ROOT = Path(__file__).resolve().parents[2]
 REGISTRY = ROOT / "docs" / "PROVENANCE.csv"
+EXPECTED_ROWS = 15
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 REQUIRED_COLUMNS = {
     "public_path",
@@ -41,13 +43,30 @@ def digest_for_policy(path: Path, policy: str) -> str:
     return hashlib.sha256(payload).hexdigest()
 
 
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--registry",
+        type=Path,
+        default=REGISTRY,
+        help="provenance CSV to validate (default: docs/PROVENANCE.csv)",
+    )
+    return parser.parse_args()
+
+
 def main() -> int:
+    args = parse_args()
     errors: list[str] = []
-    with REGISTRY.open(newline="", encoding="utf-8") as handle:
+    with args.registry.open(newline="", encoding="utf-8") as handle:
         reader = csv.DictReader(handle)
         if set(reader.fieldnames or []) != REQUIRED_COLUMNS:
             errors.append("PROVENANCE.csv has unexpected columns")
         rows = list(reader)
+
+    if len(rows) != EXPECTED_ROWS:
+        errors.append(
+            f"PROVENANCE.csv has {len(rows)} rows; expected the fixed register {EXPECTED_ROWS}"
+        )
 
     seen: set[str] = set()
     for line_number, row in enumerate(rows, start=2):
