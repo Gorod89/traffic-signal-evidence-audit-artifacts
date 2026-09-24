@@ -113,7 +113,7 @@ python supplementary/positive_control/analyze_scaled_final.py
 
 ## Integrity and citation
 
-`MANIFEST.sha256` covers every tracked release file other than the manifest itself. `docs/PROVENANCE.csv` separately distinguishes byte-exact historical objects, portable adaptations, reconstructed outputs, and derived records. The two headline decision denominators are recorded with their arithmetic and source digests in `artifacts/derived/decision_denominators.json`. Continuous integration rejects manuscript/template material, private paths, placeholder metadata, unreviewed assistant provenance, and secret-like values.
+`MANIFEST.sha256` covers every tracked release file other than the manifest itself. `docs/PROVENANCE.csv` separately distinguishes byte-exact historical objects, portable adaptations, reconstructed outputs, and derived records. The two headline decision denominators are recorded with their arithmetic and source digests in `artifacts/derived/decision_denominators.json`. Continuous integration rejects manuscript/template material, private paths, placeholder metadata, excluded working-process metadata, and secret-like values.
 
 Citation metadata are in [`CITATION.cff`](CITATION.cff). GitHub release
 `v1.0.1` identifies this corrected package. No Zenodo DOI exists yet;
