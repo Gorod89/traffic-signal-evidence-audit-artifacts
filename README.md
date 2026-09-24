@@ -115,9 +115,7 @@ python supplementary/positive_control/analyze_scaled_final.py
 `MANIFEST.sha256` covers every tracked release file other than the manifest itself. `docs/PROVENANCE.csv` separately distinguishes byte-exact historical objects, portable adaptations, reconstructed outputs, and derived records. The two headline decision denominators are recorded with their arithmetic and source digests in `artifacts/derived/decision_denominators.json`. Continuous integration rejects manuscript/template material, private paths, placeholder metadata, and secret-like values.
 
 Citation metadata are in [`CITATION.cff`](CITATION.cff). GitHub release
-`v1.0.1` identifies this corrected package. No Zenodo DOI exists yet;
-[`docs/ZENODO_RELEASE.md`](docs/ZENODO_RELEASE.md) gives the controlled deposit
-procedure, and no DOI should be cited until that record is published.
+`v1.0.1` identifies this corrected package.
 
 Mikhail Gorodnichev<br>
 Faculty of Information Technology, Moscow Technical University of Communication and Informatics<br>
