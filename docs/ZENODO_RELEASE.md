@@ -20,9 +20,14 @@ Before creating a deposit draft:
    no automatic Zenodo draft, duplicate deposit, or previously reserved DOI
    already exists. The first production record must be the single manual
    deposit described below.
-2. Ensure every tracked release file has an entry in `docs/PROVENANCE.csv` with
-   its SHA-256, creator or source, transformation, redistribution status, and
-   release license.
+2. Ensure every tracked release file is covered by `MANIFEST.sha256` and by an
+   explicit path-level license scope in `LICENSES.md` or `docs/DATA_LICENSES.md`.
+   Ensure every evidentiary byte-copy or transformation claimed by the article
+   has an entry in the curated `docs/PROVENANCE.csv` with its source and public
+   SHA-256, transformation, evidence role, storage policy, rights holder,
+   license and redistribution status. The provenance register is intentionally
+   not a second census of documentation, tests and package metadata already
+   covered by the manifest and license-scope files.
 3. Exclude every file marked `NOASSERTION` from the open archive. Where useful,
    retain only an upstream URL, version or commit, lawful acquisition
    instructions, and a checksum.
