@@ -4,7 +4,6 @@ Public companion repository for the analysis behind:
 
 > Mikhail Gorodnichev, “Baselines, Sample Size, and Supervisory Activity in Guarded Reinforcement-Learning Traffic-Signal Control: A SUMO Evidence Audit.”
 
-This repository intentionally contains no manuscript source, typeset article PDF, journal template, or `Definitions/` directory. It was created with a fresh Git history; it is not a fork or history rewrite of the private working repository.
 
 ## What this repository is
 
