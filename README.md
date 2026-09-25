@@ -125,14 +125,13 @@ the latest version. [`docs/ZENODO_RELEASE.md`](docs/ZENODO_RELEASE.md) records
 the deposit and correction procedure.
 
 Mikhail Gorodnichev (corresponding author)<br>
-Marina Moseva<br>
+Marina Moseva ([ORCID 0000-0002-9778-124X](https://orcid.org/0000-0002-9778-124X))<br>
 Faculty of Information Technology, Moscow Technical University of Communication and Informatics<br>
 Moscow 111024, Russia<br>
-m.g.gorodnichev@mtuci.ru
+m.g.gorodnichev@mtuci.ru; m.s.moseva@mtuci.ru
 
 Marina Moseva contributed to software, validation, formal analysis, and data
-curation. No email or ORCID is asserted for her because neither identifier was
-supplied for this release.
+curation.
 
 ## Licensing and attribution
 
