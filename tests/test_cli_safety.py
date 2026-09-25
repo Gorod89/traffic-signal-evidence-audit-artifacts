@@ -27,7 +27,7 @@ class ClaimAuditCliTests(unittest.TestCase):
             check=False,
         )
         self.assertEqual(completed.returncode, 0, completed.stdout + completed.stderr)
-        self.assertIn("92/92 verified against a file on disk (scope=public)", completed.stdout)
+        self.assertIn("98/98 verified against a file on disk (scope=public)", completed.stdout)
 
     def test_public_scope_rejects_structurally_empty_json(self) -> None:
         probe = textwrap.dedent(
@@ -56,7 +56,7 @@ class ClaimAuditCliTests(unittest.TestCase):
             check=False,
         )
         self.assertNotEqual(completed.returncode, 0)
-        self.assertIn("89/92 verified", completed.stdout)
+        self.assertIn("95/98 verified", completed.stdout)
         self.assertIn("MISMATCH", completed.stdout)
 
     def test_public_scope_rejects_a_reduced_check_denominator(self) -> None:
@@ -86,8 +86,8 @@ class ClaimAuditCliTests(unittest.TestCase):
             check=False,
         )
         self.assertNotEqual(completed.returncode, 0)
-        self.assertIn("89/89 verified", completed.stdout)
-        self.assertIn("expected the fixed denominator 92", completed.stdout)
+        self.assertIn("95/95 verified", completed.stdout)
+        self.assertIn("expected the fixed denominator 98", completed.stdout)
 
     def test_all_scope_fails_closed_when_archive_is_missing(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

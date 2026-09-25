@@ -13,6 +13,17 @@ The concept DOI `10.5281/zenodo.22938826` represents the version chain and
 resolves to the latest version. Reproducibility claims should cite the exact
 version DOI rather than the concept DOI.
 
+## Known archive/tag mismatch in the first two records
+
+The files currently attached to the `v1.0.0` and `v1.0.1` Zenodo records were
+created during post-publication correction from the later repository tree at
+commit `926b8c105e5b4b37b986b270f7b6b3d0a45d56bf`, not from the commits named by
+the Git tags. After normalising the archive root, the two corrected deposits
+differ only in `CITATION.cff` and `MANIFEST.sha256`; they must not be treated as
+byte-exact snapshots of tags `v1.0.0` and `v1.0.1`. The record metadata for both
+versions should carry this note. Version `v1.0.2` is therefore built from and
+verified against its exact tag, and supersedes those records for reproduction.
+
 The records contain a curated partial inspection and reproduction package, not
 a complete raw-data execution ledger. Road networks, routes, raw paired traces,
 model weights, and other restricted or unavailable inputs remain outside the

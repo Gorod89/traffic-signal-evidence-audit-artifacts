@@ -76,6 +76,8 @@ def analyse_v3() -> dict:
     disagreed = 0
     accepted = 0
     gains_when_disagreed: list[float] = []
+    gains_by_method: dict[str, list[float]] = defaultdict(list)
+    accepted_full_method: list[dict] = []
 
     for path in files:
         for rec in json.loads(path.read_text(encoding="utf-8")):
@@ -88,12 +90,47 @@ def analyse_v3() -> dict:
                 disagreed += 1
                 value = rec.get("calibrated_lower_gain")
                 if value is not None:
-                    gains_when_disagreed.append(float(value))
+                    value = float(value)
+                    gains_when_disagreed.append(value)
+                    gains_by_method[rec["method"]].append(value)
             if rec.get("accepted"):
                 accepted += 1
+                if rec["method"] == "ergs_v3":
+                    accepted_full_method.append(rec)
 
     gains = np.asarray(gains_when_disagreed, dtype=np.float64)
     no_disagreement = by_reason.get("no_disagreement", 0)
+
+    method_gain_summary = {}
+    for method, values in sorted(gains_by_method.items()):
+        array = np.asarray(values, dtype=np.float64)
+        method_gain_summary[method] = {
+            "n": int(array.size),
+            "strictly_positive": int(np.sum(array > 0)),
+            "fraction_strictly_positive": float(np.mean(array > 0)),
+            "minimum": float(array.min()),
+            "maximum": float(array.max()),
+        }
+
+    accepted_raw = np.asarray(
+        [float(rec["calibrated_lower_gain"]) for rec in accepted_full_method],
+        dtype=np.float64,
+    )
+    accepted_effective = np.asarray(
+        [float(rec["effective_lower_gain"]) for rec in accepted_full_method],
+        dtype=np.float64,
+    )
+    accepted_directions = Counter(
+        f"{rec['baseline_action']}->{rec['candidate_action']}"
+        for rec in accepted_full_method
+    )
+    accepted_events = Counter(
+        (rec.get("event") or {}).get("event_type", "none")
+        for rec in accepted_full_method
+    )
+    accepted_triggers = Counter(
+        rec.get("trigger_reason") or "none" for rec in accepted_full_method
+    )
 
     return {
         "files": len(files),
@@ -116,6 +153,23 @@ def analyse_v3() -> dict:
             "fraction_strictly_positive": (
                 float(np.mean(gains > 0)) if gains.size else None
             ),
+        },
+        "calibrated_lower_gain_by_method": method_gain_summary,
+        "full_method_accepted_deviations": {
+            "n": len(accepted_full_method),
+            "directions": dict(accepted_directions),
+            "event_types": dict(accepted_events),
+            "trigger_reasons": dict(accepted_triggers),
+            "calibrated_lower_gain_range": (
+                [float(accepted_raw.min()), float(accepted_raw.max())]
+                if accepted_raw.size else None
+            ),
+            "effective_lower_gain_range": (
+                [float(accepted_effective.min()), float(accepted_effective.max())]
+                if accepted_effective.size else None
+            ),
+            "emergency_priority_bonus": 0.90,
+            "minimum_effective_gain": 0.0,
         },
         "block_reasons_by_method": {
             m: dict(c.most_common()) for m, c in sorted(by_method_reason.items())

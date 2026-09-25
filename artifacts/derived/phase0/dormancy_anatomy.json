@@ -34,6 +34,72 @@
       "max": 0.5175284752797975,
       "fraction_strictly_positive": 0.002047966420120847
     },
+    "calibrated_lower_gain_by_method": {
+      "ergs_no_calibration": {
+        "n": 10028,
+        "strictly_positive": 121,
+        "fraction_strictly_positive": 0.012066214599122457,
+        "minimum": -2.9603657133465977,
+        "maximum": 0.5175284752797975
+      },
+      "ergs_no_hysteresis": {
+        "n": 10041,
+        "strictly_positive": 0,
+        "fraction_strictly_positive": 0.0,
+        "minimum": -3.562745962350182,
+        "maximum": 0.0
+      },
+      "ergs_no_shield": {
+        "n": 10047,
+        "strictly_positive": 0,
+        "fraction_strictly_positive": 0.0,
+        "minimum": -3.562745962350182,
+        "maximum": 0.0
+      },
+      "ergs_no_uncertainty": {
+        "n": 10028,
+        "strictly_positive": 0,
+        "fraction_strictly_positive": 0.0,
+        "minimum": -3.562745962350182,
+        "maximum": 0.0
+      },
+      "ergs_v3": {
+        "n": 10047,
+        "strictly_positive": 0,
+        "fraction_strictly_positive": 0.0,
+        "minimum": -3.562745962350182,
+        "maximum": 0.0
+      },
+      "illm_style_review": {
+        "n": 8892,
+        "strictly_positive": 0,
+        "fraction_strictly_positive": 0.0,
+        "minimum": 0.0,
+        "maximum": 0.0
+      }
+    },
+    "full_method_accepted_deviations": {
+      "n": 70,
+      "directions": {
+        "0->1": 70
+      },
+      "event_types": {
+        "EMERGENCY_VEHICLE": 70
+      },
+      "trigger_reasons": {
+        "semantic": 70
+      },
+      "calibrated_lower_gain_range": [
+        -0.8353900653563943,
+        -0.0848517737237866
+      ],
+      "effective_lower_gain_range": [
+        0.06460993464360576,
+        0.8151482262762134
+      ],
+      "emergency_priority_bonus": 0.9,
+      "minimum_effective_gain": 0.0
+    },
     "block_reasons_by_method": {
       "ergs_no_calibration": {
         "no_disagreement": 48015,

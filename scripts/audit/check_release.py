@@ -3,8 +3,6 @@
 
 from __future__ import annotations
 
-import hashlib
-import os
 import re
 import sys
 from pathlib import Path
@@ -19,15 +17,6 @@ SKIP_PARTS = {".git", ".pytest_cache", "__pycache__"}
 MAX_FILE_BYTES = 50 * 1024 * 1024
 FORBIDDEN_PATH_PARTS = {"manuscript", "Definitions", "versions"}
 FORBIDDEN_SUFFIXES = {".bib", ".bst", ".cls", ".eps", ".pdf", ".sty", ".tex"}
-
-# Installation-specific policy tokens stay outside the release tree. A caller
-# may provide comma-separated lowercase-token SHA-256 values when needed.
-BLOCKED_TOKEN_DIGESTS = frozenset(
-    value.strip().lower()
-    for value in os.environ.get("RELEASE_BLOCKED_TOKEN_SHA256", "").split(",")
-    if value.strip()
-)
-TOKEN_PATTERN = re.compile(r"[A-Za-z][A-Za-z0-9_-]*")
 
 ABSOLUTE_PATH_PATTERNS = (
     re.compile(r"[A-Za-z]:\\Users\\", re.I),
@@ -51,15 +40,6 @@ FORBIDDEN_TEXT_PATTERNS = (
 )
 
 
-def contains_blocked_token(value: str) -> bool:
-    """Match blocked product tokens without storing them in release text."""
-    for token in TOKEN_PATTERN.findall(value):
-        digest = hashlib.sha256(token.casefold().encode("utf-8")).hexdigest()
-        if digest in BLOCKED_TOKEN_DIGESTS:
-            return True
-    return False
-
-
 def main() -> int:
     problems: list[str] = []
     discovered_files = [path for path in ROOT.rglob("*") if path.is_file()]
@@ -73,8 +53,6 @@ def main() -> int:
             problems.append(f"symbolic link is not allowed: {relative.as_posix()}")
         if any(part in FORBIDDEN_PATH_PARTS for part in relative.parts):
             problems.append(f"forbidden release path: {relative.as_posix()}")
-        if contains_blocked_token(relative.as_posix()):
-            problems.append(f"blocked product token in release path: {relative.as_posix()}")
         if path.suffix.lower() in FORBIDDEN_SUFFIXES:
             problems.append(f"forbidden release file type: {relative.as_posix()}")
         size = path.stat().st_size
@@ -100,11 +78,6 @@ def main() -> int:
                             f"forbidden release text: {relative.as_posix()}:{line_number}"
                         )
                         break
-                if contains_blocked_token(line):
-                    problems.append(
-                        f"blocked product token in release text: "
-                        f"{relative.as_posix()}:{line_number}"
-                    )
             for pattern in SECRET_PATTERNS:
                 if pattern.search(line):
                     problems.append(

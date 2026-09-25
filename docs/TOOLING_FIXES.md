@@ -215,14 +215,18 @@ V1 row count.
 
 ## 7. Claim-Origin Labels and Historical Source Identity
 
-The active public checker uses the neutral origin class `inventory` for values
-transcribed from a secondary inventory, including the D+ checks, and
-`verify_fact2.py` uses the same terminology. This is a label-only public-interface
-normalisation: expected values, source paths, tolerances, and numerical logic
-are unchanged, and every claim is checked against the named file. The retained
-historical checker preserves its original internal labels byte-for-byte under
-`artifacts/historical_scripts/`; the active checker additionally provides
-explicit public/full scopes and a non-zero exit status for mismatches.
+The active public checker again uses the historical origin class `agent` for
+values reported by an inventory subagent, including the D+ checks. Earlier
+public-release commits replaced this label with `inventory` without recording
+the change clearly enough. Making that substitution without recording it
+obscured provenance, even though expected values, source paths, tolerances and
+numerical logic did not change. The retained historical checker preserves its
+original labels byte-for-byte under `artifacts/historical_scripts/`; the active
+checker additionally provides explicit public/full scopes and a non-zero exit
+status for mismatches. The release checker no longer supports hidden
+SHA-256-encoded product-name filters. The repository instead discloses the
+assistive tools used in preparing the manuscript and maintaining this package
+in `docs/AI_USE_DISCLOSURE.md`.
 
 Several other historical programs and evidence objects had also been
 normalised to LF by Git attributes. Three released evidence files have been
@@ -246,7 +250,7 @@ record first, builds both tables in memory, and publishes them atomically below
 
 The claim audit previously printed five mismatches but returned process status
 zero, and optional `if artifact:` branches could omit checks silently. Its
-public and full-archive denominators are now fixed at 92 and 135 checks,
+public and full-archive denominators are now fixed at 98 and 141 checks,
 respectively; the artifact map and provenance register likewise assert 17 and
 15 rows. Missing, structurally empty, mismatched or reduced inputs return a
 non-zero status. Full-archive mode requires an explicit source root.
