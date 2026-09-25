@@ -181,13 +181,17 @@ def figure_dormancy() -> None:
     calibrated = v3["computed_calibrated_bounds"]
     no_cal = v3["computed_uncalibrated_bounds"]
     bars = [calibrated["strictly_positive"], no_cal["strictly_positive"]]
-    labels = [f"four calibrated variants\n(n={calibrated['n']:,})",
-              f"no-calibration ablation\n(n={no_cal['n']:,})"]
-    ax2.bar(labels, bars, color=[BLUE, GREEN], alpha=0.88, width=0.58)
+    labels = [f"four calibrated variants\nn={calibrated['n']:,}",
+              f"no-calibration ablation\nn={no_cal['n']:,}"]
+    ypos2 = [0, 1]
+    ax2.barh(ypos2, bars, color=[BLUE, GREEN], alpha=0.88, height=0.55)
+    ax2.set_yticks(ypos2)
+    ax2.set_yticklabels(labels, fontsize=7.5)
+    ax2.invert_yaxis()
     for i, value in enumerate(bars):
-        ax2.text(i, value + 4, f"{value:,} positive LCBs", ha="center", fontsize=8)
-    ax2.set_ylim(0, max(bars) * 1.16)
-    ax2.set_ylabel("number of strictly positive LCBs")
+        ax2.text(max(value + 3, 3), i, f"{value:,} positive", va="center", fontsize=8)
+    ax2.set_xlim(0, 140)
+    ax2.set_xlabel("strictly positive lower bounds")
     ax2.set_title("(b) computed lower bounds", fontsize=9, loc="left")
     fig.subplots_adjust(left=0.19, right=0.98, bottom=0.22, top=0.88, wspace=0.48)
     save(fig, "dormancy_anatomy_v21")
