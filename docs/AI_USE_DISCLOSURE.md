@@ -1,6 +1,6 @@
 # Assistive-tool disclosure
 
-Generative-AI coding agents were used under the author's direction in both the
+Generative-AI coding agents were used under the first author's direction in both the
 original research programme and the later reanalysis. Codex (OpenAI; model
 GPT-5.6 Sol) executed commands used to generate routes, train controllers and
 verifiers, run SUMO evaluations and paired-branch collections, and compute
@@ -14,10 +14,10 @@ post hoc audits, and reproduction runs.
 
 Experimental records are outputs of the SUMO simulator and the research
 programs; no observation was synthesized, edited, or replaced by a language
-model. Agent session logs retained by the author record commands executed in
+model. Agent session logs retained by the first author record commands executed in
 those sessions, but cannot establish the origin of commands run elsewhere or
-who made every historical design decision. The author reviewed the code,
-configurations, protocols, outputs, analyses, and text and takes full
+who made every historical design decision. Both authors reviewed the code,
+configurations, protocols, outputs, analyses, and text and take full
 responsibility for the repository and associated publication.
 
 The term `agent` in `scripts/analysis/audit_claims.py` is a provenance class

@@ -14,6 +14,21 @@ The concept DOI `10.5281/zenodo.22938826` represents the version chain and
 resolves to the latest version. Reproducibility claims should cite the exact
 version DOI rather than the concept DOI.
 
+## Current GitHub release
+
+Release `v1.0.5` adds Marina Moseva as the second software creator in
+`CITATION.cff`, package metadata, citation guidance, and applicable copyright
+notices. Her recorded contribution is software, validation, formal analysis,
+and data curation. No email or ORCID is asserted for her because neither
+identifier was supplied. This is a metadata and documentation release: it does
+not alter code behaviour, experimental records, derived numerical results, or
+claim-audit expectations.
+
+Zenodo's GitHub integration reads the two ordered creators and their shared
+affiliation from `CITATION.cff`. The version-specific DOI for `v1.0.5` must be
+recorded in the GitHub release notes after Zenodo finishes processing; until
+then, the concept DOI remains the stable link to the version chain.
+
 ## Known archive/tag mismatch in the first two records
 
 The files currently attached to the `v1.0.0` and `v1.0.1` Zenodo records were

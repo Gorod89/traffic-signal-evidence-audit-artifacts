@@ -2,7 +2,7 @@
 
 Public companion repository for the analysis behind:
 
-> Mikhail Gorodnichev, “Baselines, Sample Size, and Supervisory Activity in Guarded Reinforcement-Learning Traffic-Signal Control: A SUMO Evidence Audit.”
+> Mikhail Gorodnichev and Marina Moseva, “Baselines, Sample Size, and Supervisory Activity in Guarded Reinforcement-Learning Traffic-Signal Control: A SUMO Evidence Audit.”
 
 
 ## What this repository is
@@ -124,10 +124,15 @@ Cite the exact version used for reproduction; the concept DOI
 the latest version. [`docs/ZENODO_RELEASE.md`](docs/ZENODO_RELEASE.md) records
 the deposit and correction procedure.
 
-Mikhail Gorodnichev<br>
+Mikhail Gorodnichev (corresponding author)<br>
+Marina Moseva<br>
 Faculty of Information Technology, Moscow Technical University of Communication and Informatics<br>
 Moscow 111024, Russia<br>
 m.g.gorodnichev@mtuci.ru
+
+Marina Moseva contributed to software, validation, formal analysis, and data
+curation. No email or ORCID is asserted for her because neither identifier was
+supplied for this release.
 
 ## Licensing and attribution
 

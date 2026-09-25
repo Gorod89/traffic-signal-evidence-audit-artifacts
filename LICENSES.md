@@ -6,7 +6,8 @@ declaration that one license covers the entire tree.
 ## Author-created software: MIT
 
 Unless a file carries a different notice, the MIT License in
-`LICENSES/MIT.txt` applies to software authored by Mikhail Gorodnichev in:
+`LICENSES/MIT.txt` applies to software authored by Mikhail Gorodnichev and/or
+Marina Moseva in:
 
 - `scripts/`;
 - `src/`;
@@ -38,9 +39,9 @@ included author-created data record has an explicit reuse license even when it
 is not one of the historically transformed objects enumerated in the current
 provenance audit.
 
-Attribution should include the record title, Mikhail Gorodnichev as creator,
-the released version or commit, the repository or deposit URL, and an
-indication of modifications. A citation is not a substitute for satisfying a
+Attribution should include the record title, Mikhail Gorodnichev and Marina
+Moseva as creators, the released version or commit, the repository or deposit
+URL, and an indication of modifications. A citation is not a substitute for satisfying a
 copyleft, share-alike, database-right, or notice requirement attached to an
 upstream source.
 

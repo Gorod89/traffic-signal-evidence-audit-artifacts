@@ -6,6 +6,10 @@ build-backend = "setuptools.build_meta"
 name = "traffic-evidence-tools"
 version = "0.1.0"
 description = "Fail-closed AAR and sealed-evidence tools for the accompanying article"
+authors = [
+  {name = "Mikhail Gorodnichev", email = "m.g.gorodnichev@mtuci.ru"},
+  {name = "Marina Moseva"},
+]
 requires-python = "==3.12.14"
 dependencies = [
   "joblib>=1.5,<2",
