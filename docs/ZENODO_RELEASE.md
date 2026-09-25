@@ -2,12 +2,13 @@
 
 ## Published records
 
-Zenodo published two versioned records on 24 September 2026:
+Zenodo published three versioned records on 24--25 September 2026:
 
 | Release | Version DOI | Record |
 |---|---|---|
 | `v1.0.0` | `10.5281/zenodo.22938827` | <https://zenodo.org/records/22938827> |
 | `v1.0.1` | `10.5281/zenodo.22938960` | <https://zenodo.org/records/22938960> |
+| `v1.0.2` | `10.5281/zenodo.22960291` | <https://zenodo.org/records/22960291> |
 
 The concept DOI `10.5281/zenodo.22938826` represents the version chain and
 resolves to the latest version. Reproducibility claims should cite the exact

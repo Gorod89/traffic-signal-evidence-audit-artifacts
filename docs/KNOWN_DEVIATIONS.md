@@ -39,7 +39,12 @@ historical filenames despite review-time recomputation or path normalisation.
 Each of these nine transformed-or-restored relationships is explicit in the
 current 15-entry `docs/PROVENANCE.csv`; that curated register is not a claim to
 enumerate every file covered by the release manifest. Filename alone is not
-evidence of byte identity.
+evidence of byte identity. Separately, the corrected Zenodo archives for
+v1.0.0 and v1.0.1 were made from commit `926b8c1`, not their named tags. The
+eight changed paths relative to the v1.0.1 tag are `CITATION.cff`,
+`MANIFEST.sha256`, `README.md`, `docs/TOOLING_FIXES.md`,
+`docs/ZENODO_RELEASE.md`, `scripts/analysis/audit_claims.py`,
+`scripts/analysis/verify_fact2.py`, and `scripts/audit/check_release.py`.
 
 The original forty-tree-seed record was generated under Python 3.13 and
 scikit-learn 1.7.2, not the repository's canonical CPU environment. It is

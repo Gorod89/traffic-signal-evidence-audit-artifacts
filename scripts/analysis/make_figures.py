@@ -27,6 +27,8 @@ plt.rcParams.update(
         "axes.spines.top": False,
         "axes.spines.right": False,
         "figure.dpi": 150,
+        "pdf.fonttype": 42,
+        "ps.fonttype": 42,
     }
 )
 
@@ -176,30 +178,19 @@ def figure_dormancy() -> None:
     ax1.set_xlabel("share of 427,342 proposal evaluations (%)")
     ax1.set_title("(a) where the channel loses its authority", fontsize=9, loc="left")
 
-    gains = v3["calibrated_lower_gain_when_disagreed"]
-    method_gains = v3["calibrated_lower_gain_by_method"]
-    calibrated = [
-        row for method, row in method_gains.items()
-        if method != "ergs_no_calibration"
-    ]
-    calibrated_n = sum(row["n"] for row in calibrated)
-    calibrated_positive = sum(row["strictly_positive"] for row in calibrated)
-    no_cal = method_gains["ergs_no_calibration"]
-    bars = [calibrated_positive, no_cal["strictly_positive"]]
-    labels = [f"calibrated variants\n(n={calibrated_n:,})",
+    calibrated = v3["computed_calibrated_bounds"]
+    no_cal = v3["computed_uncalibrated_bounds"]
+    bars = [calibrated["strictly_positive"], no_cal["strictly_positive"]]
+    labels = [f"four calibrated variants\n(n={calibrated['n']:,})",
               f"no-calibration ablation\n(n={no_cal['n']:,})"]
     ax2.bar(labels, bars, color=[BLUE, GREEN], alpha=0.88, width=0.58)
     for i, value in enumerate(bars):
         ax2.text(i, value + 4, f"{value:,} positive LCBs", ha="center", fontsize=8)
     ax2.set_ylim(0, max(bars) * 1.16)
     ax2.set_ylabel("number of strictly positive LCBs")
-    ax2.set_title(
-        f"(b) all {int(gains['n'] * gains['fraction_strictly_positive']):,} positive LCBs\n"
-        "came from the no-calibration ablation",
-        fontsize=9, loc="left",
-    )
-    fig.tight_layout()
-    save(fig, "dormancy_anatomy_v10")
+    ax2.set_title("(b) computed lower bounds", fontsize=9, loc="left")
+    fig.subplots_adjust(left=0.19, right=0.98, bottom=0.22, top=0.88, wspace=0.48)
+    save(fig, "dormancy_anatomy_v21")
 
 
 if __name__ == "__main__":

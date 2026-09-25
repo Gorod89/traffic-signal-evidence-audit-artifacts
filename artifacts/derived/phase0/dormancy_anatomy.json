@@ -26,58 +26,79 @@
       "downstream_spillback": 1
     },
     "share_blocked_before_any_authority_decision": 0.8009088739229938,
-    "calibrated_lower_gain_when_disagreed": {
-      "n": 59083,
-      "mean": -1.0507810984676293,
-      "median": -1.135318265598086,
-      "p90": 0.0,
-      "max": 0.5175284752797975,
-      "fraction_strictly_positive": 0.002047966420120847
+    "computed_calibrated_bounds": {
+      "methods": [
+        "ergs_no_hysteresis",
+        "ergs_no_shield",
+        "ergs_no_uncertainty",
+        "ergs_v3"
+      ],
+      "n": 38726,
+      "mean": -1.4025691534187943,
+      "median": -1.3435900367869187,
+      "p90": -0.9413913133737561,
+      "minimum": -3.562745962350182,
+      "maximum": -0.0848517737237866,
+      "strictly_positive": 0,
+      "fraction_strictly_positive": 0.0
     },
-    "calibrated_lower_gain_by_method": {
+    "computed_uncalibrated_bounds": {
+      "method": "ergs_no_calibration",
+      "n": 9668,
+      "mean": -0.8034140055302765,
+      "median": -0.7421945404058404,
+      "p90": -0.34173464550890986,
+      "minimum": -2.9603657133465977,
+      "maximum": 0.5175284752797975,
+      "strictly_positive": 121,
+      "fraction_strictly_positive": 0.012515515101365329
+    },
+    "computed_bounds_by_method": {
       "ergs_no_calibration": {
-        "n": 10028,
+        "n": 9668,
         "strictly_positive": 121,
-        "fraction_strictly_positive": 0.012066214599122457,
+        "fraction_strictly_positive": 0.012515515101365329,
         "minimum": -2.9603657133465977,
         "maximum": 0.5175284752797975
       },
       "ergs_no_hysteresis": {
-        "n": 10041,
+        "n": 9677,
         "strictly_positive": 0,
         "fraction_strictly_positive": 0.0,
         "minimum": -3.562745962350182,
-        "maximum": 0.0
+        "maximum": -0.0848517737237866
       },
       "ergs_no_shield": {
-        "n": 10047,
+        "n": 9685,
         "strictly_positive": 0,
         "fraction_strictly_positive": 0.0,
         "minimum": -3.562745962350182,
-        "maximum": 0.0
+        "maximum": -0.0848517737237866
       },
       "ergs_no_uncertainty": {
-        "n": 10028,
+        "n": 9679,
         "strictly_positive": 0,
         "fraction_strictly_positive": 0.0,
         "minimum": -3.562745962350182,
-        "maximum": 0.0
+        "maximum": -0.0848517737237866
       },
       "ergs_v3": {
-        "n": 10047,
+        "n": 9685,
         "strictly_positive": 0,
         "fraction_strictly_positive": 0.0,
         "minimum": -3.562745962350182,
-        "maximum": 0.0
-      },
-      "illm_style_review": {
-        "n": 8892,
-        "strictly_positive": 0,
-        "fraction_strictly_positive": 0.0,
-        "minimum": 0.0,
-        "maximum": 0.0
+        "maximum": -0.0848517737237866
       }
     },
+    "zero_placeholders_by_method": {
+      "ergs_no_calibration": 360,
+      "ergs_no_hysteresis": 364,
+      "ergs_no_shield": 362,
+      "ergs_no_uncertainty": 349,
+      "ergs_v3": 362,
+      "illm_style_review": 8892
+    },
+    "illm_style_review_bound_status": "not_computed; recorded 0.0 is a placeholder",
     "full_method_accepted_deviations": {
       "n": 70,
       "directions": {

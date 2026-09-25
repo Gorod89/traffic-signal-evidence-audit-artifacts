@@ -13,7 +13,7 @@ TEXT_SUFFIXES = {
     ".bib", ".cff", ".cfg", ".cls", ".csv", ".json", ".md", ".ps1",
     ".py", ".sty", ".tex", ".toml", ".txt", ".yaml", ".yml",
 }
-SKIP_PARTS = {".git", ".pytest_cache", "__pycache__"}
+SKIP_PARTS = {".git", ".pytest_cache", "__pycache__", "build", "dist"}
 MAX_FILE_BYTES = 50 * 1024 * 1024
 FORBIDDEN_PATH_PARTS = {"manuscript", "Definitions", "versions"}
 FORBIDDEN_SUFFIXES = {".bib", ".bst", ".cls", ".eps", ".pdf", ".sty", ".tex"}
@@ -46,7 +46,7 @@ def main() -> int:
     release_files: list[Path] = []
     for path in sorted(discovered_files):
         relative = path.relative_to(ROOT)
-        if any(part in SKIP_PARTS for part in relative.parts):
+        if any(part in SKIP_PARTS or part.endswith(".egg-info") for part in relative.parts):
             continue
         release_files.append(path)
         if path.is_symlink():

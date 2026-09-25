@@ -1,8 +1,8 @@
 cff-version: 1.2.0
-message: "Cite this software release by its Zenodo record. The DOI below is the concept DOI and resolves to the latest version; use the version-specific DOI shown by Zenodo when exact-version citation is required. The package is mixed-license, so no single CFF license field is asserted; see LICENSES.md for the controlling path-level mapping."
+message: "Cite this release by the version-specific DOI assigned by Zenodo. The DOI below is the concept DOI. The package is mixed-license, so no single CFF license field is asserted; see LICENSES.md for the controlling path-level mapping."
 title: "Traffic-Signal Evidence Audit: Code and Derived Artifacts"
 type: software
-version: 1.0.2
+version: 1.0.3
 date-released: 2026-09-25
 doi: 10.5281/zenodo.22938826
 abstract: >-

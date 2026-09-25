@@ -46,7 +46,8 @@ The following are not distributed here:
   historical programs are retained byte-for-byte under
   `artifacts/historical_scripts/` after file-level review;
 - the complete V8 trial-JSON population;
-- temporary working notes, caches, environments, telemetry, and unrelated follow-up studies.
+- prompts and agent session logs, temporary working notes, caches, environments,
+  telemetry, and unrelated follow-up studies.
 
 See [`docs/ARTIFACT_SCOPE.md`](docs/ARTIFACT_SCOPE.md) and [`docs/DATA_LICENSES.md`](docs/DATA_LICENSES.md) for the reasons and access boundary.
 
@@ -115,9 +116,9 @@ python supplementary/positive_control/analyze_scaled_final.py
 `MANIFEST.sha256` covers every tracked release file other than the manifest itself. `docs/PROVENANCE.csv` separately distinguishes byte-exact historical objects, portable adaptations, reconstructed outputs, and derived records. The two headline decision denominators are recorded with their arithmetic and source digests in `artifacts/derived/decision_denominators.json`. Continuous integration rejects manuscript/template material, private paths, placeholder metadata, and secret-like values. Assistive-tool use in manuscript and package maintenance is disclosed in [`docs/AI_USE_DISCLOSURE.md`](docs/AI_USE_DISCLOSURE.md).
 
 Citation metadata are in [`CITATION.cff`](CITATION.cff). The archived releases
-have version-specific DOI records: [`v1.0.0`](https://doi.org/10.5281/zenodo.22938827)
-and [`v1.0.1`](https://doi.org/10.5281/zenodo.22938960); the version-specific DOI
-for `v1.0.2` is recorded in the GitHub release and Zenodo record after deposit.
+have version-specific DOI records: [`v1.0.0`](https://doi.org/10.5281/zenodo.22938827),
+[`v1.0.1`](https://doi.org/10.5281/zenodo.22938960), and
+[`v1.0.2`](https://doi.org/10.5281/zenodo.22960291).
 Cite the exact version used for reproduction; the concept DOI
 [`10.5281/zenodo.22938826`](https://doi.org/10.5281/zenodo.22938826) resolves to
 the latest version. [`docs/ZENODO_RELEASE.md`](docs/ZENODO_RELEASE.md) records

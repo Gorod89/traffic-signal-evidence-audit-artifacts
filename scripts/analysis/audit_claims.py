@@ -51,7 +51,7 @@ INCLUDE_ARCHIVE = ARGS.scope == "all"
 REPO = ARGS.source_root
 
 results: list[tuple[str, str, str, object, object, bool]] = []
-EXPECTED_CHECKS = {"public": 98, "all": 141}
+EXPECTED_CHECKS = {"public": 101, "all": 144}
 
 
 def check(claim: str, source: str, origin: str, expected, actual, tol: float = 5e-3) -> None:
@@ -265,23 +265,25 @@ if dorm is not None:
           0.0790, v3["block_reasons"]["model_uncertainty"] / v3["proposal_evaluations"], tol=0.01)
     check("V3 calibrated_gain = 3.32% of evaluations", "results/dormancy_anatomy.json", "own",
           0.0332, v3["block_reasons"]["calibrated_gain"] / v3["proposal_evaluations"], tol=0.01)
-    check("V3 disagreements with LCB recorded = 59,083", "results/dormancy_anatomy.json", "own",
-          59083, dig(v3, "calibrated_lower_gain_when_disagreed", "n"))
-    check("V3 LCB positive share = 0.20%", "results/dormancy_anatomy.json", "own",
-          0.0020, dig(v3, "calibrated_lower_gain_when_disagreed", "fraction_strictly_positive"), tol=0.05)
-    check("V3 LCB median = -1.135", "results/dormancy_anatomy.json", "own",
-          -1.135, dig(v3, "calibrated_lower_gain_when_disagreed", "median"), tol=0.01)
+    check("V3 computed calibrated bounds = 38,726", "results/dormancy_anatomy.json", "own",
+          38726, dig(v3, "computed_calibrated_bounds", "n"))
+    check("V3 positive computed calibrated bounds = 0", "results/dormancy_anatomy.json", "own",
+          0, dig(v3, "computed_calibrated_bounds", "strictly_positive"))
+    check("V3 maximum computed calibrated bound = -0.084852",
+          "results/dormancy_anatomy.json", "own", -0.084852,
+          dig(v3, "computed_calibrated_bounds", "maximum"), tol=1e-5)
     ergs = dig(v3, "block_reasons_by_method", "ergs_v3", default={})
     check("V3 ergs_v3 accepted = 70", "results/dormancy_anatomy.json", "own",
           70, ergs.get("accepted"))
-    method_gain = v3["calibrated_lower_gain_by_method"]
-    check("V3 positive LCBs in no-calibration ablation = 121",
+    check("V3 computed uncalibrated bounds = 9,668",
+          "results/dormancy_anatomy.json", "own", 9668,
+          dig(v3, "computed_uncalibrated_bounds", "n"))
+    check("V3 positive bounds in no-calibration ablation = 121",
           "results/dormancy_anatomy.json", "own", 121,
-          method_gain["ergs_no_calibration"]["strictly_positive"])
-    check("V3 positive LCBs across calibrated variants = 0",
-          "results/dormancy_anatomy.json", "own", 0,
-          sum(row["strictly_positive"] for method, row in method_gain.items()
-              if method != "ergs_no_calibration"))
+          dig(v3, "computed_uncalibrated_bounds", "strictly_positive"))
+    check("V3 iLLM-style zero placeholders = 8,892",
+          "results/dormancy_anatomy.json", "own", 8892,
+          dig(v3, "zero_placeholders_by_method", "illm_style_review"))
     accepted_full = v3["full_method_accepted_deviations"]
     check("V3 full-method accepted raw LCB minimum = -0.835390",
           "results/dormancy_anatomy.json", "own", -0.835390,
@@ -289,6 +291,12 @@ if dorm is not None:
     check("V3 full-method accepted raw LCB maximum = -0.084852",
           "results/dormancy_anatomy.json", "own", -0.084852,
           accepted_full["calibrated_lower_gain_range"][1], tol=1e-5)
+    check("V3 full-method accepted effective LCB minimum = 0.064610",
+          "results/dormancy_anatomy.json", "own", 0.064610,
+          accepted_full["effective_lower_gain_range"][0], tol=2e-6)
+    check("V3 full-method accepted effective LCB maximum = 0.815148",
+          "results/dormancy_anatomy.json", "own", 0.815148,
+          accepted_full["effective_lower_gain_range"][1], tol=1e-6)
     check("V3 full-method accepted HOLD-to-ADVANCE = 70",
           "results/dormancy_anatomy.json", "own", 70,
           accepted_full["directions"].get("0->1"))

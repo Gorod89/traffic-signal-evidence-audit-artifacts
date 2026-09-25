@@ -217,8 +217,9 @@ V1 row count.
 
 The active public checker again uses the historical origin class `agent` for
 values reported by an inventory subagent, including the D+ checks. Earlier
-public-release commits replaced this label with `inventory` without recording
-the change clearly enough. Making that substitution without recording it
+public-release commits replaced this label with `inventory` twice, including
+commit `926b8c105e5b4b37b986b270f7b6b3d0a45d56bf`, without recording the change
+clearly enough. Making that substitution without recording it
 obscured provenance, even though expected values, source paths, tolerances and
 numerical logic did not change. The retained historical checker preserves its
 original labels byte-for-byte under `artifacts/historical_scripts/`; the active
@@ -250,11 +251,17 @@ record first, builds both tables in memory, and publishes them atomically below
 
 The claim audit previously printed five mismatches but returned process status
 zero, and optional `if artifact:` branches could omit checks silently. Its
-public and full-archive denominators are now fixed at 98 and 141 checks,
+public and full-archive denominators are now fixed at 101 and 144 checks,
 respectively; the artifact map and provenance register likewise assert 17 and
 15 rows. Missing, structurally empty, mismatched or reduced inputs return a
 non-zero status. Full-archive mode requires an explicit source root.
 Continuous integration runs the public mode.
+
+The V3 bound checks now distinguish 38,726 genuinely computed calibrated
+bounds from 9,668 bounds in the no-calibration ablation and from the exact-zero
+sentinels written before any bound was computed. They also verify the 70
+full-method emergency deviations and both endpoints of their recorded raw and
+effective-gain ranges.
 
 ## 9. Tree-Seed and Toolchain Sensitivity
 

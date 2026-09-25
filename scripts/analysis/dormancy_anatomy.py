@@ -75,8 +75,18 @@ def analyse_v3() -> dict:
     total = 0
     disagreed = 0
     accepted = 0
-    gains_when_disagreed: list[float] = []
-    gains_by_method: dict[str, list[float]] = defaultdict(list)
+    # The trace schema writes 0.0 into calibrated_lower_gain before the guard
+    # has run.  In particular, illm_style_review bypasses the guard entirely.
+    # Therefore field presence is not evidence that a bound was computed.
+    calibrated_methods = {
+        "ergs_v3", "ergs_no_hysteresis", "ergs_no_shield",
+        "ergs_no_uncertainty",
+    }
+    uncalibrated_method = "ergs_no_calibration"
+    computed_calibrated: list[float] = []
+    computed_uncalibrated: list[float] = []
+    computed_by_method: dict[str, list[float]] = defaultdict(list)
+    placeholder_by_method: Counter[str] = Counter()
     accepted_full_method: list[dict] = []
 
     for path in files:
@@ -88,21 +98,32 @@ def analyse_v3() -> dict:
             by_condition_reason[rec["condition"]][reason] += 1
             if rec["baseline_action"] != rec["candidate_action"]:
                 disagreed += 1
+                method = rec["method"]
                 value = rec.get("calibrated_lower_gain")
                 if value is not None:
                     value = float(value)
-                    gains_when_disagreed.append(value)
-                    gains_by_method[rec["method"]].append(value)
+                    # Exact zero is the historical sentinel written before the
+                    # bound-producing guard.  No retained computed bound is
+                    # exactly zero; the closest calibrated value is -0.08485.
+                    if method in calibrated_methods and value != 0.0:
+                        computed_calibrated.append(value)
+                        computed_by_method[method].append(value)
+                    elif method == uncalibrated_method and value != 0.0:
+                        computed_uncalibrated.append(value)
+                        computed_by_method[method].append(value)
+                    else:
+                        placeholder_by_method[method] += 1
             if rec.get("accepted"):
                 accepted += 1
                 if rec["method"] == "ergs_v3":
                     accepted_full_method.append(rec)
 
-    gains = np.asarray(gains_when_disagreed, dtype=np.float64)
+    calibrated = np.asarray(computed_calibrated, dtype=np.float64)
+    uncalibrated = np.asarray(computed_uncalibrated, dtype=np.float64)
     no_disagreement = by_reason.get("no_disagreement", 0)
 
     method_gain_summary = {}
-    for method, values in sorted(gains_by_method.items()):
+    for method, values in sorted(computed_by_method.items()):
         array = np.asarray(values, dtype=np.float64)
         method_gain_summary[method] = {
             "n": int(array.size),
@@ -144,17 +165,31 @@ def analyse_v3() -> dict:
         "share_blocked_before_any_authority_decision": (
             no_disagreement / total if total else None
         ),
-        "calibrated_lower_gain_when_disagreed": {
-            "n": int(gains.size),
-            "mean": float(gains.mean()) if gains.size else None,
-            "median": float(np.median(gains)) if gains.size else None,
-            "p90": float(np.percentile(gains, 90)) if gains.size else None,
-            "max": float(gains.max()) if gains.size else None,
-            "fraction_strictly_positive": (
-                float(np.mean(gains > 0)) if gains.size else None
-            ),
+        "computed_calibrated_bounds": {
+            "methods": sorted(calibrated_methods),
+            "n": int(calibrated.size),
+            "mean": float(calibrated.mean()) if calibrated.size else None,
+            "median": float(np.median(calibrated)) if calibrated.size else None,
+            "p90": float(np.percentile(calibrated, 90)) if calibrated.size else None,
+            "minimum": float(calibrated.min()) if calibrated.size else None,
+            "maximum": float(calibrated.max()) if calibrated.size else None,
+            "strictly_positive": int(np.sum(calibrated > 0)),
+            "fraction_strictly_positive": float(np.mean(calibrated > 0)) if calibrated.size else None,
         },
-        "calibrated_lower_gain_by_method": method_gain_summary,
+        "computed_uncalibrated_bounds": {
+            "method": uncalibrated_method,
+            "n": int(uncalibrated.size),
+            "mean": float(uncalibrated.mean()) if uncalibrated.size else None,
+            "median": float(np.median(uncalibrated)) if uncalibrated.size else None,
+            "p90": float(np.percentile(uncalibrated, 90)) if uncalibrated.size else None,
+            "minimum": float(uncalibrated.min()) if uncalibrated.size else None,
+            "maximum": float(uncalibrated.max()) if uncalibrated.size else None,
+            "strictly_positive": int(np.sum(uncalibrated > 0)),
+            "fraction_strictly_positive": float(np.mean(uncalibrated > 0)) if uncalibrated.size else None,
+        },
+        "computed_bounds_by_method": method_gain_summary,
+        "zero_placeholders_by_method": dict(sorted(placeholder_by_method.items())),
+        "illm_style_review_bound_status": "not_computed; recorded 0.0 is a placeholder",
         "full_method_accepted_deviations": {
             "n": len(accepted_full_method),
             "directions": dict(accepted_directions),
